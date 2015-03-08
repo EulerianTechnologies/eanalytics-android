@@ -17,27 +17,30 @@ public class EAProduct extends EAProperties {
 
     }
 
+    //-----------
+    //- BUILDER
+    //-----------
+
     public static class Builder extends EAProperties.Builder<Builder> {
 
         public Builder() {
-            super();
-            set(KEY_PROPERTY_TYPE, "product");
+            super(EAProperties.PROPERTY_TYPE_PRODUCT);
         }
 
         public Builder setId(String id) {
-            set(KEY_REF_ID, id);
+            setProperty(KEY_REF_ID, id);
             return this;
         }
 
         public Builder setPrice(double price, String currency) {
-            set(KEY_PRICE, String.valueOf(price));
-            set(KEY_CURRENCY, currency);
+            setProperty(KEY_PRICE, String.valueOf(price));
+            setProperty(KEY_CURRENCY, currency);
             return this;
         }
 
         public EAProduct build() {
             EAProduct res = new EAProduct();
-            res.setHashmap(this.hashmap);
+            res.setProperties(this.properties);
             res.setInternal(internal);
             return res;
         }

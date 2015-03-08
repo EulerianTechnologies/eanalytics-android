@@ -20,6 +20,8 @@ public class EAProperties {
 
     public static final String KEY_GENERIC_FOR_PROPERTY_1 = "ea-key1";
     public static final String KEY_GENERIC_FOR_PROPERTY_2 = "ea-key2";
+    public static final String PROPERTY_TYPE_PRODUCT = "product";
+    public static final String PROPERTY_TYPE_CART = "cart";
     protected static final String KEY_PROPERTY_TYPE = "property-type";
     protected static final String KEY_EOS = "eos-type";
     protected static final String KEY_EHW = "ehw";
@@ -33,60 +35,6 @@ public class EAProperties {
     private Map<String, String> mHashmap;
     private Map<String, String> mInternalProperties;
 
-    public static class Builder<T extends Builder> {
-
-        protected final Map<String, String> hashmap = new HashMap<>();
-        protected final Map<String, String> internal = new HashMap<>();
-
-        public Builder() {
-            // internal object properties
-            internal.put(KEY_EOS, "Android" + Build.VERSION.RELEASE);
-            internal.put(KEY_EHW, Build.MANUFACTURER + " " + Build.MODEL);
-            putEuidl();
-            String packageName = EAnalytics.getContext().getApplicationInfo().packageName;
-            internal.put(KEY_URL, "http://" + packageName);
-            internal.put(KEY_APPNAME, packageName);
-            //TODO internal.put("ea-android-islat", "??? TODO"); what is adInfo ?
-            //TODO internal.put("ea-android-adid", adInfo.getId()); what is adInfo?
-            // object properties
-            set(KEY_EPOCH, String.valueOf(System.currentTimeMillis()));
-            set(KEY_PROPERTY_TYPE, "property");
-        }
-
-        /**
-         * @param key   the key. Use the set of predefined keys in the corresponding class,
-         *              or any other given key. For instance {@link #KEY_GENERIC_FOR_PROPERTY_1} or
-         *              {@link com.eulerian.android.sdk.model.EAProduct#KEY_1_SPECIFIC_FOR_PRODUCT}, etc...
-         * @param value
-         * @return
-         */
-        public synchronized T set(String key, String value) {
-            hashmap.put(key, value);
-            return (T) this;
-        }
-
-        private void putEuidl() {
-            TelephonyManager telephonyManager = (TelephonyManager) EAnalytics.getContext().getSystemService(Context
-                    .TELEPHONY_SERVICE);
-            internal.put(KEY_EUIDL, telephonyManager != null && telephonyManager.getDeviceId() != null ?
-                    telephonyManager.getDeviceId() : Settings.Secure.getString(EAnalytics.getContext()
-                    .getContentResolver(), Settings.Secure.ANDROID_ID));
-        }
-
-        public T setLocation(double latitude, double longitude) {
-            internal.put(KEY_LATITUDE, String.valueOf(latitude));
-            internal.put(KEY_LONGITUDE, String.valueOf(longitude));
-            return (T) this;
-        }
-
-        public EAProperties build() {
-            EAProperties res = new EAProperties();
-            res.setHashmap(hashmap);
-            res.setInternal(internal);
-            return res;
-        }
-    }
-
     /**
      * Use {@link EAProperties.Builder} instead
      */
@@ -97,7 +45,7 @@ public class EAProperties {
         this.mInternalProperties = internalProperties;
     }
 
-    protected void setHashmap(Map<String, String> hashmap) {
+    protected void setProperties(Map<String, String> hashmap) {
         this.mHashmap = hashmap;
     }
 
@@ -123,5 +71,69 @@ public class EAProperties {
             }
         }
         return json;
+    }
+
+    //-----------
+    //- BUILDER
+    //-----------
+
+    public static class Builder<T extends Builder> {
+
+        protected final Map<String, String> properties = new HashMap<>();
+        protected final Map<String, String> internal = new HashMap<>();
+
+        /**
+         * @param propertyType Use the set of predefined property type in {@link com.eulerian.android.sdk.model
+         *                     .EAProperties}. For instance {@link #PROPERTY_TYPE_CART}. If you plan to use {@link
+         *                     #PROPERTY_TYPE_CART}, use the convenience class {@link com.eulerian.android.sdk.model
+         *                     .EACart} instead.
+         */
+        public Builder(String propertyType) {
+            // internal object properties
+            internal.put(KEY_EOS, "Android" + Build.VERSION.RELEASE);
+            internal.put(KEY_EHW, Build.MANUFACTURER + " " + Build.MODEL);
+            putEuidl();
+            String packageName = EAnalytics.getContext().getApplicationInfo().packageName;
+            internal.put(KEY_URL, "http://" + packageName);
+            internal.put(KEY_APPNAME, packageName);
+            //TODO internal.put("ea-android-islat", "??? TODO"); what is adInfo ?
+            //TODO internal.put("ea-android-adid", adInfo.getId()); what is adInfo?
+            // object properties
+            setProperty(KEY_EPOCH, String.valueOf(System.currentTimeMillis()));
+            setProperty(KEY_PROPERTY_TYPE, propertyType);
+        }
+
+        /**
+         * @param key   the key. Use the set of predefined keys in the corresponding class,
+         *              or any other given key. For instance {@link #KEY_GENERIC_FOR_PROPERTY_1} or
+         *              {@link com.eulerian.android.sdk.model.EAProduct#KEY_1_SPECIFIC_FOR_PRODUCT}, etc...
+         * @param value
+         * @return
+         */
+        public synchronized T setProperty(String key, String value) {
+            properties.put(key, value);
+            return (T) this;
+        }
+
+        private void putEuidl() {
+            TelephonyManager telephonyManager = (TelephonyManager) EAnalytics.getContext().getSystemService(Context
+                    .TELEPHONY_SERVICE);
+            internal.put(KEY_EUIDL, telephonyManager != null && telephonyManager.getDeviceId() != null ?
+                    telephonyManager.getDeviceId() : Settings.Secure.getString(EAnalytics.getContext()
+                    .getContentResolver(), Settings.Secure.ANDROID_ID));
+        }
+
+        public T setLocation(double latitude, double longitude) {
+            internal.put(KEY_LATITUDE, String.valueOf(latitude));
+            internal.put(KEY_LONGITUDE, String.valueOf(longitude));
+            return (T) this;
+        }
+
+        public EAProperties build() {
+            EAProperties res = new EAProperties();
+            res.setProperties(properties);
+            res.setInternal(internal);
+            return res;
+        }
     }
 }

@@ -13,9 +13,4 @@ public class Utils {
         return (res == PackageManager.PERMISSION_GRANTED);
     }
 
-    static String getAppPackageName(Context context) {
-        EALog.assertCondition(context != null, "Null app context, be sure to pass a not null context.");
-        return context.getApplicationInfo().packageName;
-    }
-
 }

@@ -36,7 +36,7 @@ public class EAnalytics {
         EALog.assertCondition(sAppContext == null && sRTDomain == null, "Init must be called only once.");
         EALog.assertCondition(Utils.isPermissionGranted(context, Manifest.permission.READ_PHONE_STATE),
                 "Init failed : permission is missing. You must add permission " +
-                android.Manifest.permission.READ_PHONE_STATE + " in your app Manifest.xml.");
+                        android.Manifest.permission.READ_PHONE_STATE + " in your app Manifest.xml.");
         EALog.assertCondition(context != null, "Init failed : context is null. You must provide a valid context.");
         EALog.assertCondition(rtDomain != null, "Init failed : RT domain is null. You must provide a valid RT domain.");
         sAppContext = context;

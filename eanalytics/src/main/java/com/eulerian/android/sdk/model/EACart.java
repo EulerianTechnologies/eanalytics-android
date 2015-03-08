@@ -38,12 +38,15 @@ public class EACart extends EAProperties {
         return json;
     }
 
+    //-----------
+    //- BUILDER
+    //-----------
+
     public static class Builder extends EAProperties.Builder<Builder> {
         private final List<EAProduct> products = new ArrayList<>();
 
         public Builder() {
-            super();
-            set(KEY_PROPERTY_TYPE, "cart");
+            super(EAProperties.PROPERTY_TYPE_CART);
         }
 
         public Builder addProductsToCart(EAProduct... products) {
@@ -58,12 +61,11 @@ public class EACart extends EAProperties {
 
         public EACart build() {
             EACart res = new EACart();
-            res.setHashmap(hashmap);
+            res.setProperties(properties);
             res.setInternal(internal);
             res.setProducts(products);
             return res;
         }
-
     }
 
 }
