@@ -5,6 +5,11 @@ package com.eulerian.android.sdk.model;
  */
 public class EAProduct extends EAProperties {
 
+    public static final String KEY_1_SPECIFIC_FOR_PRODUCT = "ea-product-key1";
+    protected static final String KEY_REF_ID = "ref-id";
+    protected static final String KEY_PRICE = "ea-price";
+    protected static final String KEY_CURRENCY = "ea-currency";
+
     /**
      * Use {@link com.eulerian.android.sdk.model.EAProduct.Builder} instead
      */
@@ -13,10 +18,6 @@ public class EAProduct extends EAProperties {
     }
 
     public static class Builder extends EAProperties.Builder<Builder> {
-
-        protected static final String KEY_REF_ID = "ref-id";
-        protected static final String KEY_PRICE = "ea-price";
-        protected static final String KEY_CURRENCY = "ea-currency";
 
         public Builder() {
             super();

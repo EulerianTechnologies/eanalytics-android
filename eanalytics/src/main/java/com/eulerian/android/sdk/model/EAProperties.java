@@ -54,8 +54,9 @@ public class EAProperties {
         }
 
         /**
-         * @param key   the key. Use the set of predefined keys in each class Object. For instance
-         *              {@link #KEY_GENERIC_FOR_PROPERTY_1}
+         * @param key   the key. Use the set of predefined keys in the corresponding class,
+         *              or any other given key. For instance {@link #KEY_GENERIC_FOR_PROPERTY_1} or
+         *              {@link com.eulerian.android.sdk.model.EAProduct#KEY_1_SPECIFIC_FOR_PRODUCT}, etc...
          * @param value
          * @return
          */

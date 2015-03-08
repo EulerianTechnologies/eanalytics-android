@@ -24,8 +24,8 @@ public class MainActivity extends ActionBarActivity {
 
     public void onClickPurchase(View v) {
         EAProperties monAchat = new EAProperties.Builder()
-                .set(EAProperties.KEY_GENERIC_FOR_PROPERTY_1, "aliens-\"vs\"-predator")
-                .set(EAProperties.KEY_GENERIC_FOR_PROPERTY_1, "zorro")
+                .set(EAProperties.KEY_GENERIC_FOR_PROPERTY_1, "alien-\"vs\"-predator")
+                .set(EAProperties.KEY_GENERIC_FOR_PROPERTY_2, "zorro")
                 .set("my_special_key_because_I_am_Darty", "coca")
                 .setLocation(latitude, longitude)
                 .set("test-null", null)
@@ -52,9 +52,9 @@ public class MainActivity extends ActionBarActivity {
 
     public void onClickGetProductDetails(View v) {
         EAProduct monProduit = new EAProduct.Builder()
-                .setId("chaussure4314")
                 .setPrice(50.34, "€")
                 .setLocation(latitude, longitude)
+                .setId("chaussure4314")
                 .build();
 
         EAnalytics.getInstance().track(monProduit);
