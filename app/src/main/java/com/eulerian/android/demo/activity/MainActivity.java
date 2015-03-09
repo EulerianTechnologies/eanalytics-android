@@ -6,9 +6,9 @@ import android.view.View;
 
 import com.eulerian.android.demo.R;
 import com.eulerian.android.sdk.EAnalytics;
-import com.eulerian.android.sdk.model.EACart;
-import com.eulerian.android.sdk.model.EAProduct;
-import com.eulerian.android.sdk.model.EAProperties;
+import com.eulerian.android.sdk.EACart;
+import com.eulerian.android.sdk.EAProduct;
+import com.eulerian.android.sdk.EAProperties;
 
 
 public class MainActivity extends ActionBarActivity {

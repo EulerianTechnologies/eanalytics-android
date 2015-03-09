@@ -1,4 +1,4 @@
-package com.eulerian.android.sdk.model;
+package com.eulerian.android.sdk;
 
 import org.json.JSONArray;
 import org.json.JSONException;

@@ -14,22 +14,39 @@ class PersistentIdentity {
     private static PersistentIdentity mInstance;
     private final SharedPreferences mSharedPreferences;
 
-    public static final String KEY_REFERRER = "referrer";
-    public static final String KEY_UTM_MEDIUM = "utm_medium";
-    public static final String KEY_UTM_CONTENT = "utm_content";
-    public static final String KEY_UTM_TERM = "utm_term";
-    public static final String KEY_UTM_CAMPAIGN = "utm_campaign";
-    public static final String KEY_UTM_SOURCE = "utm_source";
+    static final String KEY_REFERRER = "referrer";
+    static final String KEY_UTM_MEDIUM = "utm_medium";
+    static final String KEY_UTM_CONTENT = "utm_content";
+    static final String KEY_UTM_TERM = "utm_term";
+    static final String KEY_UTM_CAMPAIGN = "utm_campaign";
+    static final String KEY_UTM_SOURCE = "utm_source";
+    static final String KEY_ADVERTISING_ID = "id";
+    static final String KEY_ADVERTISING_IS_LAT = "isLAT";
 
-    public static PersistentIdentity getInstance(Context context) {
+    public static PersistentIdentity getInstance() {
         if (mInstance == null) {
-            mInstance = new PersistentIdentity(context);
+            mInstance = new PersistentIdentity();
         }
         return mInstance;
     }
 
-    private PersistentIdentity(Context context) {
-        mSharedPreferences = context.getSharedPreferences("eanalytics-prefs", Context.MODE_PRIVATE);
+    private PersistentIdentity() {
+        mSharedPreferences = EAnalytics.getContext().getSharedPreferences("eanalytics-prefs", Context.MODE_PRIVATE);
+    }
+
+    public String getAdvertisingId() {
+        return mSharedPreferences.getString(KEY_ADVERTISING_ID, "unknown");
+    }
+
+    public boolean getAdvertisingIsLat() {
+        return mSharedPreferences.getBoolean(KEY_ADVERTISING_IS_LAT, false);
+    }
+
+    public synchronized void saveAdvertisingId(String id, boolean isLAT) {
+        SharedPreferences.Editor editor = mSharedPreferences.edit();
+        editor.putString(KEY_ADVERTISING_ID, id);
+        editor.putBoolean(KEY_ADVERTISING_IS_LAT, isLAT);
+        writeEdits(editor);
     }
 
     public synchronized void save(Map<String, String> map) {

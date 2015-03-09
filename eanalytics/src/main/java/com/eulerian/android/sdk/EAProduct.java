@@ -1,4 +1,4 @@
-package com.eulerian.android.sdk.model;
+package com.eulerian.android.sdk;
 
 /**
  * Created by Francois Rouault on 07/03/2015.
@@ -11,7 +11,7 @@ public class EAProduct extends EAProperties {
     protected static final String KEY_CURRENCY = "ea-currency";
 
     /**
-     * Use {@link com.eulerian.android.sdk.model.EAProduct.Builder} instead
+     * Use {@link EAProduct.Builder} instead
      */
     protected EAProduct() {
 

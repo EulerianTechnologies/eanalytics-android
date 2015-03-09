@@ -35,7 +35,7 @@ import java.util.regex.Pattern;
  * .com/help/questions/articles/how-can-i-use-multiple-install-trackers-with-the-android-library&nbsp;</p>
  * <p/>
  * <p>Once you've added the &lt;receiver&gt; tag to your manifest,
- * the first call to {@link com.eulerian.android.sdk.EAnalytics#track(com.eulerian.android.sdk.model.EAProperties)}
+ * the first call to {@link com.eulerian.android.sdk.EAnalytics#track(EAProperties)}
  * will include the user's Google Play Referrer as metadata. In addition, if
  * you include utm parameters in your link to Google Play, they will be parsed and
  * provided as individual properties in your track calls.</p>
@@ -110,7 +110,7 @@ public class InstallReferrerReceiver extends BroadcastReceiver {
 
         EALog.d(TAG, "Install Referrer received: " + newPrefs.toString());
 
-        PersistentIdentity.getInstance(context).save(newPrefs);
+        PersistentIdentity.getInstance().save(newPrefs);
     }
 
     private String find(Matcher matcher) {

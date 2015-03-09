@@ -5,7 +5,7 @@ import android.util.Log;
 /**
  * Created by Francois Rouault on 25/02/2015.
  */
-public class EALog {
+class EALog {
 
     protected static boolean LOG_ENABLED = false;
 

@@ -4,7 +4,13 @@ package com.eulerian.android.sdk;
 import android.Manifest;
 import android.content.Context;
 
-import com.eulerian.android.sdk.model.EAProperties;
+import com.google.android.gms.ads.identifier.AdvertisingIdClient;
+import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
+import com.google.android.gms.common.GooglePlayServicesRepairableException;
+
+import java.io.IOException;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 
 /**
  * Created by Francois Rouault on 25/02/2015.
@@ -15,6 +21,9 @@ public class EAnalytics {
     private static String sRTDomain;
     private static EAnalytics sInstance;
     private static Context sAppContext;
+    private Executor mExecutor = Executors.newSingleThreadExecutor();
+    static String sAdInfoId = "undefined";
+    static boolean sAdInfoIsLAT = false;
 
     private EAnalytics() {
         //cannot be initialized anywhere else
@@ -44,17 +53,66 @@ public class EAnalytics {
                 "domain");
         sAppContext = context;
         sRTDomain = rtDomain;
+        sAdInfoId = PersistentIdentity.getInstance().getAdvertisingId();
+        sAdInfoIsLAT = PersistentIdentity.getInstance().getAdvertisingIsLat();
+        EALog.d(TAG, "Initialized with " + rtDomain + " domain.");
+        getInstance().mExecutor.execute(new GetAdInfo());
     }
 
-    public static Context getContext() {
+    static Context getContext() {
         EALog.assertCondition(TAG, sAppContext != null, "The SDK has not been initialized. You must call EAnalytics" +
                 ".init(Context, String) once.");
         return sAppContext;
     }
 
-    public void track(EAProperties properties) {
+    public void track(final EAProperties properties) {
         //TODO: check rt domain != null before sending request
-        EALog.d(TAG, "Tracking properties: " + properties.toJson(true));
+        mExecutor.execute(new PropertiesTracker(properties));
+    }
+
+    static class PropertiesTracker implements Runnable {
+
+        private final EAProperties properties;
+
+        PropertiesTracker(EAProperties properties) {
+            this.properties = properties;
+        }
+
+        @Override
+        public void run() {
+            try {
+                Thread.sleep(2000);
+            } catch (InterruptedException e) {
+            }
+            EALog.d(TAG, "Tracking properties: " + properties.toJson(true));
+        }
+    }
+
+    static class GetAdInfo implements Runnable {
+        private static final String TAG = GetAdInfo.class.getName();
+
+        @Override
+        public void run() {
+            AdvertisingIdClient.Info adInfo = null;
+            try {
+                adInfo = AdvertisingIdClient.getAdvertisingIdInfo(getContext());
+            } catch (IOException e) {
+                EALog.e(TAG, "Unrecoverable error connecting to Google Play services (e.g. the old version of the " +
+                        "service doesn't support getting AdvertisingId)");
+            } catch (GooglePlayServicesRepairableException e) {
+                EALog.e(TAG, "Google Play Services is not installed, up-to-date, or enabled");
+            } catch (GooglePlayServicesNotAvailableException e) {
+                EALog.e(TAG, "Google Play services is not available entirely.");
+            }
+            if (adInfo == null) {
+                EALog.d(TAG, "AdvertisingIdClient null");
+                return;
+            }
+            sAdInfoId = adInfo.getId();
+            sAdInfoIsLAT = adInfo.isLimitAdTrackingEnabled();
+            PersistentIdentity.getInstance().saveAdvertisingId(sAdInfoId, sAdInfoIsLAT);
+            EALog.d(TAG, "AdvertisingIdClient id:" + sAdInfoId + ", isLat: " + sAdInfoIsLAT);
+        }
     }
 
 }

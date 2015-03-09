@@ -1,11 +1,9 @@
-package com.eulerian.android.sdk.model;
+package com.eulerian.android.sdk;
 
 import android.content.Context;
 import android.os.Build;
 import android.provider.Settings;
 import android.telephony.TelephonyManager;
-
-import com.eulerian.android.sdk.EAnalytics;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -83,9 +81,9 @@ public class EAProperties {
         protected final Map<String, String> internal = new HashMap<>();
 
         /**
-         * @param propertyType Use the set of predefined property type in {@link com.eulerian.android.sdk.model
+         * @param propertyType Use the set of predefined property type in {@link com.eulerian.android.sdk
          *                     .EAProperties}. For instance {@link #PROPERTY_TYPE_CART}. If you plan to use {@link
-         *                     #PROPERTY_TYPE_CART}, use the convenience class {@link com.eulerian.android.sdk.model
+         *                     #PROPERTY_TYPE_CART}, use the convenience class {@link com.eulerian.android.sdk
          *                     .EACart} instead.
          */
         public Builder(String propertyType) {
@@ -96,8 +94,8 @@ public class EAProperties {
             String packageName = EAnalytics.getContext().getApplicationInfo().packageName;
             internal.put(KEY_URL, "http://" + packageName);
             internal.put(KEY_APPNAME, packageName);
-            //TODO internal.put("ea-android-islat", "??? TODO"); what is adInfo ?
-            //TODO internal.put("ea-android-adid", adInfo.getId()); what is adInfo?
+            internal.put("ea-android-islat", String.valueOf(EAnalytics.sAdInfoIsLAT));
+            internal.put("ea-android-adid", EAnalytics.sAdInfoId);
             // object properties
             setProperty(KEY_EPOCH, String.valueOf(System.currentTimeMillis()));
             setProperty(KEY_PROPERTY_TYPE, propertyType);
@@ -106,7 +104,7 @@ public class EAProperties {
         /**
          * @param key   the key. Use the set of predefined keys in the corresponding class,
          *              or any other given key. For instance {@link #KEY_GENERIC_FOR_PROPERTY_1} or
-         *              {@link com.eulerian.android.sdk.model.EAProduct#KEY_1_SPECIFIC_FOR_PRODUCT}, etc...
+         *              {@link EAProduct#KEY_1_SPECIFIC_FOR_PRODUCT}, etc...
          * @param value
          * @return
          */
