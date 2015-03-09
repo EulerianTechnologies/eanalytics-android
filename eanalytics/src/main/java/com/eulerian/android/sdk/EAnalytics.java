@@ -3,6 +3,7 @@ package com.eulerian.android.sdk;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.IntentFilter;
 
 import com.eulerian.android.sdk.model.EAProperties;
 
@@ -11,6 +12,7 @@ import com.eulerian.android.sdk.model.EAProperties;
  */
 public class EAnalytics {
 
+    private static final String TAG = EAnalytics.class.getName();
     private static String sRTDomain;
     private static EAnalytics sInstance;
     private static Context sAppContext;
@@ -33,30 +35,32 @@ public class EAnalytics {
      * @param rtDomain the rt domain
      */
     public static void init(Context context, String rtDomain) {
-        EALog.assertCondition(sAppContext == null && sRTDomain == null, "Init must be called only once.");
-        EALog.assertCondition(Utils.isPermissionGranted(context, Manifest.permission.READ_PHONE_STATE),
+        EALog.assertCondition(TAG, sAppContext == null && sRTDomain == null, "Init must be called only once.");
+        EALog.assertCondition(TAG, Utils.isPermissionGranted(context, Manifest.permission.READ_PHONE_STATE),
                 "Init failed : permission is missing. You must add permission " +
                         android.Manifest.permission.READ_PHONE_STATE + " in your app Manifest.xml.");
-        EALog.assertCondition(context != null, "Init failed : context is null. You must provide a valid context.");
-        EALog.assertCondition(rtDomain != null, "Init failed : RT domain is null. You must provide a valid RT domain.");
+        EALog.assertCondition(TAG, context != null, "Init failed : context is null. You must provide a valid context.");
+        EALog.assertCondition(TAG, rtDomain != null, "Init failed : RT domain is null. You must provide a valid RT " +
+                "domain.");
         sAppContext = context;
         sRTDomain = rtDomain;
     }
 
     public static Context getContext() {
-        EALog.assertCondition(sAppContext != null, "The SDK has not been initialized. You must call EAnalytics.init" +
+        EALog.assertCondition(TAG, sAppContext != null, "The SDK has not been initialized. You must call EAnalytics" +
+                ".init" +
                 "(Context, String) once.");
         return sAppContext;
     }
 
     public static void setLogEnabled(boolean enable) {
         EALog.LOG_ENABLED = enable;
-        EALog.d("Log enabled");
+        EALog.d(TAG, "Log enabled");
     }
 
     public void track(EAProperties properties) {
         //TODO: check rt domain != null before sending request
-        EALog.i("Tracking properties: " + properties.toJson(true));
+        EALog.d(TAG, "Tracking properties: " + properties.toJson(true));
     }
 
 }

@@ -1,10 +1,23 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.eulerian.android.sdk">
 
+    <!--<uses-permission android:name="android.permission.READ_PHONE_STATE"/>-->
+
     <application
         android:allowBackup="true"
         android:label="@string/app_name">
 
+        <!-- This receiver will allow your application to record referrer parameters as super properties automatically -->
+        <!-- If you want to use multiple install trackers, refer to com.eulerian.android.sdk.InstallReferrerReceiver javadoc -->
+        <!--
+        <receiver android:name="com.eulerian.android.sdk.InstallReferrerReceiver" android:exported="true">
+            <intent-filter>
+                <action android:name="com.android.vending.INSTALL_REFERRER" />
+            </intent-filter>
+        </receiver>
+        -->
+
     </application>
+
 
 </manifest>
