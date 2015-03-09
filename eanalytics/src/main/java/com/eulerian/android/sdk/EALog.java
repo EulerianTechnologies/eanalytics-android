@@ -17,7 +17,7 @@ public class EALog {
         if (condition) {
             return;
         }
-        if (LOG_ENABLED) Log.e(tag, msg);
+        EALog.e(tag, msg);
         throw new IllegalStateException(msg);
     }
 

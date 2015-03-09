@@ -13,7 +13,6 @@ public class DemoApp extends Application {
     public void onCreate() {
         super.onCreate();
 
-        EAnalytics.init(this, "monRtDomain");
-        EAnalytics.setLogEnabled(true);
+        EAnalytics.init(this, "eulerian.sdk.com", true);
     }
 }
