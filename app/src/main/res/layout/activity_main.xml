@@ -16,6 +16,13 @@
         android:text="EULERIAN ANALYTICS DEMO"
         android:textSize="24dp" />
 
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="onClickProperties"
+        android:text="PROPERTIES" />
+
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

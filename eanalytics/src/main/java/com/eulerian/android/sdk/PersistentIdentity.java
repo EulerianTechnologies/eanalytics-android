@@ -65,4 +65,7 @@ class PersistentIdentity {
         }
     }
 
+    public String getInstallReferrer() {
+        return mSharedPreferences.getString(KEY_REFERRER, "undefined");
+    }
 }

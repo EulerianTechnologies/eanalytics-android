@@ -24,4 +24,5 @@ public class Utils {
         final Matcher contentMatcher = Pattern.compile(RT_DOMAIN_REGEX).matcher(domain);
         return contentMatcher.find();
     }
+
 }

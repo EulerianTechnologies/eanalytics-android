@@ -5,70 +5,59 @@ import android.os.Build;
 import android.provider.Settings;
 import android.telephony.TelephonyManager;
 
-import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Created by Francois Rouault on 07/03/2015.
  */
 public class EAProperties {
 
-    public static final String KEY_GENERIC_FOR_PROPERTY_1 = "ea-key1";
-    public static final String KEY_GENERIC_FOR_PROPERTY_2 = "ea-key2";
-    public static final String PROPERTY_TYPE_PRODUCT = "product";
-    public static final String PROPERTY_TYPE_CART = "cart";
-    protected static final String KEY_PROPERTY_TYPE = "property-type";
-    protected static final String KEY_EOS = "eos-type";
+    //- internal keys
+    protected static final String KEY_INSTALL_REFERRER = "ea-android-referrer";
+    protected static final String KEY_EOS = "eos";
     protected static final String KEY_EHW = "ehw";
+    protected static final String KEY_ADINFO_IS_LAT = "ea-android-islat";
+    protected static final String KEY_EUIDL = "euidl";
     protected static final String KEY_URL = "url";
     protected static final String KEY_APPNAME = "ea-appname";
-    protected static final String KEY_EPOCH = "epoch";
-    protected static final String KEY_EUIDL = "euidl";
-    protected static final String KEY_LATITUDE = "ea-lat";
-    protected static final String KEY_LONGITUDE = "ea-lon";
+    protected static final String KEY_ADINFO_ID = "ea-android-adid";
+    protected static final String KEY_EPOCH = "ereplay-time";
+    //- page keys
+    protected static final String KEY_PAGE_LATITUDE = "ea-lat";
+    protected static final String KEY_PAGE_LONGITUDE = "ea-lon";
+    protected static final String KEY_PAGE_PATH = "path";
+    protected static final String KEY_PAGE_EMAIL = "email";
+    protected static final String KEY_PAGE_UID = "uid";
+    protected static final String KEY_PAGE_PROFILE = "profile";
+    protected static final String KEY_PAGE_GROUP = "pagegroup";
+    protected static final String KEY_PAGE_ACTION = "action";
+    protected static final String KEY_PAGE_PROPERTY = "property";
+    protected static final String KEY_PAGE_NEW_CUSTOMER = "newcustomer";
 
-    private Map<String, String> mHashmap;
-    private Map<String, String> mInternalProperties;
+    private JSONObject mProperties;
+    private JSONObject mInternals;
+    private JSONObject mPages;
 
     /**
      * Use {@link EAProperties.Builder} instead
      */
-    protected EAProperties() {
+    protected EAProperties(Builder builder) {
+        mInternals = builder.internals;
+        mPages = builder.pages;
+        mProperties = builder.properties;
     }
 
-    protected void setInternal(Map<String, String> internalProperties) {
-        this.mInternalProperties = internalProperties;
-    }
-
-    protected void setProperties(Map<String, String> hashmap) {
-        this.mHashmap = hashmap;
-    }
-
-    //TODO: just for the demo. Will not be available to developer, keep the magic.
-    public JSONObject toJson(boolean addInternalProperties) {
-        JSONObject json = new JSONObject();
-        for (String key : mHashmap.keySet()) {
-            try {
-                String value = mHashmap.get(key);
-                json.put(key, value == null ? JSONObject.NULL.toString() : value);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
+    /**
+     * //TODO just for the demo
+     */
+    public JSONObject toJson(boolean withInternals) {
+        JSONObject result;
+        if (withInternals) {
+            result = JSONUtils.merge(mInternals, mPages, mProperties);
+        } else {
+            result = JSONUtils.merge(mPages, mProperties);
         }
-        if (addInternalProperties) {
-            for (String key : mInternalProperties.keySet()) {
-                try {
-                    String value = mInternalProperties.get(key);
-                    json.put(key, value == null ? JSONObject.NULL.toString() : value);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-        return json;
+        return result;
     }
 
     //-----------
@@ -77,60 +66,86 @@ public class EAProperties {
 
     public static class Builder<T extends Builder> {
 
-        protected final Map<String, String> properties = new HashMap<>();
-        protected final Map<String, String> internal = new HashMap<>();
+        protected final JSONObject properties = new JSONObject();
+        protected final JSONObject internals = new JSONObject();
+        protected final JSONObject pages = new JSONObject();
 
-        /**
-         * @param propertyType Use the set of predefined property type in {@link com.eulerian.android.sdk
-         *                     .EAProperties}. For instance {@link #PROPERTY_TYPE_CART}. If you plan to use {@link
-         *                     #PROPERTY_TYPE_CART}, use the convenience class {@link com.eulerian.android.sdk
-         *                     .EACart} instead.
-         */
-        public Builder(String propertyType) {
-            // internal object properties
-            internal.put(KEY_EOS, "Android" + Build.VERSION.RELEASE);
-            internal.put(KEY_EHW, Build.MANUFACTURER + " " + Build.MODEL);
-            putEuidl();
-            String packageName = EAnalytics.getContext().getApplicationInfo().packageName;
-            internal.put(KEY_URL, "http://" + packageName);
-            internal.put(KEY_APPNAME, packageName);
-            internal.put("ea-android-islat", String.valueOf(EAnalytics.sAdInfoIsLAT));
-            internal.put("ea-android-adid", EAnalytics.sAdInfoId);
-            // object properties
-            setProperty(KEY_EPOCH, String.valueOf(System.currentTimeMillis()));
-            setProperty(KEY_PROPERTY_TYPE, propertyType);
+        public Builder(String path, int newCustomer) {
+            initInteralParams();
+            setPagePath(path);
+            setPageNewCustomer(newCustomer);
         }
 
-        /**
-         * @param key   the key. Use the set of predefined keys in the corresponding class,
-         *              or any other given key. For instance {@link #KEY_GENERIC_FOR_PROPERTY_1} or
-         *              {@link EAProduct#KEY_1_SPECIFIC_FOR_PRODUCT}, etc...
-         * @param value
-         * @return
-         */
-        public synchronized T setProperty(String key, String value) {
-            properties.put(key, value);
+        private void initInteralParams() {
+            JSONUtils.put(internals, KEY_INSTALL_REFERRER, EAnalytics.sInstallReferrer);
+            JSONUtils.put(internals, KEY_EOS, "Android" + Build.VERSION.RELEASE);
+            JSONUtils.put(internals, KEY_EHW, Build.MANUFACTURER + " " + Build.MODEL);
+            TelephonyManager telephonyManager = (TelephonyManager) EAnalytics.getContext().getSystemService(Context
+                    .TELEPHONY_SERVICE);
+            JSONUtils.put(internals, KEY_EUIDL, telephonyManager != null && telephonyManager.getDeviceId() != null ?
+                    telephonyManager.getDeviceId() : Settings.Secure.getString(EAnalytics.getContext()
+                    .getContentResolver(), Settings.Secure.ANDROID_ID));
+            String packageName = EAnalytics.getContext().getApplicationInfo().packageName;
+            JSONUtils.put(internals, KEY_URL, "http://" + packageName);
+            JSONUtils.put(internals, KEY_APPNAME, packageName);
+            JSONUtils.put(internals, KEY_ADINFO_IS_LAT, String.valueOf(EAnalytics.sAdInfoIsLAT));
+            JSONUtils.put(internals, KEY_ADINFO_ID, EAnalytics.sAdInfoId);
+            JSONUtils.put(internals, KEY_EPOCH, String.valueOf(System.currentTimeMillis() / 1000));
+        }
+
+        public T set(String key, String value) {
+            JSONUtils.put(properties, key, value);
             return (T) this;
         }
 
-        private void putEuidl() {
-            TelephonyManager telephonyManager = (TelephonyManager) EAnalytics.getContext().getSystemService(Context
-                    .TELEPHONY_SERVICE);
-            internal.put(KEY_EUIDL, telephonyManager != null && telephonyManager.getDeviceId() != null ?
-                    telephonyManager.getDeviceId() : Settings.Secure.getString(EAnalytics.getContext()
-                    .getContentResolver(), Settings.Secure.ANDROID_ID));
+        public T setPageLocation(double latitude, double longitude) {
+            JSONUtils.put(pages, KEY_PAGE_LATITUDE, String.valueOf(latitude));
+            JSONUtils.put(pages, KEY_PAGE_LONGITUDE, String.valueOf(longitude));
+            return (T) this;
         }
 
-        public T setLocation(double latitude, double longitude) {
-            internal.put(KEY_LATITUDE, String.valueOf(latitude));
-            internal.put(KEY_LONGITUDE, String.valueOf(longitude));
+        private T setPagePath(String path) {
+            JSONUtils.put(pages, KEY_PAGE_PATH, path);
+            return (T) this;
+        }
+
+        private T setPageNewCustomer(int newCustomer) {
+            JSONUtils.put(pages, KEY_PAGE_NEW_CUSTOMER, String.valueOf(newCustomer));
+            return (T) this;
+        }
+
+        public T setPageEmail(String email) {
+            JSONUtils.put(pages, KEY_PAGE_EMAIL, email);
+            return (T) this;
+        }
+
+        public T setPageUid(String uid) {
+            JSONUtils.put(pages, KEY_PAGE_UID, uid);
+            return (T) this;
+        }
+
+        public T setPageProfile(String profile) {
+            JSONUtils.put(pages, KEY_PAGE_PROFILE, profile);
+            return (T) this;
+        }
+
+        public T setPageGroup(String group) {
+            JSONUtils.put(pages, KEY_PAGE_GROUP, group);
+            return (T) this;
+        }
+
+        public T setAction(EAAction action) {
+            JSONUtils.put(pages, KEY_PAGE_ACTION, action.getJSONObject());
+            return (T) this;
+        }
+
+        public T setProperty(EASiteCentricProperty property) {
+            JSONUtils.put(pages, KEY_PAGE_PROPERTY, property.getJSONObject());
             return (T) this;
         }
 
         public EAProperties build() {
-            EAProperties res = new EAProperties();
-            res.setProperties(properties);
-            res.setInternal(internal);
+            EAProperties res = new EAProperties(this);
             return res;
         }
     }

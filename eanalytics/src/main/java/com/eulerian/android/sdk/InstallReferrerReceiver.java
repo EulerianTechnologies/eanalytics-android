@@ -77,6 +77,7 @@ public class InstallReferrerReceiver extends BroadcastReceiver {
 
         final Map<String, String> newPrefs = new HashMap<>();
         newPrefs.put(PersistentIdentity.KEY_REFERRER, referrer);
+        EAnalytics.sInstallReferrer = referrer;
 
         final Matcher sourceMatcher = UTM_SOURCE_PATTERN.matcher(referrer);
         final String source = find(sourceMatcher);

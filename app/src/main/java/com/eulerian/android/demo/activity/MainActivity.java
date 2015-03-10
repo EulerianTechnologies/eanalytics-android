@@ -5,10 +5,10 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 
 import com.eulerian.android.demo.R;
-import com.eulerian.android.sdk.EAnalytics;
-import com.eulerian.android.sdk.EACart;
-import com.eulerian.android.sdk.EAProduct;
+import com.eulerian.android.sdk.EAAction;
 import com.eulerian.android.sdk.EAProperties;
+import com.eulerian.android.sdk.EASiteCentricProperty;
+import com.eulerian.android.sdk.EAnalytics;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -22,44 +22,84 @@ public class MainActivity extends ActionBarActivity {
         setContentView(R.layout.activity_main);
     }
 
-    public void onClickPurchase(View v) {
-        EAProperties monAchat = new EAProperties.Builder("achat")
-                .setProperty(EAProperties.KEY_GENERIC_FOR_PROPERTY_1, "alien-\"vs\"-predator")
-                .setProperty(EAProperties.KEY_GENERIC_FOR_PROPERTY_2, "zorro")
-                .setProperty("my_special_key_because_I_am_Darty", "coca")
-                .setLocation(latitude, longitude)
-                .setProperty("test-null", null)
+    public void onClickProperties(View v) {
+        EAProperties properties = new EAProperties.Builder("the_path", 2)
+                .setPageEmail("test-email")
+                .setPageGroup("test-group")
+                .setPageLocation(latitude, longitude)
+                .setPageProfile("test-profile")
+                .setPageUid("test-uid")
+                .set("whatever", "...")
+                .set("whatever1", "...")
+                .set("whatever2", "...")
+                .setAction(new EAAction.Builder()
+                        .setRef("test-ref-\"fefds$`^")
+                        .addIn(new String[]{"toto", "titi"})
+                        .addOut(new String[]{"tata", "tutu", "tete"})
+                        .build())
+                .setProperty(new EASiteCentricProperty.Builder()
+                        .set("cle1", new String[]{"poisson", "viande"})
+                        .set("cle2", "choucroute")
+                        .build())
                 .build();
 
-        EAnalytics.getInstance().track(monAchat);
+        EAnalytics.getInstance().track(properties);
 
 //        RESULT:
-//        {
-//            "eos-type":"Android4.3",
-//            "ea-key1":"alien-\"vs\"-predator",
-//            "ea-key2":"zorro",
-//            "ea-appname":"com.eulerian.android.demo",
-//            "epoch":"1425816370993",
-//            "my_special_key_because_I_am_Darty":"coca",
-//            "test-null":"null",
-//            "ea-lat":"48.871835",
-//            "ea-lon":"2.38243",
-//            "ehw":"Genymotion Google Nexus 4 - 4.3 - API 18 - 768x1280",
-//            "euidl":"000000000000000",
-//            "url":"http:\/\/com.eulerian.android.demo",
-//            "property-type":"achat"
-//        }
+/*
+{
+   "uid":"test-uid",
+   "ea-appname":"com.eulerian.android.demo",
+   "ea-android-islat":"false",
+   "property":{
+      "cle2":[
+         "choucroute"
+      ],
+      "cle1":[
+         "poisson",
+         "viande"
+      ]
+   },
+   "ea-lat":"48.871835",
+   "url":"http:\/\/com.eulerian.android.demo",
+   "eos":"Android4.3",
+   "ea-android-referrer":"utm_source=test_source&utm_medium=test_medium&utm_term=test_term&utm_content=te​st_content&utm_campaign=test_name",
+   "email":"test-email",
+   "path":"the_path",
+   "action":{
+      "in":[
+         "toto",
+         "titi"
+      ],
+      "ref":"test-ref-\"fefds$`^",
+      "out":[
+         "tata",
+         "pouet"
+      ]
+   },
+   "ea-android-adid":"eae34b48-7308-43e0-92f5-b4923b665855",
+   "ea-lon":"2.38243",
+   "newcustomer":"2",
+   "pagegroup":"test-group",
+   "ereplay-time":"1425942046",
+   "ehw":"Genymotion Google Nexus 4 - 4.3 - API 18 - 768x1280",
+   "euidl":"000000000000000",
+   "profile":"test-profile"
+}
+*/
+    }
 
+    public void onClickPurchase(View v) {
     }
 
     public void onClickGetProductDetails(View v) {
-        EAProduct monProduit = new EAProduct.Builder()
-                .setPrice(50.34, "€")
-                .setLocation(latitude, longitude)
-                .setId("chaussure4314")
-                .build();
+//        EAProduct monProduit = new EAProduct.Builder()
+//                .setPrice(50.34, "€")
+//                .setPageLocation(latitude, longitude)
+//                .setId("chaussure4314")
+//                .build();
 
-        EAnalytics.getInstance().track(monProduit);
+//        EAnalytics.getInstance().track(monProduit);
 
         // RESULT
 //        {
@@ -79,28 +119,28 @@ public class MainActivity extends ActionBarActivity {
     }
 
     public void onClickAddToCart(View v) {
-        EAProduct patesFraiches = new EAProduct.Builder()
-                .setId("pates_barilla_extrem_quality-432444")
-                .setPrice(5.23, "euros")
-                .build();
+//        EAProduct patesFraiches = new EAProduct.Builder()
+//                .setId("pates_barilla_extrem_quality-432444")
+//                .setPrice(5.23, "euros")
+//                .build();
 
-        EAProduct lardons = new EAProduct.Builder()
-                .setId("lardons_herta-4321")
-                .setPrice(3.10, "euros")
-                .build();
+//        EAProduct lardons = new EAProduct.Builder()
+//                .setId("lardons_herta-4321")
+//                .setPrice(3.10, "euros")
+//                .build();
 
-        EAProduct cremeFraiche = new EAProduct.Builder()
-                .setId("creme_fraiche_de_la_laitière-240003")
-                .setPrice(5.23, "euros")
-                .build();
+//        EAProduct cremeFraiche = new EAProduct.Builder()
+//                .setId("creme_fraiche_de_la_laitière-240003")
+//                .setPrice(5.23, "euros")
+//                .build();
 
-        EACart monPanier = new EACart.Builder()
-                .addProductsToCart(patesFraiches, lardons)
-                .addProductToCart(cremeFraiche)
-                .setLocation(latitude, longitude)
-                .build();
+//        EACart monPanier = new EACart.Builder()
+//                .addProductsToCart(patesFraiches, lardons)
+//                .addProductToCart(cremeFraiche)
+//                .setPageLocation(latitude, longitude)
+//                .build();
 
-        EAnalytics.getInstance().track(monPanier);
+//        EAnalytics.getInstance().track(monPanier);
 
         // RESULT:
 //        {

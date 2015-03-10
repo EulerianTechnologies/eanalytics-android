@@ -22,7 +22,8 @@ public class EAnalytics {
     private static EAnalytics sInstance;
     private static Context sAppContext;
     private Executor mExecutor = Executors.newSingleThreadExecutor();
-    static String sAdInfoId = "undefined";
+    static String sAdInfoId;
+    static String sInstallReferrer;
     static boolean sAdInfoIsLAT = false;
 
     private EAnalytics() {
@@ -55,6 +56,7 @@ public class EAnalytics {
         sRTDomain = rtDomain;
         sAdInfoId = PersistentIdentity.getInstance().getAdvertisingId();
         sAdInfoIsLAT = PersistentIdentity.getInstance().getAdvertisingIsLat();
+        sInstallReferrer = PersistentIdentity.getInstance().getInstallReferrer();
         EALog.d(TAG, "Initialized with " + rtDomain + " domain.");
         getInstance().mExecutor.execute(new GetAdInfo());
     }
