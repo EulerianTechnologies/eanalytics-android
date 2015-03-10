@@ -16,7 +16,6 @@
         android:text="EULERIAN ANALYTICS DEMO"
         android:textSize="24dp" />
 
-
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -26,8 +25,14 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:onClick="onClickPurchase"
-        android:text="PURCHASE" />
+        android:onClick="onClickProduct"
+        android:text="ONE PRODUCT" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="onClickProducts"
+        android:text="PRODUCTS" />
 
     <Button
         android:layout_width="match_parent"

@@ -16,11 +16,11 @@ public class EACart extends EAProperties {
 //    }
 //
 //    @Override
-//    public JSONObject toJson(boolean addInternalProperties) {
-//        JSONObject json = super.toJson(true);
+//    public JSONObject getJson(boolean addInternalProperties) {
+//        JSONObject json = super.getJson(true);
 //        JSONArray jsonArray = new JSONArray();
 //        for (EAProduct item : mProducts) {
-//            jsonArray.put(item.toJson(false));
+//            jsonArray.put(item.getJson(false));
 //        }
 //        try {
 //            json.put("items", jsonArray);

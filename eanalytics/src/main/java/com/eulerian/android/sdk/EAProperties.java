@@ -13,26 +13,26 @@ import org.json.JSONObject;
 public class EAProperties {
 
     //- internal keys
-    protected static final String KEY_INSTALL_REFERRER = "ea-android-referrer";
-    protected static final String KEY_EOS = "eos";
-    protected static final String KEY_EHW = "ehw";
-    protected static final String KEY_ADINFO_IS_LAT = "ea-android-islat";
-    protected static final String KEY_EUIDL = "euidl";
-    protected static final String KEY_URL = "url";
-    protected static final String KEY_APPNAME = "ea-appname";
-    protected static final String KEY_ADINFO_ID = "ea-android-adid";
-    protected static final String KEY_EPOCH = "ereplay-time";
+    private static final String KEY_INSTALL_REFERRER = "ea-android-referrer";
+    private static final String KEY_EOS = "eos";
+    private static final String KEY_EHW = "ehw";
+    private static final String KEY_ADINFO_IS_LAT = "ea-android-islat";
+    private static final String KEY_EUIDL = "euidl";
+    private static final String KEY_URL = "url";
+    private static final String KEY_APPNAME = "ea-appname";
+    private static final String KEY_ADINFO_ID = "ea-android-adid";
+    private static final String KEY_EPOCH = "ereplay-time";
     //- page keys
-    protected static final String KEY_PAGE_LATITUDE = "ea-lat";
-    protected static final String KEY_PAGE_LONGITUDE = "ea-lon";
-    protected static final String KEY_PAGE_PATH = "path";
-    protected static final String KEY_PAGE_EMAIL = "email";
-    protected static final String KEY_PAGE_UID = "uid";
-    protected static final String KEY_PAGE_PROFILE = "profile";
-    protected static final String KEY_PAGE_GROUP = "pagegroup";
-    protected static final String KEY_PAGE_ACTION = "action";
-    protected static final String KEY_PAGE_PROPERTY = "property";
-    protected static final String KEY_PAGE_NEW_CUSTOMER = "newcustomer";
+    private static final String KEY_PAGE_LATITUDE = "ea-lat";
+    private static final String KEY_PAGE_LONGITUDE = "ea-lon";
+    private static final String KEY_PAGE_PATH = "path";
+    private static final String KEY_PAGE_EMAIL = "email";
+    private static final String KEY_PAGE_UID = "uid";
+    private static final String KEY_PAGE_PROFILE = "profile";
+    private static final String KEY_PAGE_GROUP = "pagegroup";
+    private static final String KEY_PAGE_ACTION = "action";
+    private static final String KEY_PAGE_PROPERTY = "property";
+    private static final String KEY_PAGE_NEW_CUSTOMER = "newcustomer";
 
     private JSONObject mProperties;
     private JSONObject mInternals;
@@ -50,7 +50,7 @@ public class EAProperties {
     /**
      * //TODO just for the demo
      */
-    public JSONObject toJson(boolean withInternals) {
+    public JSONObject getJson(boolean withInternals) {
         JSONObject result;
         if (withInternals) {
             result = JSONUtils.merge(mInternals, mPages, mProperties);
@@ -70,10 +70,9 @@ public class EAProperties {
         protected final JSONObject internals = new JSONObject();
         protected final JSONObject pages = new JSONObject();
 
-        public Builder(String path, int newCustomer) {
+        public Builder(String path) {
             initInteralParams();
             setPagePath(path);
-            setPageNewCustomer(newCustomer);
         }
 
         private void initInteralParams() {
@@ -109,8 +108,10 @@ public class EAProperties {
             return (T) this;
         }
 
-        private T setPageNewCustomer(int newCustomer) {
-            JSONUtils.put(pages, KEY_PAGE_NEW_CUSTOMER, String.valueOf(newCustomer));
+        public T setPageNewCustomer(boolean newCustomer) {
+            if (newCustomer) {
+                JSONUtils.put(pages, KEY_PAGE_NEW_CUSTOMER, String.valueOf(1));
+            }
             return (T) this;
         }
 
@@ -134,13 +135,13 @@ public class EAProperties {
             return (T) this;
         }
 
-        public T setAction(EAAction action) {
-            JSONUtils.put(pages, KEY_PAGE_ACTION, action.getJSONObject());
+        public T setAction(Action action) {
+            JSONUtils.put(pages, KEY_PAGE_ACTION, action.getJson());
             return (T) this;
         }
 
-        public T setProperty(EASiteCentricProperty property) {
-            JSONUtils.put(pages, KEY_PAGE_PROPERTY, property.getJSONObject());
+        public T setProperty(SiteCentricProperty property) {
+            JSONUtils.put(pages, KEY_PAGE_PROPERTY, property.getJson());
             return (T) this;
         }
 

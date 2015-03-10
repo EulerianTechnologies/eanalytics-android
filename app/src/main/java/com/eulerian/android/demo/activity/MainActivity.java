@@ -5,10 +5,12 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 
 import com.eulerian.android.demo.R;
-import com.eulerian.android.sdk.EAAction;
+import com.eulerian.android.sdk.Action;
+import com.eulerian.android.sdk.EAProducts;
 import com.eulerian.android.sdk.EAProperties;
-import com.eulerian.android.sdk.EASiteCentricProperty;
 import com.eulerian.android.sdk.EAnalytics;
+import com.eulerian.android.sdk.Product;
+import com.eulerian.android.sdk.SiteCentricProperty;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -23,7 +25,8 @@ public class MainActivity extends ActionBarActivity {
     }
 
     public void onClickProperties(View v) {
-        EAProperties properties = new EAProperties.Builder("the_path", 2)
+        EAProperties properties = new EAProperties.Builder("the_path")
+                .setPageNewCustomer(true)
                 .setPageEmail("test-email")
                 .setPageGroup("test-group")
                 .setPageLocation(latitude, longitude)
@@ -32,12 +35,12 @@ public class MainActivity extends ActionBarActivity {
                 .set("whatever", "...")
                 .set("whatever1", "...")
                 .set("whatever2", "...")
-                .setAction(new EAAction.Builder()
-                        .setRef("test-ref-\"fefds$`^")
+                .setAction(new Action.Builder()
+                        .setReference("test-ref-\"fefds$`^")
                         .addIn(new String[]{"toto", "titi"})
                         .addOut(new String[]{"tata", "tutu", "tete"})
                         .build())
-                .setProperty(new EASiteCentricProperty.Builder()
+                .setProperty(new SiteCentricProperty.Builder()
                         .set("cle1", new String[]{"poisson", "viande"})
                         .set("cle2", "choucroute")
                         .build())
@@ -63,7 +66,8 @@ public class MainActivity extends ActionBarActivity {
    "ea-lat":"48.871835",
    "url":"http:\/\/com.eulerian.android.demo",
    "eos":"Android4.3",
-   "ea-android-referrer":"utm_source=test_source&utm_medium=test_medium&utm_term=test_term&utm_content=te​st_content&utm_campaign=test_name",
+   "ea-android-referrer":"utm_source=test_source&utm_medium=test_medium&utm_term=test_term&utm_content=te​st_content
+   &utm_campaign=test_name",
    "email":"test-email",
    "path":"the_path",
    "action":{
@@ -89,7 +93,90 @@ public class MainActivity extends ActionBarActivity {
 */
     }
 
-    public void onClickPurchase(View v) {
+    public void onClickProduct(View v) {
+        Product product1 = new Product.Builder("test-reference1")
+                .setName("test-name1")
+                .addParams("marque", "mars1")
+                .addParams("categorie", "comestique1")
+                .addParams("stock", 1)
+                .addParams("taille", "43-1")
+                .build();
+
+        EAProducts products = new EAProducts.Builder("test-path")
+                .setPageEmail("francoisrouault.fr@gmail.com")
+                .setPageLocation(latitude, longitude)
+                .addProduct(product1)
+                .build();
+
+        EAnalytics.getInstance().track(products);
+    }
+
+    public void onClickProducts(View v) {
+        Product product1 = new Product.Builder("test-reference1")
+                .setName("test-name1")
+                .addParams("marque", "mars1")
+                .addParams("categorie", "comestique1")
+                .addParams("stock", 1)
+                .addParams("taille", "43-1")
+                .build();
+
+        Product product2 = new Product.Builder("test-reference2")
+                .setName("test-name2")
+                .addParams("marque", "mars2")
+                .addParams("categorie", "comestique2")
+                .addParams("stock", 1)
+                .addParams("taille", "43-2")
+                .build();
+
+        EAProducts products = new EAProducts.Builder("test-path")
+                .setPageEmail("francoisrouault.fr@gmail.com")
+                .setPageLocation(latitude, longitude)
+                .addProduct(product1)
+                .addProduct(product2)
+                .build();
+
+        EAnalytics.getInstance().track(products);
+
+        //RESULT
+        /*
+{
+   "ea-appname":"com.eulerian.android.demo",
+   "ea-android-islat":"false",
+   "ea-lat":"48.871835",
+   "url":"http:\/\/com.eulerian.android.demo",
+   "eos":"Android4.3",
+   "ea-android-referrer":"utm_source=test_source&utm_medium=test_medium&utm_term=test_term&utm_content=te​st_content&utm_campaign=test_name",
+   "email":"francoisrouault.fr@gmail.com",
+   "path":"test-path",
+   "ea-android-adid":"eae34b48-7308-43e0-92f5-b4923b665855",
+   "ea-lon":"2.38243",
+   "products":[
+      {
+         "ref":"test-reference1",
+         "params":{
+            "taille":"43-1",
+            "categorie":"comestique1",
+            "stock":1,
+            "marque":"mars1"
+         },
+         "name":"test-name1"
+      },
+      {
+         "ref":"test-reference2",
+         "params":{
+            "taille":"43-2",
+            "categorie":"comestique2",
+            "stock":1,
+            "marque":"mars2"
+         },
+         "name":"test-name2"
+      }
+   ],
+   "ereplay-time":"1426029987",
+   "ehw":"Genymotion Google Nexus 4 - 4.3 - API 18 - 768x1280",
+   "euidl":"000000000000000"
+}
+         */
     }
 
     public void onClickGetProductDetails(View v) {

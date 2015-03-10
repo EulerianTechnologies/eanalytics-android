@@ -79,35 +79,35 @@ public class InstallReferrerReceiver extends BroadcastReceiver {
         newPrefs.put(PersistentIdentity.KEY_REFERRER, referrer);
         EAnalytics.sInstallReferrer = referrer;
 
-        final Matcher sourceMatcher = UTM_SOURCE_PATTERN.matcher(referrer);
-        final String source = find(sourceMatcher);
-        if (null != source) {
-            newPrefs.put(PersistentIdentity.KEY_UTM_SOURCE, source);
-        }
+//        final Matcher sourceMatcher = UTM_SOURCE_PATTERN.matcher(referrer);
+//        final String source = find(sourceMatcher);
+//        if (null != source) {
+//            newPrefs.put(PersistentIdentity.KEY_UTM_SOURCE, source);
+//        }
 
-        final Matcher mediumMatcher = UTM_MEDIUM_PATTERN.matcher(referrer);
-        final String medium = find(mediumMatcher);
-        if (null != medium) {
-            newPrefs.put(PersistentIdentity.KEY_UTM_MEDIUM, medium);
-        }
+//        final Matcher mediumMatcher = UTM_MEDIUM_PATTERN.matcher(referrer);
+//        final String medium = find(mediumMatcher);
+//        if (null != medium) {
+//            newPrefs.put(PersistentIdentity.KEY_UTM_MEDIUM, medium);
+//        }
 
-        final Matcher campaignMatcher = UTM_CAMPAIGN_PATTERN.matcher(referrer);
-        final String campaign = find(campaignMatcher);
-        if (null != campaign) {
-            newPrefs.put(PersistentIdentity.KEY_UTM_CAMPAIGN, campaign);
-        }
+//        final Matcher campaignMatcher = UTM_CAMPAIGN_PATTERN.matcher(referrer);
+//        final String campaign = find(campaignMatcher);
+//        if (null != campaign) {
+//            newPrefs.put(PersistentIdentity.KEY_UTM_CAMPAIGN, campaign);
+//        }
 
-        final Matcher contentMatcher = UTM_CONTENT_PATTERN.matcher(referrer);
-        final String content = find(contentMatcher);
-        if (null != content) {
-            newPrefs.put(PersistentIdentity.KEY_UTM_CONTENT, content);
-        }
+//        final Matcher contentMatcher = UTM_CONTENT_PATTERN.matcher(referrer);
+//        final String content = find(contentMatcher);
+//        if (null != content) {
+//            newPrefs.put(PersistentIdentity.KEY_UTM_CONTENT, content);
+//        }
 
-        final Matcher termMatcher = UTM_TERM_PATTERN.matcher(referrer);
-        final String term = find(termMatcher);
-        if (null != term) {
-            newPrefs.put(PersistentIdentity.KEY_UTM_TERM, term);
-        }
+//        final Matcher termMatcher = UTM_TERM_PATTERN.matcher(referrer);
+//        final String term = find(termMatcher);
+//        if (null != term) {
+//            newPrefs.put(PersistentIdentity.KEY_UTM_TERM, term);
+//        }
 
         EALog.d(TAG, "Install Referrer received: " + newPrefs.toString());
 
@@ -128,9 +128,9 @@ public class InstallReferrerReceiver extends BroadcastReceiver {
         return null;
     }
 
-    private final Pattern UTM_SOURCE_PATTERN = Pattern.compile("(^|&)utm_source=([^&#=]*)([#&]|$)");
-    private final Pattern UTM_MEDIUM_PATTERN = Pattern.compile("(^|&)utm_medium=([^&#=]*)([#&]|$)");
-    private final Pattern UTM_CAMPAIGN_PATTERN = Pattern.compile("(^|&)utm_campaign=([^&#=]*)([#&]|$)");
-    private final Pattern UTM_CONTENT_PATTERN = Pattern.compile("(^|&)utm_content=([^&#=]*)([#&]|$)");
-    private final Pattern UTM_TERM_PATTERN = Pattern.compile("(^|&)utm_term=([^&#=]*)([#&]|$)");
+//    private final Pattern UTM_SOURCE_PATTERN = Pattern.compile("(^|&)utm_source=([^&#=]*)([#&]|$)");
+//    private final Pattern UTM_MEDIUM_PATTERN = Pattern.compile("(^|&)utm_medium=([^&#=]*)([#&]|$)");
+//    private final Pattern UTM_CAMPAIGN_PATTERN = Pattern.compile("(^|&)utm_campaign=([^&#=]*)([#&]|$)");
+//    private final Pattern UTM_CONTENT_PATTERN = Pattern.compile("(^|&)utm_content=([^&#=]*)([#&]|$)");
+//    private final Pattern UTM_TERM_PATTERN = Pattern.compile("(^|&)utm_term=([^&#=]*)([#&]|$)");
 }

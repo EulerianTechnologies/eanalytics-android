@@ -86,7 +86,7 @@ public class EAnalytics {
                 Thread.sleep(2000);
             } catch (InterruptedException e) {
             }
-            EALog.d(TAG, "Tracking properties: " + properties.toJson(true));
+            EALog.d(TAG, "Tracking properties: " + properties.getJson(true));
         }
     }
 
