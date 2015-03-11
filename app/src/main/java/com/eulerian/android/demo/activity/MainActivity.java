@@ -8,7 +8,9 @@ import com.eulerian.android.demo.R;
 import com.eulerian.android.sdk.Action;
 import com.eulerian.android.sdk.EAProducts;
 import com.eulerian.android.sdk.EAProperties;
+import com.eulerian.android.sdk.EASearch;
 import com.eulerian.android.sdk.EAnalytics;
+import com.eulerian.android.sdk.Params;
 import com.eulerian.android.sdk.Product;
 import com.eulerian.android.sdk.SiteCentricProperty;
 
@@ -93,39 +95,28 @@ public class MainActivity extends ActionBarActivity {
 */
     }
 
-    public void onClickProduct(View v) {
-        Product product1 = new Product.Builder("test-reference1")
-                .setName("test-name1")
-                .addParams("marque", "mars1")
-                .addParams("categorie", "comestique1")
-                .addParams("stock", 1)
-                .addParams("taille", "43-1")
-                .build();
-
-        EAProducts products = new EAProducts.Builder("test-path")
-                .setPageEmail("francoisrouault.fr@gmail.com")
-                .setPageLocation(latitude, longitude)
-                .addProduct(product1)
-                .build();
-
-        EAnalytics.getInstance().track(products);
-    }
-
     public void onClickProducts(View v) {
+
+        Params paramsProduct1 = new Params.Builder()
+                .addParam("marque", "mars1")
+                .addParam("categorie", "comestique1")
+                .addParam("stock", 1)
+                .addParam("taille", "43-1")
+                .build();
+
         Product product1 = new Product.Builder("test-reference1")
                 .setName("test-name1")
-                .addParams("marque", "mars1")
-                .addParams("categorie", "comestique1")
-                .addParams("stock", 1)
-                .addParams("taille", "43-1")
+                .setParams(paramsProduct1)
                 .build();
 
         Product product2 = new Product.Builder("test-reference2")
                 .setName("test-name2")
-                .addParams("marque", "mars2")
-                .addParams("categorie", "comestique2")
-                .addParams("stock", 1)
-                .addParams("taille", "43-2")
+                .setParams(new Params.Builder()
+                        .addParam("toto", "value")
+                        .addParam("titi", 3)
+                        .addParam("tata", "value--ffd")
+                        .addParam("tata", "value")
+                        .build())
                 .build();
 
         EAProducts products = new EAProducts.Builder("test-path")
@@ -145,7 +136,8 @@ public class MainActivity extends ActionBarActivity {
    "ea-lat":"48.871835",
    "url":"http:\/\/com.eulerian.android.demo",
    "eos":"Android4.3",
-   "ea-android-referrer":"utm_source=test_source&utm_medium=test_medium&utm_term=test_term&utm_content=te​st_content&utm_campaign=test_name",
+   "ea-android-referrer":"utm_source=test_source&utm_medium=test_medium&utm_term=test_term&utm_content=te​st_content
+   &utm_campaign=test_name",
    "email":"francoisrouault.fr@gmail.com",
    "path":"test-path",
    "ea-android-adid":"eae34b48-7308-43e0-92f5-b4923b665855",
@@ -164,17 +156,53 @@ public class MainActivity extends ActionBarActivity {
       {
          "ref":"test-reference2",
          "params":{
-            "taille":"43-2",
-            "categorie":"comestique2",
-            "stock":1,
-            "marque":"mars2"
+            "tata":"value",
+            "toto":"value",
+            "titi":3
          },
          "name":"test-name2"
       }
    ],
-   "ereplay-time":"1426029987",
+   "ereplay-time":"1426111116",
    "ehw":"Genymotion Google Nexus 4 - 4.3 - API 18 - 768x1280",
    "euidl":"000000000000000"
+}
+         */
+    }
+
+    public void onClickSearch(View v) {
+        EASearch search = new EASearch.Builder("search-path", "banana")
+                .setParams(new Params.Builder()
+                        .addParam("provenance", "martinique")
+                        .addParam("color", "yellow")
+                        .build())
+                .setResults(432)
+                .build();
+
+        EAnalytics.getInstance().track(search);
+
+        //RESULT
+        /*
+{
+   "eos":"Android4.3",
+   "ea-android-referrer":"utm_source=test_source&utm_medium=test_medium&utm_term=test_term&utm_content=te​st_content
+   &utm_campaign=test_name",
+   "ea-appname":"com.eulerian.android.demo",
+   "ea-android-islat":"false",
+   "isearchengine":{
+      "results":432,
+      "params":{
+         "color":"yellow",
+         "provenance":"martinique"
+      },
+      "name":"banana"
+   },
+   "path":"search-path",
+   "ea-android-adid":"eae34b48-7308-43e0-92f5-b4923b665855",
+   "ereplay-time":"1426112277",
+   "ehw":"Genymotion Google Nexus 4 - 4.3 - API 18 - 768x1280",
+   "euidl":"000000000000000",
+   "url":"http:\/\/com.eulerian.android.demo"
 }
          */
     }

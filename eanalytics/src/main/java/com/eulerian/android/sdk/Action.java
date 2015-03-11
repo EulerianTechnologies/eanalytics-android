@@ -14,9 +14,9 @@ import java.util.List;
  */
 public class Action {
 
-    static final String KEY_REF = "ref";
-    static final String KEY_IN = "in";
-    static final String KEY_OUT = "out";
+    private static final String KEY_REF = "ref";
+    private static final String KEY_IN = "in";
+    private static final String KEY_OUT = "out";
 
     private JSONObject mJson;
 

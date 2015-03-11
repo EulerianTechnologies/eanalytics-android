@@ -25,14 +25,14 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:onClick="onClickProduct"
-        android:text="ONE PRODUCT" />
+        android:onClick="onClickProducts"
+        android:text="PRODUCTS" />
 
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:onClick="onClickProducts"
-        android:text="PRODUCTS" />
+        android:onClick="onClickSearch"
+        android:text="PAGE SEARCH" />
 
     <Button
         android:layout_width="match_parent"
