@@ -6,6 +6,7 @@ import android.view.View;
 
 import com.eulerian.android.demo.R;
 import com.eulerian.android.sdk.Action;
+import com.eulerian.android.sdk.EACart;
 import com.eulerian.android.sdk.EAProducts;
 import com.eulerian.android.sdk.EAProperties;
 import com.eulerian.android.sdk.EASearch;
@@ -207,30 +208,73 @@ public class MainActivity extends ActionBarActivity {
          */
     }
 
-    public void onClickGetProductDetails(View v) {
-//        EAProduct monProduit = new EAProduct.Builder()
-//                .setPrice(50.34, "€")
-//                .setPageLocation(latitude, longitude)
-//                .setId("chaussure4314")
-//                .build();
+    public void onClickCart(View v) {
+        EACart monPanier = new EACart.Builder("path-cart", 323)
+                .setCartCumul(true)
+                .setRef("toto-ref")
+                .addProduct(new Product.Builder("mouffle-noire")
+                        .setName("super-mouffle")
+                        .setParams(new Params.Builder()
+                                .addParam("origin", "France")
+                                .addParam("tissu", "noir")
+                                .addParam("tricotée", "main")
+                                .build())
+                        .build(), 2, 43)
+                .addProduct(new Product.Builder("bonnet-rouge")
+                        .setName("super-bonnet")
+                        .setParams(new Params.Builder()
+                                .addParam("origin", "Belgique")
+                                .addParam("tissu", "rouge")
+                                .addParam("tricotée", "main")
+                                .build())
+                        .build(), 2, -4)
+                .build();
 
-//        EAnalytics.getInstance().track(monProduit);
+        EAnalytics.getInstance().track(monPanier);
 
         // RESULT
-//        {
-//            "eos-type":"Android4.3",
-//            "ea-appname":"com.eulerian.android.demo",
-//            "epoch":"1425816371519",
-//            "ea-currency":"€",
-//            "ea-lat":"48.871835",
-//            "ea-price":"50.34",
-//            "ref-id":"chaussure4314",
-//            "ea-lon":"2.38243",
-//            "ehw":"Genymotion Google Nexus 4 - 4.3 - API 18 - 768x1280",
-//            "euidl":"000000000000000",
-//            "url":"http:\/\/com.eulerian.android.demo",
-//            "property-type":"product"
-//        }
+/*
+{
+   "scartcumul":1,
+   "ea-appname":"com.eulerian.android.demo",
+   "ea-android-islat":"false",
+   "scart":"323",
+   "url":"http:\/\/com.eulerian.android.demo",
+   "ref":"toto-ref",
+   "eos":"Android4.3",
+   "ea-android-referrer":"utm_source=test_source&utm_medium=test_medium&utm_term=test_term&utm_content=te​st_content
+   &utm_campaign=test_name",
+   "path":"path-cart",
+   "ea-android-adid":"eae34b48-7308-43e0-92f5-b4923b665855",
+   "products":[
+      {
+         "amount":2,
+         "ref":"mouffle-noire",
+         "quantity":43,
+         "params":{
+            "origin":"France",
+            "tricotée":"main",
+            "tissu":"noir"
+         },
+         "name":"super-mouffle"
+      },
+      {
+         "amount":2,
+         "ref":"bonnet-rouge",
+         "quantity":-4,
+         "params":{
+            "origin":"Belgique",
+            "tricotée":"main",
+            "tissu":"rouge"
+         },
+         "name":"super-bonnet"
+      }
+   ],
+   "ereplay-time":"1426113665",
+   "ehw":"Genymotion Google Nexus 4 - 4.3 - API 18 - 768x1280",
+   "euidl":"000000000000000"
+}
+ */
     }
 
     public void onClickAddToCart(View v) {

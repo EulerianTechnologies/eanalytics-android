@@ -97,6 +97,11 @@ public class EAProperties {
             return (T) this;
         }
 
+        protected T set(String key, int value) {
+            JSONUtils.put(properties, key, value);
+            return (T) this;
+        }
+
         public T setPageLocation(double latitude, double longitude) {
             JSONUtils.put(pages, KEY_PAGE_LATITUDE, String.valueOf(latitude));
             JSONUtils.put(pages, KEY_PAGE_LONGITUDE, String.valueOf(longitude));

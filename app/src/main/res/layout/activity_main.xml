@@ -37,8 +37,8 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:onClick="onClickGetProductDetails"
-        android:text="SEE PRODUCT DETAILS" />
+        android:onClick="onClickCart"
+        android:text="CART" />
 
     <Button
         android:layout_width="match_parent"
