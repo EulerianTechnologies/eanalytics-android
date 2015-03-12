@@ -32,7 +32,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:onClick="onClickSearch"
-        android:text="PAGE SEARCH" />
+        android:text="SEARCH" />
 
     <Button
         android:layout_width="match_parent"
@@ -43,6 +43,12 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:onClick="onClickAddToCart"
-        android:text="ADD TO CART" />
+        android:onClick="onClickEstimate"
+        android:text="ESTIMATE" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="onClickSale"
+        android:text="SALE" />
 </LinearLayout>

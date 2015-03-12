@@ -6,9 +6,12 @@ import android.view.View;
 
 import com.eulerian.android.demo.R;
 import com.eulerian.android.sdk.Action;
+import com.eulerian.android.sdk.CurrencyISO;
 import com.eulerian.android.sdk.EACart;
+import com.eulerian.android.sdk.EAEstimate;
 import com.eulerian.android.sdk.EAProducts;
 import com.eulerian.android.sdk.EAProperties;
+import com.eulerian.android.sdk.EASale;
 import com.eulerian.android.sdk.EASearch;
 import com.eulerian.android.sdk.EAnalytics;
 import com.eulerian.android.sdk.Params;
@@ -277,65 +280,160 @@ public class MainActivity extends ActionBarActivity {
  */
     }
 
-    public void onClickAddToCart(View v) {
-//        EAProduct patesFraiches = new EAProduct.Builder()
-//                .setId("pates_barilla_extrem_quality-432444")
-//                .setPrice(5.23, "euros")
-//                .build();
+    public void onClickEstimate(View v) {
 
-//        EAProduct lardons = new EAProduct.Builder()
-//                .setId("lardons_herta-4321")
-//                .setPrice(3.10, "euros")
-//                .build();
+        Product pasta = new Product.Builder("ref-rrr")
+                .setParams(new Params.Builder()
+                        .addParam("marque", "barilla")
+                        .addParam("categorie", "frais")
+                        .addParam("stock", 4)
+                        .build())
+                .setName("Pate fraiche")
+                .build();
 
-//        EAProduct cremeFraiche = new EAProduct.Builder()
-//                .setId("creme_fraiche_de_la_laitière-240003")
-//                .setPrice(5.23, "euros")
-//                .build();
+        Product lardons = new Product.Builder("ref-lll")
+                .setParams(new Params.Builder()
+                        .addParam("marque", "herta")
+                        .addParam("categorie", "lard")
+                        .addParam("stock", 98)
+                        .build())
+                .setName("Lardons herta")
+                .build();
 
-//        EACart monPanier = new EACart.Builder()
-//                .addProductsToCart(patesFraiches, lardons)
-//                .addProductToCart(cremeFraiche)
-//                .setPageLocation(latitude, longitude)
-//                .build();
+        EAEstimate monDevis = new EAEstimate.Builder("test-path", "test-ref", 43)
+                .setAmount(432)
+                .setCurrency(CurrencyISO.EUR)
+                .setType("test-type")
+                .addProduct(pasta, 32, 1)
+                .addProduct(lardons, 3, 21)
+                .build();
 
-//        EAnalytics.getInstance().track(monPanier);
+        EAnalytics.getInstance().track(monDevis);
 
         // RESULT:
-//        {
-//            "eos-type":"Android4.3",
-//            "items":[
-//                {
-//                    "ea-currency":"euros",
-//                    "ref-id":"pates_barilla_extrem_quality-432444",
-//                    "ea-price":"5.23",
-//                    "epoch":"1425816372063",
-//                    "property-type":"product"
-//                },
-//                {
-//                    "ea-currency":"euros",
-//                    "ref-id":"lardons_herta-4321",
-//                    "ea-price":"3.1",
-//                    "epoch":"1425816372065",
-//                    "property-type":"product"
-//                },
-//                {
-//                    "ea-currency":"euros",
-//                    "ref-id":"creme_fraiche_de_la_laitière-240003",
-//                    "ea-price":"5.23",
-//                    "epoch":"1425816372067",
-//                    "property-type":"product"
-//                }
-//            ],
-//            "ea-appname":"com.eulerian.android.demo",
-//            "epoch":"1425816372069",
-//            "ea-lat":"48.871835",
-//            "ea-lon":"2.38243",
-//            "ehw":"Genymotion Google Nexus 4 - 4.3 - API 18 - 768x1280",
-//            "euidl":"000000000000000",
-//            "url":"http:\/\/com.eulerian.android.demo",
-//            "property-type":"cart"
-//        }
+/*
+{
+   "ea-appname":"com.eulerian.android.demo",
+   "ea-android-islat":"false",
+   "type":"test-type",
+   "estimate":43,
+   "url":"http:\/\/com.eulerian.android.demo",
+   "currency":"EUR",
+   "amount":"432",
+   "ref":"test-ref",
+   "eos":"Android4.3",
+   "ea-android-referrer":"utm_source=test_source&utm_medium=test_medium&utm_term=test_term&utm_content=te​st_content
+   &utm_campaign=test_name",
+   "path":"test-path",
+   "ea-android-adid":"eae34b48-7308-43e0-92f5-b4923b665855",
+   "products":[
+      {
+         "amount":32,
+         "ref":"ref-rrr",
+         "quantity":1,
+         "params":{
+            "categorie":"frais",
+            "stock":4,
+            "marque":"barilla"
+         },
+         "name":"Pate fraiche"
+      },
+      {
+         "amount":3,
+         "ref":"ref-lll",
+         "quantity":21,
+         "params":{
+            "categorie":"lard",
+            "stock":98,
+            "marque":"herta"
+         },
+         "name":"Lardons herta"
+      }
+   ],
+   "ereplay-time":"1426115551",
+   "ehw":"Genymotion Google Nexus 4 - 4.3 - API 18 - 768x1280",
+   "euidl":"000000000000000"
+}
+*/
+    }
+
+    public void onClickSale(View v) {
+        Product pasta = new Product.Builder("ref-rrr")
+                .setParams(new Params.Builder()
+                        .addParam("marque", "barilla")
+                        .addParam("categorie", "frais")
+                        .addParam("stock", 4)
+                        .build())
+                .setName("Pate fraiche")
+                .build();
+
+        Product lardons = new Product.Builder("ref-lll")
+                .setParams(new Params.Builder()
+                        .addParam("marque", "herta")
+                        .addParam("categorie", "lard")
+                        .addParam("stock", 98)
+                        .build())
+                .setName("Lardons herta")
+                .build();
+
+        EASale maVente = new EASale.Builder("test-path", "test-ref", 43)
+                .setAmount(432)
+                .setCurrency(CurrencyISO.EUR)
+                .setType("test-type")
+                .setPayment("test-payment")
+                .setEstimateRef("test-estimate-ref")
+                .addProduct(pasta, 32, 1)
+                .addProduct(lardons, 3, 21)
+                .build();
+
+        EAnalytics.getInstance().track(maVente);
+
+        //RESULT
+        /*
+{
+   "payment":"test-payment",
+   "ea-appname":"com.eulerian.android.demo",
+   "ea-android-islat":"false",
+   "type":"test-type",
+   "url":"http:\/\/com.eulerian.android.demo",
+   "currency":"EUR",
+   "amount":"432",
+   "ref":"test-ref",
+   "estimateref":"test-estimate-ref",
+   "eos":"Android4.3",
+   "ea-android-referrer":"utm_source=test_source&utm_medium=test_medium&utm_term=test_term&utm_content=te​st_content
+   &utm_campaign=test_name",
+   "path":"test-path",
+   "ea-android-adid":"eae34b48-7308-43e0-92f5-b4923b665855",
+   "products":[
+      {
+         "amount":32,
+         "ref":"ref-rrr",
+         "quantity":1,
+         "params":{
+            "categorie":"frais",
+            "stock":4,
+            "marque":"barilla"
+         },
+         "name":"Pate fraiche"
+      },
+      {
+         "amount":3,
+         "ref":"ref-lll",
+         "quantity":21,
+         "params":{
+            "categorie":"lard",
+            "stock":98,
+            "marque":"herta"
+         },
+         "name":"Lardons herta"
+      }
+   ],
+   "ereplay-time":"1426116096",
+   "ehw":"Genymotion Google Nexus 4 - 4.3 - API 18 - 768x1280",
+   "euidl":"000000000000000"
+}
+         */
     }
 
 }

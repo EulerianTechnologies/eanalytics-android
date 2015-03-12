@@ -13,7 +13,7 @@ public class EACart extends EAProperties {
     private static final String KEY_CUMUL = "scartcumul";
     private static final String KEY_AMOUNT = "amount";
     private static final String KEY_QUANTITY = "quantity";
-    private static final String KEY_PRODUCT = "products";
+    private static final String KEY_PRODUCTS = "products";
 
     /**
      * Use {@link com.eulerian.android.sdk.EACart.Builder} instead
@@ -52,7 +52,7 @@ public class EACart extends EAProperties {
         }
 
         public EACart build() {
-            JSONUtils.put(properties, KEY_PRODUCT, products);
+            JSONUtils.put(properties, KEY_PRODUCTS, products);
             return new EACart(this);
         }
     }
