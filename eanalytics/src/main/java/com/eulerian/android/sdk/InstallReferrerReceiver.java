@@ -10,7 +10,6 @@ import java.net.URLDecoder;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * Created by Francois Rouault on 09/03/2015.
@@ -54,7 +53,6 @@ import java.util.regex.Pattern;
  * also create a "referrer" super property with the complete referrer string.</p>
  */
 public class InstallReferrerReceiver extends BroadcastReceiver {
-    private static final String TAG = InstallReferrerReceiver.class.getName();
 
     //test it using:
     // adb shell
@@ -109,7 +107,7 @@ public class InstallReferrerReceiver extends BroadcastReceiver {
 //            newPrefs.put(PersistentIdentity.KEY_UTM_TERM, term);
 //        }
 
-        EALog.d(TAG, "Install Referrer received: " + newPrefs.toString());
+        EALog.d("Install Referrer received: " + newPrefs.toString());
 
         PersistentIdentity.getInstance().save(newPrefs);
     }
@@ -121,7 +119,7 @@ public class InstallReferrerReceiver extends BroadcastReceiver {
                 try {
                     return URLDecoder.decode(encoded, "UTF-8");
                 } catch (final UnsupportedEncodingException e) {
-                    EALog.e(TAG, "Could not decode a parameter into UTF-8");
+                    EALog.e("Could not decode a parameter into UTF-8");
                 }
             }
         }

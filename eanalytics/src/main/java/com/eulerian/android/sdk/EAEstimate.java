@@ -8,7 +8,6 @@ import org.json.JSONObject;
  */
 public class EAEstimate extends EAProperties {
 
-    private static final String TAG = EAEstimate.class.getSimpleName();
     private static final String KEY_ESTIMATE = "estimate";
     private static final String KEY_REF = "ref";
     private static final String KEY_ESTIMATE_AMOUNT = "amount";
@@ -58,7 +57,7 @@ public class EAEstimate extends EAProperties {
         }
 
         public Builder addProduct(Product product, int amount, int quantity) {
-            EALog.assertCondition(TAG, quantity > 0, "Quantity must be > 0");
+            EALog.assertCondition(quantity > 0, "Quantity must be > 0");
             JSONObject productJson = product.getJson();
             JSONUtils.put(productJson, KEY_PRODUCT_AMOUNT, amount);
             JSONUtils.put(productJson, KEY_QUANTITY, quantity);

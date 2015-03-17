@@ -51,4 +51,5 @@
         android:layout_height="wrap_content"
         android:onClick="onClickSale"
         android:text="SALE" />
+
 </LinearLayout>

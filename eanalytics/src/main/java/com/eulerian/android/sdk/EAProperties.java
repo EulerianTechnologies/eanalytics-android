@@ -50,7 +50,7 @@ public class EAProperties {
     /**
      * //TODO just for the demo
      */
-    public JSONObject getJson(boolean withInternals) {
+    JSONObject getJson(boolean withInternals) {
         JSONObject result;
         if (withInternals) {
             result = JSONUtils.merge(mInternals, mPages, mProperties);
@@ -71,11 +71,11 @@ public class EAProperties {
         protected final JSONObject pages = new JSONObject();
 
         public Builder(String path) {
-            initInteralParams();
+            initInternalParams();
             setPagePath(path);
         }
 
-        private void initInteralParams() {
+        private void initInternalParams() {
             JSONUtils.put(internals, KEY_INSTALL_REFERRER, EAnalytics.sInstallReferrer);
             JSONUtils.put(internals, KEY_EOS, "Android" + Build.VERSION.RELEASE);
             JSONUtils.put(internals, KEY_EHW, Build.MANUFACTURER + " " + Build.MODEL);
@@ -121,6 +121,9 @@ public class EAProperties {
         }
 
         public T setPageEmail(String email) {
+            if (!Utils.isEmailValid(email)) {
+                EALog.w("Email \"" + email + "\" is not a valid email.");
+            }
             JSONUtils.put(pages, KEY_PAGE_EMAIL, email);
             return (T) this;
         }

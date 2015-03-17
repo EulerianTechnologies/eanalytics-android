@@ -7,21 +7,26 @@ import android.util.Log;
  */
 class EALog {
 
+    private static String TAG = EAnalytics.class.getSimpleName();
     protected static boolean LOG_ENABLED = false;
 
-    public static void d(String tag, String msg) {
-        if (LOG_ENABLED) Log.d(tag, msg);
+    public static void d(String msg) {
+        if (LOG_ENABLED) Log.d(TAG, msg);
     }
 
-    public static void assertCondition(String tag, boolean condition, String msg) {
+    public static void assertCondition(boolean condition, String msg) {
         if (condition) {
             return;
         }
-        EALog.e(tag, msg);
+        EALog.e(msg);
         throw new IllegalStateException(msg);
     }
 
-    public static void e(String tag, String msg) {
-        if (LOG_ENABLED) Log.e(tag, msg);
+    public static void e(String msg) {
+        Log.e(TAG, msg);
+    }
+
+    public static void w(String msg) {
+        Log.w(TAG, msg);
     }
 }

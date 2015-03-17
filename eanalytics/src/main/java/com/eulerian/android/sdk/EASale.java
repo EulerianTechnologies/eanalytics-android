@@ -8,7 +8,6 @@ import org.json.JSONObject;
  */
 public class EASale extends EAProperties {
 
-    private static final String TAG = EASale.class.getSimpleName();
     private static final String KEY_REF = "ref";
     private static final String KEY_SALE_AMOUNT = "amount";
     private static final String KEY_CURRENCY = "currency";
@@ -68,7 +67,7 @@ public class EASale extends EAProperties {
         }
 
         public Builder addProduct(Product product, int amount, int quantity) {
-            EALog.assertCondition(TAG, quantity > 0, "Quantity must be > 0");
+            EALog.assertCondition(quantity > 0, "Quantity must be > 0");
             JSONObject productJson = product.getJson();
             JSONUtils.put(productJson, KEY_PRODUCT_AMOUNT, amount);
             JSONUtils.put(productJson, KEY_PRODUCT_QUANTITY, quantity);
