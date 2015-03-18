@@ -1,12 +1,7 @@
 package com.eulerian.android.sdk;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 /**
  * Created by Francois Rouault on 09/03/2015.
@@ -33,50 +28,28 @@ public class Action {
      */
     public static class Builder {
         private final JSONObject mainJson = new JSONObject();
-        private final List<String> inStrings = new ArrayList<>();
-        private final List<String> outStrings = new ArrayList<>();
-
-        public Builder() {
-
-        }
+        private final JSONArray outsJson = new JSONArray();
 
         public Builder setReference(String ref) {
-            try {
-                mainJson.put(KEY_REF, ref);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
+            JSONUtils.put(mainJson, KEY_REF, ref);
             return this;
         }
 
-        public Builder addIn(String... ins) {
-            inStrings.addAll(Arrays.asList(ins));
+        public Builder setIn(String in) {
+            JSONUtils.put(mainJson, KEY_IN, in);
             return this;
         }
 
         public Builder addOut(String... outs) {
-            outStrings.addAll(Arrays.asList(outs));
+            for (String out : outs) {
+                outsJson.put(out);
+            }
             return this;
         }
 
         public Action build() {
-            if (inStrings.size() == 1) {
-                JSONUtils.put(mainJson, KEY_IN, inStrings.get(0));
-            } else if (!inStrings.isEmpty()) {
-                JSONArray inArray = new JSONArray();
-                for (String in : inStrings) {
-                    inArray.put(in);
-                }
-                JSONUtils.put(mainJson, KEY_IN, inArray);
-            }
-            if (outStrings.size() == 1) {
-                JSONUtils.put(mainJson, KEY_OUT, outStrings.get(0));
-            } else if (!outStrings.isEmpty()) {
-                JSONArray outArray = new JSONArray();
-                for (String out : outStrings) {
-                    outArray.put(out);
-                }
-                JSONUtils.put(mainJson, KEY_OUT, outArray);
+            if (outsJson.length() != 0) {
+                JSONUtils.put(mainJson, KEY_OUT, outsJson);
             }
             return new Action(this);
         }

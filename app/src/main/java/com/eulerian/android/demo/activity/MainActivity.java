@@ -51,7 +51,7 @@ public class MainActivity extends ActionBarActivity {
             .set("whatever2", "...")
             .setAction(new Action.Builder()
                     .setReference("test-ref-\"fefds$`^")
-                    .addIn(new String[]{"toto", "titi"})
+                    .setIn("in-test")
                     .addOut(new String[]{"tata", "tutu", "tete"})
                     .build())
             .setProperty(new SiteCentricProperty.Builder()

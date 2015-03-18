@@ -117,7 +117,7 @@ public class EAProperties {
         }
 
         public T setEmail(String email) {
-            if (!TextUtils.isEmpty(email)) {
+            if (TextUtils.isEmpty(email)) {
                 EALog.w("Email is empty");
             }
             JSONUtils.put(pages, KEY_PAGE_EMAIL, email);
