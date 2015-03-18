@@ -6,7 +6,7 @@ import org.json.JSONObject;
 /**
  * Created by Francois Rouault on 12/03/2015.
  */
-public class EASale extends EAProperties {
+public class EAOrder extends EAProperties {
 
     private static final String KEY_REF = "ref";
     private static final String KEY_SALE_AMOUNT = "amount";
@@ -19,11 +19,11 @@ public class EASale extends EAProperties {
     private static final String KEY_PRODUCT_QUANTITY = "quantity";
 
     /**
-     * Use {@link com.eulerian.android.sdk.EASale.Builder} instead
+     * Use {@link EAOrder.Builder} instead
      *
      * @param builder
      */
-    protected EASale(Builder builder) {
+    protected EAOrder(Builder builder) {
         super(builder);
     }
 
@@ -75,9 +75,9 @@ public class EASale extends EAProperties {
             return this;
         }
 
-        public EASale build() {
+        public EAOrder build() {
             JSONUtils.put(properties, KEY_PRODUCTS, products);
-            return new EASale(this);
+            return new EAOrder(this);
         }
     }
 

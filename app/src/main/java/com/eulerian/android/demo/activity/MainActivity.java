@@ -9,9 +9,9 @@ import com.eulerian.android.sdk.Action;
 import com.eulerian.android.sdk.CurrencyISO;
 import com.eulerian.android.sdk.EACart;
 import com.eulerian.android.sdk.EAEstimate;
+import com.eulerian.android.sdk.EAOrder;
 import com.eulerian.android.sdk.EAProducts;
 import com.eulerian.android.sdk.EAProperties;
-import com.eulerian.android.sdk.EASale;
 import com.eulerian.android.sdk.EASearch;
 import com.eulerian.android.sdk.EAnalytics;
 import com.eulerian.android.sdk.Params;
@@ -152,7 +152,7 @@ public class MainActivity extends ActionBarActivity {
     }
 
     public void onClickSale(View v) {
-        EASale maVente = new EASale.Builder("test-path", "test-ref", 43)
+        EAOrder maVente = new EAOrder.Builder("test-path", "test-ref", 43)
                 .setAmount(432)
                 .setCurrency(CurrencyISO.EUR)
                 .setType("test-type")
