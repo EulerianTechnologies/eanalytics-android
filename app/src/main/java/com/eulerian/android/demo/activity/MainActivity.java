@@ -40,12 +40,12 @@ public class MainActivity extends ActionBarActivity {
             .setName("Lardons herta")
             .build();
     private EAProperties properties = new EAProperties.Builder("the_path")
-            .setPageNewCustomer(true)
-            .setPageEmail("test-email")
+            .setNewCustomer(true)
+            .setEmail("test-email")
             .setPageGroup("test-group")
-            .setPageLocation(latitude, longitude)
-            .setPageProfile("test-profile")
-            .setPageUid("test-uid")
+            .setLocation(latitude, longitude)
+            .setProfile("test-profile")
+            .setUID("test-uid")
             .set("whatever", "...")
             .set("whatever1", "...")
             .set("whatever2", "...")
@@ -107,8 +107,8 @@ public class MainActivity extends ActionBarActivity {
 
     public void onClickProducts(View v) {
         EAProducts products = new EAProducts.Builder("test-path")
-                .setPageEmail("francoisrouault.fr@gmail.com")
-                .setPageLocation(latitude, longitude)
+                .setEmail("francoisrouault.fr@gmail.com")
+                .setLocation(latitude, longitude)
                 .addProduct(product1)
                 .addProduct(product2)
                 .build();

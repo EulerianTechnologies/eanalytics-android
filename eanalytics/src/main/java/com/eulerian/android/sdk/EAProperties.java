@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Build;
 import android.provider.Settings;
 import android.telephony.TelephonyManager;
+import android.text.TextUtils;
 
 import org.json.JSONObject;
 
@@ -72,7 +73,7 @@ public class EAProperties {
 
         public Builder(String path) {
             initInternalParams();
-            setPagePath(path);
+            JSONUtils.put(pages, KEY_PAGE_PATH, path);
         }
 
         private void initInternalParams() {
@@ -102,38 +103,33 @@ public class EAProperties {
             return (T) this;
         }
 
-        public T setPageLocation(double latitude, double longitude) {
+        public T setLocation(double latitude, double longitude) {
             JSONUtils.put(pages, KEY_PAGE_LATITUDE, String.valueOf(latitude));
             JSONUtils.put(pages, KEY_PAGE_LONGITUDE, String.valueOf(longitude));
             return (T) this;
         }
 
-        private T setPagePath(String path) {
-            JSONUtils.put(pages, KEY_PAGE_PATH, path);
-            return (T) this;
-        }
-
-        public T setPageNewCustomer(boolean newCustomer) {
+        public T setNewCustomer(boolean newCustomer) {
             if (newCustomer) {
                 JSONUtils.put(pages, KEY_PAGE_NEW_CUSTOMER, String.valueOf(1));
             }
             return (T) this;
         }
 
-        public T setPageEmail(String email) {
-            if (!Utils.isEmailValid(email)) {
-                EALog.w("Email \"" + email + "\" is not a valid email.");
+        public T setEmail(String email) {
+            if (!TextUtils.isEmpty(email)) {
+                EALog.w("Email is empty");
             }
             JSONUtils.put(pages, KEY_PAGE_EMAIL, email);
             return (T) this;
         }
 
-        public T setPageUid(String uid) {
+        public T setUID(String uid) {
             JSONUtils.put(pages, KEY_PAGE_UID, uid);
             return (T) this;
         }
 
-        public T setPageProfile(String profile) {
+        public T setProfile(String profile) {
             JSONUtils.put(pages, KEY_PAGE_PROFILE, profile);
             return (T) this;
         }
