@@ -8,7 +8,7 @@ import org.json.JSONObject;
  */
 public class EACart extends EAProperties {
 
-    private static final String KEY_CART = "scart";
+    private static final String KEY_SCART = "scart";
     private static final String KEY_REF = "ref";
     private static final String KEY_CUMUL = "scartcumul";
     private static final String KEY_AMOUNT = "amount";
@@ -28,9 +28,9 @@ public class EACart extends EAProperties {
 
         private final JSONArray products = new JSONArray();
 
-        public Builder(String path, int cart) {
+        public Builder(String path) {
             super(path);
-            set(KEY_CART, String.valueOf(cart));
+            set(KEY_SCART, "1");
         }
 
         public Builder setRef(String ref) {

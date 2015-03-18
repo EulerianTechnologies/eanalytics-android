@@ -31,7 +31,7 @@ public class EAOrder extends EAProperties {
 
         private final JSONArray products = new JSONArray();
 
-        public Builder(String path, String ref, int estimate) {
+        public Builder(String path, String ref) {
             super(path);
             set(KEY_REF, ref);
         }

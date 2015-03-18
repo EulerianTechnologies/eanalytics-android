@@ -129,7 +129,7 @@ public class MainActivity extends ActionBarActivity {
     }
 
     public void onClickCart(View v) {
-        EACart monPanier = new EACart.Builder("path-cart", 3)
+        EACart monPanier = new EACart.Builder("path-cart")
                 .setCartCumul(true)
                 .setRef("test-ref")
                 .addProduct(moufle, 2, 42)
@@ -152,7 +152,7 @@ public class MainActivity extends ActionBarActivity {
     }
 
     public void onClickSale(View v) {
-        EAOrder maVente = new EAOrder.Builder("test-path", "test-ref", 43)
+        EAOrder maVente = new EAOrder.Builder("test-path", "test-ref")
                 .setAmount(432)
                 .setCurrency(CurrencyISO.EUR)
                 .setType("test-type")
