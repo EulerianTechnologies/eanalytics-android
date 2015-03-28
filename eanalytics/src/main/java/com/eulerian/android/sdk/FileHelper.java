@@ -65,14 +65,14 @@ class FileHelper {
         return new File(fileDir, FILENAME_TEMP).renameTo(new File(fileDir, FILENAME));
     }
 
-    static void appendLine(String jsonProperties) {
+    public static void appendLine(String jsonProperties) {
         OutputStreamWriter osw;
         try {
             osw = new OutputStreamWriter(EAnalytics.getContext().openFileOutput(FILENAME, Context.MODE_APPEND));
             osw.append(jsonProperties);
             osw.append(SEPARATOR);
             osw.close();
-            EALog.d("-> properties stored.");
+            EALog.v("-> properties stored.");
         } catch (IOException e) {
             EALog.e("Unable to store properties: " + jsonProperties);
         }

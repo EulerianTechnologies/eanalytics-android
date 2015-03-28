@@ -112,19 +112,19 @@ public class InstallReferrerReceiver extends BroadcastReceiver {
         PersistentIdentity.getInstance().save(newPrefs);
     }
 
-    private String find(Matcher matcher) {
-        if (matcher.find()) {
-            final String encoded = matcher.group(2);
-            if (null != encoded) {
-                try {
-                    return URLDecoder.decode(encoded, "UTF-8");
-                } catch (final UnsupportedEncodingException e) {
-                    EALog.e("Could not decode a parameter into UTF-8");
-                }
-            }
-        }
-        return null;
-    }
+//    private String find(Matcher matcher) {
+//        if (matcher.find()) {
+//            final String encoded = matcher.group(2);
+//            if (null != encoded) {
+//                try {
+//                    return URLDecoder.decode(encoded, "UTF-8");
+//                } catch (final UnsupportedEncodingException e) {
+//                    EALog.e("Could not decode a parameter into UTF-8");
+//                }
+//            }
+//        }
+//        return null;
+//    }
 
 //    private final Pattern UTM_SOURCE_PATTERN = Pattern.compile("(^|&)utm_source=([^&#=]*)([#&]|$)");
 //    private final Pattern UTM_MEDIUM_PATTERN = Pattern.compile("(^|&)utm_medium=([^&#=]*)([#&]|$)");

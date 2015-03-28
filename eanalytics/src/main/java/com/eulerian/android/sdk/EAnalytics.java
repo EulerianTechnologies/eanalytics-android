@@ -3,17 +3,15 @@ package com.eulerian.android.sdk;
 
 import android.Manifest;
 import android.content.Context;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 
 import com.google.android.gms.ads.identifier.AdvertisingIdClient;
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.io.IOException;
-import java.util.List;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
@@ -22,13 +20,27 @@ import java.util.concurrent.Executors;
  */
 public class EAnalytics {
 
+    private static final String TAG = EAnalytics.class.getSimpleName();
+    protected static final int HANDLER_MESSAGE_RETRY = 1;
     static String sRTDomain;
     private static EAnalytics sInstance;
     private static Context sAppContext;
-    private Executor mExecutor = Executors.newSingleThreadExecutor();
+    protected Executor mExecutor = Executors.newSingleThreadExecutor();
     static String sAdInfoId;
     static String sInstallReferrer;
     static boolean sAdInfoIsLAT = false;
+
+    protected Handler mUiHandler = new Handler(Looper.getMainLooper()) {
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case HANDLER_MESSAGE_RETRY:
+                    EALog.d("Retry strategy");
+                    EAnalytics.getInstance().track(null);
+                    break;
+            }
+        }
+    };
 
     private EAnalytics() {
         //cannot be initialized anywhere else
@@ -68,6 +80,7 @@ public class EAnalytics {
         sInstallReferrer = PersistentIdentity.getInstance().getInstallReferrer();
         EALog.d("Eulerian Analytics initialized with " + rtDomain + " domain.");
         getInstance().mExecutor.execute(new GetAdInfo());
+        getInstance().track(null);
     }
 
     static Context getContext() {
@@ -77,73 +90,13 @@ public class EAnalytics {
     }
 
     public void track(final EAProperties properties) {
+        EALog.d("track");
         EALog.assertCondition(sRTDomain != null, "The SDK has not been initialized. You must call EAnalytics" +
                 ".init(Context, String) once.");
-        mExecutor.execute(new PropertiesTracker(properties));
-    }
-
-    static class PropertiesTracker implements Runnable {
-
-        private final EAProperties properties;
-
-        PropertiesTracker(EAProperties properties) {
-            this.properties = properties;
-        }
-
-        @Override
-        public void run() {
-            String propertiesToString = properties.getJson(true).toString();
-
-            EALog.d("Tracking properties : " + propertiesToString);
-
-            if (!ConnectivityHelper.isConnected(sAppContext)) {
-                EALog.d("-> no network access. Will try later.");
-                FileHelper.appendLine(propertiesToString);
-                return;
-            }
-
-            List<String> storedProperties = FileHelper.getLines();
-            if (storedProperties.isEmpty()) {
-                boolean success = HttpHelper.postData("[" + propertiesToString + "]");
-                if (!success) {
-                    EALog.d("-> synchronization failed. Will try later.");
-                    FileHelper.appendLine(propertiesToString);
-                } else {
-                    EALog.d("-> synchronization succeeded.");
-                }
-                return;
-            }
-
-            EALog.d("-> " + storedProperties.size() + " stored properties found. Added for synchronization.");
-            FileHelper.appendLine(propertiesToString);
-            storedProperties.add(propertiesToString);
-            try {
-                int counter = 0;
-                JSONArray jsonArray = new JSONArray();
-                do {
-                    String line = storedProperties.get(counter);
-                    JSONObject lineJson = new JSONObject(line);
-                    jsonArray.put(lineJson);
-                    if (counter == storedProperties.size() - 1 // last item
-                            || (jsonArray.toString().getBytes().length + storedProperties.get(counter + 1)
-                            .getBytes().length) > HttpHelper.MAX_UNZIPPED_BYTES_PER_SEND) {
-                        // no more data OR json array is becoming too big -> send it
-                        boolean success = HttpHelper.postData(jsonArray.toString());
-                        if (success) {
-                            FileHelper.deleteLines(jsonArray.length());
-                            jsonArray = new JSONArray(); // re-init in case the is still pending data.
-                        } else {
-                            // something went wrong, will try on next call to track(). This avoid infinite loop.
-                            EALog.d("-> synchronization failed. Will try later.");
-                            return;
-                        }
-                    }
-                    counter++;
-                } while (counter < storedProperties.size());
-                EALog.d("-> synchronization succeeded : " + counter + " EAProperties synchronized.");
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
+        if (properties == null) {
+            mExecutor.execute(new StoredPropertiesTracker(mUiHandler));
+        } else {
+            mExecutor.execute(new PropertiesTracker(properties, mUiHandler));
         }
     }
 

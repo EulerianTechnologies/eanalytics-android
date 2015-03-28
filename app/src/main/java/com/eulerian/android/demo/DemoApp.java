@@ -13,6 +13,6 @@ public class DemoApp extends Application {
     public void onCreate() {
         super.onCreate();
 
-        EAnalytics.init(this, "eulerian.sdk.com", true);
+        EAnalytics.init(this, "http://ett.eulerian.net/collectorjson/-/123", true);
     }
 }

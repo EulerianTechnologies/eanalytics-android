@@ -37,11 +37,10 @@ class HttpHelper {
         client = new DefaultHttpClient(params);
     }
 
-    static final long MAX_UNZIPPED_BYTES_PER_SEND = 100000;
 
     public static boolean postData(String value) {
         try {
-            EALog.d("-> synchronizing...");
+            EALog.v("-> post data, synchronizing... " + value);
             Thread.sleep(1000);
         } catch (InterruptedException e) {
             e.printStackTrace();

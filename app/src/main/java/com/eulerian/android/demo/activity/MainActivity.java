@@ -165,4 +165,10 @@ public class MainActivity extends ActionBarActivity {
         EAnalytics.getInstance().track(maVente);
     }
 
+    public void onClickDebug(View v) {
+//        FileHelper.appendLine("{\"tata\":" + new Random().nextInt(20) + "}");
+//        FileHelper.appendLine("{\"titi\":" + new Random().nextInt(20) + "}");
+//        FileHelper.appendLine("{\"tete\":" + new Random().nextInt(20) + "}");
+//        FileHelper.appendLine("{\"tutu\":" + new Random().nextInt(20) + "}");
+    }
 }
