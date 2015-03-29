@@ -62,16 +62,19 @@ public class EAnalytics {
     public static void init(Context context, String rtDomain, boolean log) {
         EALog.LOG_ENABLED = log;
         EALog.assertCondition(sAppContext == null && sRTDomain == null, "Init must be called only once.");
-        EALog.assertCondition(Utils.isPermissionGranted(context, Manifest.permission.READ_PHONE_STATE),
+        EALog.assertCondition(Helper.isPermissionGranted(context, Manifest.permission.INTERNET),
+                "Init failed : permission is missing. You must add permission " +
+                        Manifest.permission.INTERNET + " in your app Manifest.xml.");
+        EALog.assertCondition(Helper.isPermissionGranted(context, Manifest.permission.READ_PHONE_STATE),
                 "Init failed : permission is missing. You must add permission " +
                         android.Manifest.permission.READ_PHONE_STATE + " in your app Manifest.xml.");//TODO: confirm
         // with Eulerian whether throwing exception or just warn. Not good: TelephonyManager.getDeviceId
         // won't be accessible. Good: client don't have to add this permission if he don't want to.
-        EALog.assertCondition(Utils.isPermissionGranted(context, Manifest.permission.ACCESS_NETWORK_STATE),
+        EALog.assertCondition(Helper.isPermissionGranted(context, Manifest.permission.ACCESS_NETWORK_STATE),
                 "Init failed : permission is missing: Your must add permission " + Manifest.permission
                         .ACCESS_NETWORK_STATE + " in your app Manifest.xml"); // TODO: confirm assert with Eulerian
         EALog.assertCondition(context != null, "Init failed : context is null. You must provide a valid context.");
-        EALog.assertCondition(Utils.isDomainValid(rtDomain), "Init failed : " + rtDomain + " is not a valid RT " +
+        EALog.assertCondition(Helper.isDomainValid(rtDomain), "Init failed : " + rtDomain + " is not a valid RT " +
                 "domain");
         sAppContext = context;
         sRTDomain = rtDomain;
