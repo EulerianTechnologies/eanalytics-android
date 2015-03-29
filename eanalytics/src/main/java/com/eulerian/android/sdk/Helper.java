@@ -2,7 +2,6 @@ package com.eulerian.android.sdk;
 
 import android.content.Context;
 import android.content.pm.PackageManager;
-import android.text.TextUtils;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -28,14 +27,6 @@ class Helper {
     static boolean isDomainValid(String domain) {
         final Matcher contentMatcher = Pattern.compile(RT_DOMAIN_REGEX).matcher(domain);
         return contentMatcher.find();
-    }
-
-    public static boolean isEmailValid(CharSequence target) {
-        if (TextUtils.isEmpty(target)) {
-            return false;
-        } else {
-            return android.util.Patterns.EMAIL_ADDRESS.matcher(target).matches();
-        }
     }
 
     public static CharSequence toString(InputStream is) {
