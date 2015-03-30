@@ -43,6 +43,9 @@ public class EACart extends EAProperties {
             return this;
         }
 
+        /**
+         * TODO: discuss with Eulerian (cf. mail Mathieu)
+         */
         public Builder addProduct(Product product, int amount, int quantity) {
             JSONObject productJson = product.getJson();
             JSONUtils.put(productJson, KEY_AMOUNT, amount);

@@ -73,6 +73,9 @@ public class EAnalytics {
         EALog.assertCondition(Helper.isPermissionGranted(context, Manifest.permission.ACCESS_NETWORK_STATE),
                 "Init failed : permission is missing: Your must add permission " + Manifest.permission
                         .ACCESS_NETWORK_STATE + " in your app Manifest.xml"); // TODO: confirm assert with Eulerian
+        EALog.assertCondition(Helper.isPermissionGranted(context, Manifest.permission.ACCESS_WIFI_STATE),
+                "Init failed : permission is missing: Your must add permission " + Manifest.permission
+                        .ACCESS_WIFI_STATE + " in your app Manifest.xml"); // TODO: confirm assert with Eulerian
         EALog.assertCondition(context != null, "Init failed : context is null. You must provide a valid context.");
         EALog.assertCondition(Helper.isDomainValid(rtDomain), "Init failed : " + rtDomain + " is not a valid RT " +
                 "domain");

@@ -1,6 +1,7 @@
 package com.eulerian.android.sdk;
 
 import android.content.Context;
+import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.provider.Settings;
 import android.telephony.TelephonyManager;
@@ -34,6 +35,7 @@ public class EAProperties {
     private static final String KEY_PAGE_ACTION = "action";
     private static final String KEY_PAGE_PROPERTY = "property";
     private static final String KEY_PAGE_NEW_CUSTOMER = "newcustomer";
+    private static final String KEY_MAC = "ea-android-mac";
 
     private JSONObject mProperties;
     private JSONObject mInternals;
@@ -48,10 +50,7 @@ public class EAProperties {
         mProperties = builder.properties;
     }
 
-    /**
-     * //TODO just for the demo
-     */
-    JSONObject getJson(boolean withInternals) {
+    protected JSONObject getJson(boolean withInternals) {
         JSONObject result;
         if (withInternals) {
             result = JSONUtils.merge(mInternals, mPages, mProperties);
@@ -80,17 +79,30 @@ public class EAProperties {
             JSONUtils.put(internals, KEY_INSTALL_REFERRER, EAnalytics.sInstallReferrer);
             JSONUtils.put(internals, KEY_EOS, "Android" + Build.VERSION.RELEASE);
             JSONUtils.put(internals, KEY_EHW, Build.MANUFACTURER + " " + Build.MODEL);
-            TelephonyManager telephonyManager = (TelephonyManager) EAnalytics.getContext().getSystemService(Context
-                    .TELEPHONY_SERVICE);
-            JSONUtils.put(internals, KEY_EUIDL, telephonyManager != null && telephonyManager.getDeviceId() != null ?
-                    telephonyManager.getDeviceId() : Settings.Secure.getString(EAnalytics.getContext()
-                    .getContentResolver(), Settings.Secure.ANDROID_ID));
+            JSONUtils.put(internals, KEY_EUIDL, getEuidl());
+            JSONUtils.put(internals, KEY_MAC, getMacAddress());
             String packageName = EAnalytics.getContext().getApplicationInfo().packageName;
             JSONUtils.put(internals, KEY_URL, "http://" + packageName);
             JSONUtils.put(internals, KEY_APPNAME, packageName);
             JSONUtils.put(internals, KEY_ADINFO_IS_LAT, String.valueOf(EAnalytics.sAdInfoIsLAT));
             JSONUtils.put(internals, KEY_ADINFO_ID, EAnalytics.sAdInfoId);
             JSONUtils.put(internals, KEY_EPOCH, String.valueOf(System.currentTimeMillis() / 1000));
+        }
+
+        private String getEuidl() {
+            Context context = EAnalytics.getContext();
+            TelephonyManager telephonyManager = (TelephonyManager) context.getSystemService(Context
+                    .TELEPHONY_SERVICE);
+            return telephonyManager != null && telephonyManager.getDeviceId() != null ?
+                    telephonyManager.getDeviceId() :
+                    Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
+        }
+
+        private String getMacAddress() {
+            WifiManager wifiManager = (WifiManager) EAnalytics.getContext().getSystemService(Context.WIFI_SERVICE);
+            return wifiManager != null && wifiManager.getConnectionInfo() != null ?
+                    wifiManager.getConnectionInfo().getMacAddress() :
+                    null;
         }
 
         public T set(String key, String value) {
