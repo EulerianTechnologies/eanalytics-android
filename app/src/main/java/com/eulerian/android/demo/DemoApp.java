@@ -12,7 +12,6 @@ public class DemoApp extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-
-        EAnalytics.init(this, "http://ett.eulerian.net/collectorjson/-/123", true);
+        EAnalytics.init(this, "ett.eulerian.net", true);
     }
 }

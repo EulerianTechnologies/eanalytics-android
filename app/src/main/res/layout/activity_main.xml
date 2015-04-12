@@ -45,16 +45,4 @@
         android:onClick="onClickSale"
         android:text="SALE" />
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="---" />
-
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:onClick="onClickDebug"
-        android:text="DEBUG" />
-
 </LinearLayout>

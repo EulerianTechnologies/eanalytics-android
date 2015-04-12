@@ -11,6 +11,7 @@ import java.util.Map;
  */
 class PersistentIdentity {
 
+    private static final String INSTALL_REFERRER_HAS_ALREADY_BEEN_SENT_ONCE = "referrer_sent";
     private static PersistentIdentity mInstance;
     private final SharedPreferences mSharedPreferences;
 
@@ -66,6 +67,18 @@ class PersistentIdentity {
     }
 
     public String getInstallReferrer() {
-        return mSharedPreferences.getString(KEY_REFERRER, "undefined");
+        return mSharedPreferences.getString(KEY_REFERRER, null);
+    }
+
+    public boolean shouldSendInstallReferrer() {
+        return mSharedPreferences.getBoolean(INSTALL_REFERRER_HAS_ALREADY_BEEN_SENT_ONCE, false)
+                && getInstallReferrer() != null;
+    }
+
+    public void setInstallReferrerSent() {
+        mSharedPreferences.edit()
+                .putBoolean(INSTALL_REFERRER_HAS_ALREADY_BEEN_SENT_ONCE, true)
+                .putString(KEY_REFERRER, null)
+                .apply();
     }
 }

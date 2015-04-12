@@ -20,7 +20,6 @@ import com.eulerian.android.sdk.SiteCentricProperty;
 
 public class MainActivity extends ActionBarActivity {
 
-    private static final String TAG = MainActivity.class.getSimpleName();
     private double latitude = 48.871835;
     private double longitude = 2.382430;
     private Product pasta = new Product.Builder("ref-rrr")
@@ -29,7 +28,7 @@ public class MainActivity extends ActionBarActivity {
                     .addParam("categorie", "frais")
                     .addParam("stock", 4)
                     .build())
-            .setName("Pate fraiche")
+            .setName("Pates fraiches")
             .build();
     private Product lardons = new Product.Builder("ref-lll")
             .setParams(new Params.Builder()
@@ -50,7 +49,7 @@ public class MainActivity extends ActionBarActivity {
             .set("whatever1", "...")
             .set("whatever2", "...")
             .setAction(new Action.Builder()
-                    .setReference("test-ref-\"fefds$`^")
+                    .setReference("test-ref-\"fefds$432`^")
                     .setIn("in-test")
                     .addOut(new String[]{"tata", "tutu", "tete"})
                     .build())
@@ -78,10 +77,10 @@ public class MainActivity extends ActionBarActivity {
     private Product product2 = new Product.Builder("test-reference2")
             .setName("test-name2")
             .setParams(new Params.Builder()
-                    .addParam("toto", "value")
-                    .addParam("titi", 3)
-                    .addParam("tata", "value--ffd")
-                    .addParam("tata", "value")
+                    .addParam("param1", "value")
+                    .addParam("param2", 3)
+                    .addParam("param3", "value-3")
+                    .addParam("param4", "value-4")
                     .build())
             .build();
     ;
@@ -107,7 +106,7 @@ public class MainActivity extends ActionBarActivity {
 
     public void onClickProducts(View v) {
         EAProducts products = new EAProducts.Builder("test-path")
-                .setEmail("francoisrouault.fr@gmail.com")
+                .setEmail("francois.rouault.fr@gmail.com")
                 .setLocation(latitude, longitude)
                 .addProduct(product1)
                 .addProduct(product2)
@@ -120,7 +119,7 @@ public class MainActivity extends ActionBarActivity {
         EASearch search = new EASearch.Builder("search-path", "banana")
                 .setParams(new Params.Builder()
                         .addParam("provenance", "martinique")
-                        .addParam("color", "yellow")
+                        .addParam("couleur", "jaune")
                         .build())
                 .setResults(432)
                 .build();
@@ -131,7 +130,6 @@ public class MainActivity extends ActionBarActivity {
     public void onClickCart(View v) {
         EACart monPanier = new EACart.Builder("path-cart")
                 .setCartCumul(true)
-                .setRef("test-ref")
                 .addProduct(moufle, 2, 42)
                 .addProduct(bonnet, 2, -4)
                 .build();
@@ -140,7 +138,7 @@ public class MainActivity extends ActionBarActivity {
     }
 
     public void onClickEstimate(View v) {
-        EAEstimate monDevis = new EAEstimate.Builder("test-path", "test-ref", 43)
+        EAEstimate monDevis = new EAEstimate.Builder("test-path", "test-ref")
                 .setAmount(432)
                 .setCurrency(CurrencyISO.EUR)
                 .setType("test-type")
@@ -165,10 +163,4 @@ public class MainActivity extends ActionBarActivity {
         EAnalytics.getInstance().track(maVente);
     }
 
-    public void onClickDebug(View v) {
-//        FileHelper.appendLine("{\"tata\":" + new Random().nextInt(20) + "}");
-//        FileHelper.appendLine("{\"titi\":" + new Random().nextInt(20) + "}");
-//        FileHelper.appendLine("{\"tete\":" + new Random().nextInt(20) + "}");
-//        FileHelper.appendLine("{\"tutu\":" + new Random().nextInt(20) + "}");
-    }
 }

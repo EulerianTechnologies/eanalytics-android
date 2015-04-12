@@ -67,7 +67,10 @@ public class EAOrder extends EAProperties {
         }
 
         public Builder addProduct(Product product, int amount, int quantity) {
-            EALog.assertCondition(quantity > 0, "Quantity must be > 0");
+            if (quantity <= 0) {
+                EALog.w(EAOrder.class.getSimpleName() + "#addProduct() : quantity might be > 0. Current is " +
+                        quantity);
+            }
             JSONObject productJson = product.getJson();
             JSONUtils.put(productJson, KEY_PRODUCT_AMOUNT, amount);
             JSONUtils.put(productJson, KEY_PRODUCT_QUANTITY, quantity);

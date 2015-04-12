@@ -5,11 +5,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.regex.Matcher;
 
 /**
  * Created by Francois Rouault on 09/03/2015.
@@ -75,7 +72,6 @@ public class InstallReferrerReceiver extends BroadcastReceiver {
 
         final Map<String, String> newPrefs = new HashMap<>();
         newPrefs.put(PersistentIdentity.KEY_REFERRER, referrer);
-        EAnalytics.sInstallReferrer = referrer;
 
 //        final Matcher sourceMatcher = UTM_SOURCE_PATTERN.matcher(referrer);
 //        final String source = find(sourceMatcher);
@@ -107,7 +103,7 @@ public class InstallReferrerReceiver extends BroadcastReceiver {
 //            newPrefs.put(PersistentIdentity.KEY_UTM_TERM, term);
 //        }
 
-        EALog.d("Install Referrer received: " + newPrefs.toString());
+        EALog.d("Install Referrer received");
 
         PersistentIdentity.getInstance().save(newPrefs);
     }

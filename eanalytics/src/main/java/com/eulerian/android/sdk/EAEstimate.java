@@ -30,9 +30,9 @@ public class EAEstimate extends EAProperties {
 
         private final JSONArray products = new JSONArray();
 
-        public Builder(String path, String ref, int estimate) {
+        public Builder(String path, String ref) {
             super(path);
-            set(KEY_ESTIMATE, estimate);
+            set(KEY_ESTIMATE, "1");
             set(KEY_REF, ref);
         }
 
@@ -57,7 +57,10 @@ public class EAEstimate extends EAProperties {
         }
 
         public Builder addProduct(Product product, int amount, int quantity) {
-            EALog.assertCondition(quantity > 0, "Quantity must be > 0");
+            if (quantity <= 0) {
+                EALog.w(EAEstimate.class.getSimpleName() + "#addProduct() : quantity might be > 0. Current is " +
+                        quantity);
+            }
             JSONObject productJson = product.getJson();
             JSONUtils.put(productJson, KEY_PRODUCT_AMOUNT, amount);
             JSONUtils.put(productJson, KEY_QUANTITY, quantity);

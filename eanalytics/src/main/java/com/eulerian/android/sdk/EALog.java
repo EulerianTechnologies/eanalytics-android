@@ -10,9 +10,9 @@ class EALog {
     private static String TAG = EAnalytics.class.getSimpleName();
     protected static boolean LOG_ENABLED = false;
 
-    public static void v(String msg) {
-        Log.v(TAG, msg);
-    }
+//    public static void v(String msg) {
+//        Log.v(TAG, msg);
+//    }
 
     public static void d(String msg) {
         if (LOG_ENABLED) Log.d(TAG, msg);
@@ -30,7 +30,6 @@ class EALog {
         if (condition) {
             return true;
         }
-        //TODO: see with Eulerian, the app will crash
         throw new IllegalStateException(msg);
     }
 

@@ -23,9 +23,6 @@ public class Action {
         return mJson;
     }
 
-    /**
-     * TODO: nothing is mandatory => object can be empty "action": {}. Is that correct ?
-     */
     public static class Builder {
         private final JSONObject mainJson = new JSONObject();
         private final JSONArray outsJson = new JSONArray();
@@ -50,6 +47,10 @@ public class Action {
         public Action build() {
             if (outsJson.length() != 0) {
                 JSONUtils.put(mainJson, KEY_OUT, outsJson);
+            }
+            if (!mainJson.has(KEY_IN) && !mainJson.has(KEY_OUT)) {
+                EALog.w(Action.class.getSimpleName() + ": one of setIn() or addOut() method must be called to create " +
+                        "a valid Action.");
             }
             return new Action(this);
         }

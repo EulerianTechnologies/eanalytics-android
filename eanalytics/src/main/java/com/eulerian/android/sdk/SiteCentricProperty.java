@@ -19,9 +19,6 @@ public class SiteCentricProperty {
         return mJson;
     }
 
-    /**
-     * TODO: nothing is mandatory => object can be empty "action": {}. Is that correct ?
-     */
     public static class Builder {
         private final JSONObject mainJson = new JSONObject();
 
@@ -39,6 +36,11 @@ public class SiteCentricProperty {
         }
 
         public SiteCentricProperty build() {
+            if (!mainJson.keys().hasNext()) {
+                String clzName = SiteCentricProperty.class.getSimpleName();
+                EALog.w(clzName + ":  you might want to provide at least one key to" +
+                        " make " + clzName + " valid");
+            }
             return new SiteCentricProperty(this);
         }
     }

@@ -9,7 +9,6 @@ import org.json.JSONObject;
 public class EACart extends EAProperties {
 
     private static final String KEY_SCART = "scart";
-    private static final String KEY_REF = "ref";
     private static final String KEY_CUMUL = "scartcumul";
     private static final String KEY_AMOUNT = "amount";
     private static final String KEY_QUANTITY = "quantity";
@@ -33,19 +32,11 @@ public class EACart extends EAProperties {
             set(KEY_SCART, "1");
         }
 
-        public Builder setRef(String ref) {
-            set(KEY_REF, ref);
-            return this;
-        }
-
         public Builder setCartCumul(boolean cumul) {
             set(KEY_CUMUL, cumul ? 1 : 0);
             return this;
         }
 
-        /**
-         * TODO: discuss with Eulerian (cf. mail Mathieu)
-         */
         public Builder addProduct(Product product, int amount, int quantity) {
             JSONObject productJson = product.getJson();
             JSONUtils.put(productJson, KEY_AMOUNT, amount);

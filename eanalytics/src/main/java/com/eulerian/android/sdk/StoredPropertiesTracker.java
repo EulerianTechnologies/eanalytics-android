@@ -21,27 +21,27 @@ public class StoredPropertiesTracker implements Runnable {
 
     @Override
     public void run() {
-        EALog.v("Tracking stored properties");
+        EALog.d("Tracking stored properties");
         handler.removeMessages(EAnalytics.HANDLER_MESSAGE_RETRY);
 
         if (!ConnectivityHelper.isConnected(EAnalytics.getContext())) {
-            EALog.v("-> abort because no network access.");
+            EALog.d("-> abort because no network access.");
             handler.sendEmptyMessageDelayed(EAnalytics.HANDLER_MESSAGE_RETRY, Config.NO_INTERNET_RETRY_DELAY_MILLIS);
             return;
         }
 
         List<String> storedProperties = FileHelper.getLines();
         if (storedProperties.isEmpty()) {
-            EALog.v("-> no properties stored.");
+            EALog.d("-> no properties stored.");
             return;
         }
 
-        EALog.v("-> " + storedProperties.size() + " stored properties found. Added for synchronization.");
+        EALog.d("-> " + storedProperties.size() + " stored properties found. Added for synchronization.");
         int result = postStoredProperties(storedProperties);
         if (result == -1) {
             handler.sendEmptyMessageDelayed(EAnalytics.HANDLER_MESSAGE_RETRY, Config.RETRY_DELAY_MILLIS);
         } else {
-            EALog.v("-> properties + history (" + result + ") synchronization succeeded.");
+            EALog.d("-> properties + history = " + result + " synchronization succeeded.");
         }
     }
 
@@ -67,7 +67,7 @@ public class StoredPropertiesTracker implements Runnable {
                         jsonArray = new JSONArray(); // re-init in case the is still pending data.
                     } else {
                         // something went wrong, will try on next call to track(). This avoid infinite loop.
-                        EALog.v("-> synchronization failed.");
+                        EALog.d("-> synchronization failed.");
                         return -1;
                     }
                 }

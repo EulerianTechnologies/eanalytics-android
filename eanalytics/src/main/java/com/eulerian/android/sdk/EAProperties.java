@@ -15,7 +15,7 @@ import org.json.JSONObject;
 public class EAProperties {
 
     //- internal keys
-    private static final String KEY_INSTALL_REFERRER = "ea-android-referrer";
+    static final String KEY_INSTALL_REFERRER = "ea-android-referrer";
     private static final String KEY_EOS = "eos";
     private static final String KEY_EHW = "ehw";
     private static final String KEY_ADINFO_IS_LAT = "ea-android-islat";
@@ -37,7 +37,7 @@ public class EAProperties {
     private static final String KEY_PAGE_NEW_CUSTOMER = "newcustomer";
     private static final String KEY_MAC = "ea-android-mac";
 
-    private JSONObject mProperties;
+    JSONObject mProperties;
     private JSONObject mInternals;
     private JSONObject mPages;
 
@@ -72,11 +72,13 @@ public class EAProperties {
 
         public Builder(String path) {
             initInternalParams();
+            if (!path.startsWith("/")) {
+                path = "/" + path;
+            }
             JSONUtils.put(pages, KEY_PAGE_PATH, path);
         }
 
         private void initInternalParams() {
-            JSONUtils.put(internals, KEY_INSTALL_REFERRER, EAnalytics.sInstallReferrer);
             JSONUtils.put(internals, KEY_EOS, "Android" + Build.VERSION.RELEASE);
             JSONUtils.put(internals, KEY_EHW, Build.MANUFACTURER + " " + Build.MODEL);
             JSONUtils.put(internals, KEY_EUIDL, getEuidl());

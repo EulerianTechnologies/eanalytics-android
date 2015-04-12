@@ -9,13 +9,15 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.zip.GZIPOutputStream;
 
+import javax.net.ssl.HttpsURLConnection;
+
 /**
  * Created by Francois Rouault on 15/03/2015.
  */
 class HttpHelper {
 
     public static boolean postData(String value) {
-        EALog.v("-> post data, synchronizing... " + value);
+        EALog.d("-> posting data");
         // FOR TEST
 //        try {
 //            Thread.sleep(1000);
@@ -23,14 +25,14 @@ class HttpHelper {
 //            e.printStackTrace();
 //        }
 //        return new Random().nextInt(4) != 0;
-        // END FOR TEST
+//        END FOR TEST
         try {
             URL url = new URL(EAnalytics.sRTDomain);
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();
             conn.addRequestProperty("Content-Encoding", "gzip");
             conn.addRequestProperty("Content-Type", "application/json");
-            conn.setReadTimeout(10000);
-            conn.setConnectTimeout(15000);
+            conn.setReadTimeout(2000);
+            conn.setConnectTimeout(5000);
             conn.setRequestMethod("POST");
             conn.setDoInput(true);
             conn.setDoOutput(true);
@@ -45,7 +47,7 @@ class HttpHelper {
 
             if (conn.getResponseCode() == 200) {
                 CharSequence response = Helper.toString(conn.getInputStream());
-                EALog.v("-> post response: " + response);
+                EALog.d("-> post response: " + response);
                 JSONObject json = new JSONObject(response.toString());
                 return !json.getBoolean("error");
             } else {

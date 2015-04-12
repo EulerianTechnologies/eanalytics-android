@@ -21,16 +21,23 @@ class PropertiesTracker implements Runnable {
     public void run() {
         handler.removeMessages(EAnalytics.HANDLER_MESSAGE_RETRY);
 
+        if (PersistentIdentity.getInstance().shouldSendInstallReferrer()) {
+            String installReferrer = PersistentIdentity.getInstance().getInstallReferrer();
+            EALog.d("Tracking properties for the fist time, add install referrer to it");
+            JSONUtils.put(properties.mProperties, EAProperties.KEY_INSTALL_REFERRER, installReferrer);
+            PersistentIdentity.getInstance().setInstallReferrerSent();
+        }
+
         String propertiesToString = properties.getJson(true).toString();
         // FOR TEST
         // reminder : change also max size in Config.java
 //        propertiesToString = "{\"TEST\":" + (new Random().nextInt(20)) + "}";
         // END FOR TEST
 
-        EALog.v("Tracking properties : " + propertiesToString);
+        EALog.d("Tracking properties");
 
         if (!ConnectivityHelper.isConnected(EAnalytics.getContext())) {
-            EALog.v("-> abort because no network access.");
+            EALog.d("-> abort because no network access.");
             FileHelper.appendLine(propertiesToString);
             handler.sendEmptyMessageDelayed(EAnalytics.HANDLER_MESSAGE_RETRY, Config.NO_INTERNET_RETRY_DELAY_MILLIS);
             return;
@@ -40,16 +47,17 @@ class PropertiesTracker implements Runnable {
         if (storedProperties.isEmpty()) {
             final boolean success = HttpHelper.postData("[" + propertiesToString + "]");
             if (!success) {
-                EALog.v("-> synchronization failed.");
+                EALog.d("-> synchronization failed. Will retry if no other pending track is found.");
                 FileHelper.appendLine(propertiesToString);
                 handler.sendEmptyMessageDelayed(EAnalytics.HANDLER_MESSAGE_RETRY, Config.RETRY_DELAY_MILLIS);
             } else {
-                EALog.v("-> synchronization succeeded.");
+                EALog.d("-> synchronization succeeded.");
             }
             return;
         }
 
-        EALog.v("-> " + storedProperties.size() + " stored properties found, current properties added to history");
+        EALog.d("-> " + storedProperties.size() + " stored properties found, current properties added to history to " +
+                "be sent with stored ones.");
         FileHelper.appendLine(propertiesToString);//we treat the current properties as a stored properties (history)
 
         new StoredPropertiesTracker(handler).run();

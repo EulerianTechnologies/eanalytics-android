@@ -72,7 +72,7 @@ class FileHelper {
             osw.append(jsonProperties);
             osw.append(SEPARATOR);
             osw.close();
-            EALog.v("-> properties stored.");
+            EALog.d("-> properties stored.");
         } catch (IOException e) {
             EALog.e("Unable to store properties: " + jsonProperties);
         }

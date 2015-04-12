@@ -27,7 +27,6 @@ public class EAnalytics {
     private static Context sAppContext;
     protected Executor mExecutor = Executors.newSingleThreadExecutor();
     static String sAdInfoId;
-    static String sInstallReferrer;
     static boolean sAdInfoIsLAT = false;
 
     protected Handler mUiHandler = new Handler(Looper.getMainLooper()) {
@@ -56,10 +55,10 @@ public class EAnalytics {
     /**
      * Initialization.
      *
-     * @param context  the app context
-     * @param rtDomain the rt domain
+     * @param context the app context
+     * @param host    the host
      */
-    public static void init(Context context, String rtDomain, boolean log) {
+    public static void init(Context context, String host, boolean log) {
         EALog.LOG_ENABLED = log;
         EALog.assertCondition(sAppContext == null && sRTDomain == null, "Init must be called only once.");
         EALog.assertCondition(Helper.isPermissionGranted(context, Manifest.permission.INTERNET),
@@ -67,24 +66,23 @@ public class EAnalytics {
                         Manifest.permission.INTERNET + " in your app Manifest.xml.");
         EALog.assertCondition(Helper.isPermissionGranted(context, Manifest.permission.READ_PHONE_STATE),
                 "Init failed : permission is missing. You must add permission " +
-                        android.Manifest.permission.READ_PHONE_STATE + " in your app Manifest.xml.");//TODO: confirm
+                        android.Manifest.permission.READ_PHONE_STATE + " in your app Manifest.xml.");
         // with Eulerian whether throwing exception or just warn. Not good: TelephonyManager.getDeviceId
         // won't be accessible. Good: client don't have to add this permission if he don't want to.
         EALog.assertCondition(Helper.isPermissionGranted(context, Manifest.permission.ACCESS_NETWORK_STATE),
                 "Init failed : permission is missing: Your must add permission " + Manifest.permission
-                        .ACCESS_NETWORK_STATE + " in your app Manifest.xml"); // TODO: confirm assert with Eulerian
+                        .ACCESS_NETWORK_STATE + " in your app Manifest.xml");
         EALog.assertCondition(Helper.isPermissionGranted(context, Manifest.permission.ACCESS_WIFI_STATE),
                 "Init failed : permission is missing: Your must add permission " + Manifest.permission
-                        .ACCESS_WIFI_STATE + " in your app Manifest.xml"); // TODO: confirm assert with Eulerian
+                        .ACCESS_WIFI_STATE + " in your app Manifest.xml");
         EALog.assertCondition(context != null, "Init failed : context is null. You must provide a valid context.");
-        EALog.assertCondition(Helper.isDomainValid(rtDomain), "Init failed : " + rtDomain + " is not a valid RT " +
-                "domain");
+        EALog.assertCondition(Helper.isHostValid(host), "Init failed : " + host + " is not a valid host name. " +
+                "For instance, test.example.net is a valid.");
         sAppContext = context;
-        sRTDomain = rtDomain;
+        sRTDomain = "https://" + host + "/collectorjson/-/123";
         sAdInfoId = PersistentIdentity.getInstance().getAdvertisingId();
         sAdInfoIsLAT = PersistentIdentity.getInstance().getAdvertisingIsLat();
-        sInstallReferrer = PersistentIdentity.getInstance().getInstallReferrer();
-        EALog.d("Eulerian Analytics initialized with " + rtDomain + " domain.");
+        EALog.d("Eulerian Analytics initialized with " + host);
         getInstance().mExecutor.execute(new GetAdInfo());
         getInstance().track(null);
     }
@@ -127,7 +125,7 @@ public class EAnalytics {
             sAdInfoId = adInfo.getId();
             sAdInfoIsLAT = adInfo.isLimitAdTrackingEnabled();
             PersistentIdentity.getInstance().saveAdvertisingId(sAdInfoId, sAdInfoIsLAT);
-            EALog.d("AdvertisingIdClient id:" + sAdInfoId + ", isLat: " + sAdInfoIsLAT);
+            EALog.d("AdvertisingIdClient id and isLat found");
         }
     }
 }

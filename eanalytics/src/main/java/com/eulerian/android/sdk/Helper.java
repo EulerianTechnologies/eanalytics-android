@@ -15,17 +15,16 @@ import java.util.regex.Pattern;
  */
 class Helper {
 
-    private static final String RT_DOMAIN_REGEX = "([-a-zA-Z0-9^\\p{L}\\p{C}\\u00a1-\\uffff@:%_\\+.~#?&//=]{2," +
-            "256}){1}(\\.[a-z]{2,4}){1}(\\:[0-9]*)?(\\/[-a-zA-Z0-9\\u00a1-\\uffff\\(\\)@:%," +
-            "_\\+.~#?&//=]*)?([-a-zA-Z0-9\\(\\)@:%,_\\+.~#?&//=]*)?";
+    private static final String HOST_REGEX = "^(([a-zA-Z0-9]|[a-zA-Z0-9][a-zA-Z0-9\\-]*[a-zA-Z0-9])\\.)*" +
+            "([A-Za-z0-9]|[A-Za-z0-9][A-Za-z0-9\\-]*[A-Za-z0-9])$";
 
     static boolean isPermissionGranted(Context context, String permission) {
         int res = context.checkCallingOrSelfPermission(permission);
         return (res == PackageManager.PERMISSION_GRANTED);
     }
 
-    static boolean isDomainValid(String domain) {
-        final Matcher contentMatcher = Pattern.compile(RT_DOMAIN_REGEX).matcher(domain);
+    static boolean isHostValid(String domain) {
+        final Matcher contentMatcher = Pattern.compile(HOST_REGEX).matcher(domain);
         return contentMatcher.find();
     }
 
