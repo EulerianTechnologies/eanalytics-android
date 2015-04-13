@@ -5,7 +5,6 @@ import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.zip.GZIPOutputStream;
 
@@ -27,7 +26,7 @@ class HttpHelper {
 //        return new Random().nextInt(4) != 0;
 //        END FOR TEST
         try {
-            URL url = new URL(EAnalytics.sRTDomain);
+            URL url = new URL(EAnalytics.sRTDomain + (System.currentTimeMillis() / 1000));
             HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();
             conn.addRequestProperty("Content-Encoding", "gzip");
             conn.addRequestProperty("Content-Type", "application/json");

@@ -79,7 +79,7 @@ public class EAnalytics {
         EALog.assertCondition(Helper.isHostValid(host), "Init failed : " + host + " is not a valid host name. " +
                 "For instance, test.example.net is a valid.");
         sAppContext = context;
-        sRTDomain = "https://" + host + "/collectorjson/-/123";
+        sRTDomain = "https://" + host + "/collectorjson/-/";
         sAdInfoId = PersistentIdentity.getInstance().getAdvertisingId();
         sAdInfoIsLAT = PersistentIdentity.getInstance().getAdvertisingIsLat();
         EALog.d("Eulerian Analytics initialized with " + host);
