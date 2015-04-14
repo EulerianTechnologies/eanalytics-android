@@ -12,6 +12,6 @@ public class DemoApp extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        EAnalytics.init(this, "ett.eulerian.net", false);
+        EAnalytics.init(this, "ett.eulerian.net", true);
     }
 }

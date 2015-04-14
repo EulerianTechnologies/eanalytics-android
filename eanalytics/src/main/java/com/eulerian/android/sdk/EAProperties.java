@@ -36,6 +36,7 @@ public class EAProperties {
     private static final String KEY_PAGE_PROPERTY = "property";
     private static final String KEY_PAGE_NEW_CUSTOMER = "newcustomer";
     private static final String KEY_MAC = "ea-android-mac";
+    private static final String KEY_SDK_VERSION = "ea-sdk-version";
 
     JSONObject mProperties;
     private JSONObject mInternals;
@@ -89,6 +90,7 @@ public class EAProperties {
             JSONUtils.put(internals, KEY_ADINFO_IS_LAT, String.valueOf(EAnalytics.sAdInfoIsLAT));
             JSONUtils.put(internals, KEY_ADINFO_ID, EAnalytics.sAdInfoId);
             JSONUtils.put(internals, KEY_EPOCH, String.valueOf(System.currentTimeMillis() / 1000));
+            JSONUtils.put(internals, KEY_SDK_VERSION, Config.SDK_VERSION);
         }
 
         private String getEuidl() {

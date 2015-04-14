@@ -26,7 +26,7 @@ class HttpHelper {
 //        return new Random().nextInt(4) != 0;
 //        END FOR TEST
         try {
-            URL url = new URL(EAnalytics.sRTDomain + (System.currentTimeMillis() / 1000));
+            URL url = new URL(EAnalytics.sRTDomain + (System.currentTimeMillis() / 1000) + "_" + Config.SDK_VERSION);
             HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();
             conn.addRequestProperty("Content-Encoding", "gzip");
             conn.addRequestProperty("Content-Type", "application/json");

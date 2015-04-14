@@ -52,6 +52,10 @@ public class EAnalytics {
         return sInstance;
     }
 
+    public static String getSDKVersion() {
+        return Config.SDK_VERSION;
+    }
+
     /**
      * Initialization.
      *
