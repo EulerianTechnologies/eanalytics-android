@@ -14,8 +14,12 @@ class EALog {
 //        Log.v(TAG, msg);
 //    }
 
+    public static void d(String msg, boolean mandatory) {
+        if (LOG_ENABLED || mandatory) Log.d(TAG, (mandatory ? "Eulerian Analytics : " : "") + msg);
+    }
+
     public static void d(String msg) {
-        if (LOG_ENABLED) Log.d(TAG, msg);
+        d(msg, false);
     }
 
     public static void e(String msg) {

@@ -67,8 +67,6 @@ public class EAnalytics {
         EALog.assertCondition(Helper.isPermissionGranted(context, Manifest.permission.READ_PHONE_STATE),
                 "Init failed : permission is missing. You must add permission " +
                         android.Manifest.permission.READ_PHONE_STATE + " in your app Manifest.xml.");
-        // with Eulerian whether throwing exception or just warn. Not good: TelephonyManager.getDeviceId
-        // won't be accessible. Good: client don't have to add this permission if he don't want to.
         EALog.assertCondition(Helper.isPermissionGranted(context, Manifest.permission.ACCESS_NETWORK_STATE),
                 "Init failed : permission is missing: Your must add permission " + Manifest.permission
                         .ACCESS_NETWORK_STATE + " in your app Manifest.xml");
@@ -82,7 +80,7 @@ public class EAnalytics {
         sRTDomain = "https://" + host + "/collectorjson/-/";
         sAdInfoId = PersistentIdentity.getInstance().getAdvertisingId();
         sAdInfoIsLAT = PersistentIdentity.getInstance().getAdvertisingIsLat();
-        EALog.d("Eulerian Analytics initialized with " + host);
+        EALog.d("SDK initialized with " + host, true);
         getInstance().mExecutor.execute(new GetAdInfo());
         getInstance().track(null);
     }

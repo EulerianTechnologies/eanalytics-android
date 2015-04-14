@@ -37,7 +37,7 @@ class PropertiesTracker implements Runnable {
         EALog.d("Tracking properties");
 
         if (!ConnectivityHelper.isConnected(EAnalytics.getContext())) {
-            EALog.d("-> abort because no network access.");
+            EALog.d("-> no network access. Properties is being stored and will be sent later.", true);
             FileHelper.appendLine(propertiesToString);
             handler.sendEmptyMessageDelayed(EAnalytics.HANDLER_MESSAGE_RETRY, Config.NO_INTERNET_RETRY_DELAY_MILLIS);
             return;
@@ -49,9 +49,10 @@ class PropertiesTracker implements Runnable {
             if (!success) {
                 EALog.d("-> synchronization failed. Will retry if no other pending track is found.");
                 FileHelper.appendLine(propertiesToString);
-                handler.sendEmptyMessageDelayed(EAnalytics.HANDLER_MESSAGE_RETRY, Config.RETRY_DELAY_MILLIS);
+                handler.sendEmptyMessageDelayed(EAnalytics.HANDLER_MESSAGE_RETRY,
+                        Config.POST_FAILED_RETRY_DELAY_MILLIS);
             } else {
-                EALog.d("-> synchronization succeeded.");
+                EALog.d("-> properties tracked !", true);
             }
             return;
         }

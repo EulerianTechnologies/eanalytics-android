@@ -25,7 +25,7 @@ public class StoredPropertiesTracker implements Runnable {
         handler.removeMessages(EAnalytics.HANDLER_MESSAGE_RETRY);
 
         if (!ConnectivityHelper.isConnected(EAnalytics.getContext())) {
-            EALog.d("-> abort because no network access.");
+            EALog.d("-> no network access. Properties is being stored and will be sent later.", true);
             handler.sendEmptyMessageDelayed(EAnalytics.HANDLER_MESSAGE_RETRY, Config.NO_INTERNET_RETRY_DELAY_MILLIS);
             return;
         }
@@ -39,9 +39,9 @@ public class StoredPropertiesTracker implements Runnable {
         EALog.d("-> " + storedProperties.size() + " stored properties found. Added for synchronization.");
         int result = postStoredProperties(storedProperties);
         if (result == -1) {
-            handler.sendEmptyMessageDelayed(EAnalytics.HANDLER_MESSAGE_RETRY, Config.RETRY_DELAY_MILLIS);
+            handler.sendEmptyMessageDelayed(EAnalytics.HANDLER_MESSAGE_RETRY, Config.POST_FAILED_RETRY_DELAY_MILLIS);
         } else {
-            EALog.d("-> properties + history = " + result + " synchronization succeeded.");
+            EALog.d("-> all properties tracked successfully. Stored properties is now empty.");
         }
     }
 
@@ -65,9 +65,10 @@ public class StoredPropertiesTracker implements Runnable {
                     if (success) {
                         FileHelper.deleteLines(jsonArray.length());
                         jsonArray = new JSONArray(); // re-init in case the is still pending data.
+                        EALog.d("-> properties tracked !", true);
                     } else {
-                        // something went wrong, will try on next call to track(). This avoid infinite loop.
-                        EALog.d("-> synchronization failed.");
+                        // something went wrong, will try on track() next call. This avoid infinite loop.
+                        EALog.d("-> synchronization failed with " + counter + " properties successfully synchronized");
                         return -1;
                     }
                 }
