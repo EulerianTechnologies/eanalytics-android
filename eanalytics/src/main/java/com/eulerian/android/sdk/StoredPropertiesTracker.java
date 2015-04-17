@@ -68,7 +68,7 @@ public class StoredPropertiesTracker implements Runnable {
                         EALog.d("-> properties tracked !", true);
                     } else {
                         // something went wrong, will try on track() next call. This avoid infinite loop.
-                        EALog.d("-> synchronization failed with " + counter + " properties successfully synchronized");
+                        EALog.d("-> synchronization failed. Will retry later.");
                         return -1;
                     }
                 }
