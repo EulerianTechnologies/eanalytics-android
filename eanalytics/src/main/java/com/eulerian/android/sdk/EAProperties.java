@@ -141,7 +141,11 @@ public class EAProperties {
         }
 
         public T setUID(String uid) {
-            JSONUtils.put(pages, KEY_PAGE_UID, uid);
+            if (!TextUtils.isEmpty(uid)) {
+                JSONUtils.put(pages, KEY_PAGE_UID, uid);
+            } else {
+                EALog.w("UID is empty, should not be.");
+            }
             return (T) this;
         }
 
