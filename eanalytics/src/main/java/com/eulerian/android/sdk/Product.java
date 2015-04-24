@@ -10,6 +10,7 @@ public class Product {
     private static final String KEY_REF = "ref";
     private static final String KEY_NAME = "name";
     private static final String KEY_PARAMS = "params";
+    private static final String KEY_GROUP = "group";
 
     private JSONObject mJson;
 
@@ -34,6 +35,11 @@ public class Product {
 
         public Builder setName(String name) {
             JSONUtils.put(mainJson, KEY_NAME, name);
+            return this;
+        }
+
+        public Builder setGroup(String group) {
+            JSONUtils.put(mainJson, KEY_GROUP, group);
             return this;
         }
 
