@@ -2,10 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/EulerianAnalytics.iml" filepath="$PROJECT_DIR$/EulerianAnalytics.iml" />
+      <module fileurl="file://$PROJECT_DIR$/EulerianAnalytics-android.iml" filepath="$PROJECT_DIR$/EulerianAnalytics-android.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/eanalytics/eanalytics.iml" filepath="$PROJECT_DIR$/eanalytics/eanalytics.iml" />
     </modules>
   </component>
 </project>
-
