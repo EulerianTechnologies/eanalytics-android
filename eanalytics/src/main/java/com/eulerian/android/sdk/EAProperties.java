@@ -51,14 +51,8 @@ public class EAProperties {
         mProperties = builder.properties;
     }
 
-    protected JSONObject getJson(boolean withInternals) {
-        JSONObject result;
-        if (withInternals) {
-            result = JSONUtils.merge(mInternals, mPages, mProperties);
-        } else {
-            result = JSONUtils.merge(mPages, mProperties);
-        }
-        return result;
+    protected JSONObject getJson() {
+        return JSONUtils.merge(mInternals, mPages, mProperties);
     }
 
     //-----------

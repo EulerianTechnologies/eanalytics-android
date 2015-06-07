@@ -28,7 +28,7 @@ class PropertiesTracker implements Runnable {
             PersistentIdentity.getInstance().setInstallReferrerSent();
         }
 
-        String propertiesToString = properties.getJson(true).toString();
+        String propertiesToString = properties.getJson().toString();
         // FOR TEST
         // reminder : change also max size in Config.java
 //        propertiesToString = "{\"TEST\":" + (new Random().nextInt(20)) + "}";
