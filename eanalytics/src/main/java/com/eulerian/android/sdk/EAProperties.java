@@ -36,7 +36,7 @@ public class EAProperties {
     private static final String KEY_PAGE_PROPERTY = "property";
     private static final String KEY_PAGE_NEW_CUSTOMER = "newcustomer";
     private static final String KEY_MAC = "ea-android-mac";
-    private static final String KEY_SDK_VERSION = "ea-sdk-version";
+    private static final String KEY_SDK_VERSION = "ea-android-sdk-version";
 
     JSONObject mProperties;
     private JSONObject mInternals;
