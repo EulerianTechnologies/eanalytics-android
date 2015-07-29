@@ -66,7 +66,7 @@ public class EAOrder extends EAProperties {
             return this;
         }
 
-        public Builder addProduct(Product product, int amount, int quantity) {
+        public Builder addProduct(Product product, double amount, int quantity) {
             if (quantity <= 0) {
                 EALog.w(EAOrder.class.getSimpleName() + "#addProduct() : quantity might be > 0. Current is " +
                         quantity);

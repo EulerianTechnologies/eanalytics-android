@@ -130,8 +130,8 @@ public class MainActivity extends ActionBarActivity {
     public void onClickCart(View v) {
         EACart monPanier = new EACart.Builder("path-cart")
                 .setCartCumul(true)
-                .addProduct(moufle, 2, 42)
-                .addProduct(bonnet, 2, -4)
+                .addProduct(moufle, 2.52, 42)
+                .addProduct(bonnet, 2.123, -4)
                 .build();
 
         EAnalytics.getInstance().track(monPanier);
@@ -142,8 +142,8 @@ public class MainActivity extends ActionBarActivity {
                 .setAmount(432)
                 .setCurrency(CurrencyISO.EUR)
                 .setType("test-type")
-                .addProduct(pasta, 32, 1)
-                .addProduct(lardons, 3, 21)
+                .addProduct(pasta, 32.111, 1)
+                .addProduct(lardons, 3.99, 21)
                 .build();
 
         EAnalytics.getInstance().track(monDevis);
@@ -156,8 +156,8 @@ public class MainActivity extends ActionBarActivity {
                 .setType("test-type")
                 .setPayment("test-payment")
                 .setEstimateRef("test-estimate-ref")
-                .addProduct(pasta, 32, 1)
-                .addProduct(lardons, 3, 21)
+                .addProduct(pasta, 32.32, 1)
+                .addProduct(lardons, 3.01, 21)
                 .build();
 
         EAnalytics.getInstance().track(maVente);
