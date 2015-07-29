@@ -1,6 +1,8 @@
 package com.eulerian.android.sdk;
 
 import android.content.Context;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.provider.Settings;
@@ -24,6 +26,9 @@ public class EAProperties {
     private static final String KEY_APPNAME = "ea-appname";
     private static final String KEY_ADINFO_ID = "ea-android-adid";
     private static final String KEY_EPOCH = "ereplay-time";
+    private static final String KEY_APP_VERSION_NAME = "ea-appversion";
+    private static final String KEY_APP_VERSION_CODE = "ea-appversionbuild";
+
     //- page keys
     private static final String KEY_PAGE_LATITUDE = "ea-lat";
     private static final String KEY_PAGE_LONGITUDE = "ea-lon";
@@ -85,6 +90,19 @@ public class EAProperties {
             JSONUtils.put(internals, KEY_ADINFO_ID, EAnalytics.sAdInfoId);
             JSONUtils.put(internals, KEY_EPOCH, String.valueOf(System.currentTimeMillis() / 1000));
             JSONUtils.put(internals, KEY_SDK_VERSION, Config.SDK_VERSION);
+            setVersionCodeAndVersionName();
+        }
+
+        private void setVersionCodeAndVersionName() {
+            Context context = EAnalytics.getContext();
+            try {
+                PackageInfo packageInfo = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
+                JSONUtils.put(internals, KEY_APP_VERSION_NAME, packageInfo.versionName);
+                JSONUtils.put(internals, KEY_APP_VERSION_CODE, String.valueOf(packageInfo.versionCode));
+            } catch (PackageManager.NameNotFoundException e) {
+                EALog.e("Error while getting package manager / package info. Error : " +
+                        (e == null ? "null" : e.getMessage()));
+            }
         }
 
         private String getEuidl() {

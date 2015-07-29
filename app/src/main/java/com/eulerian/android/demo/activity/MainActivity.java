@@ -38,26 +38,6 @@ public class MainActivity extends ActionBarActivity {
                     .build())
             .setName("Lardons herta")
             .build();
-    private EAProperties properties = new EAProperties.Builder("the_path")
-            .setNewCustomer(true)
-            .setEmail("test-email")
-            .setPageGroup("test-group")
-            .setLocation(latitude, longitude)
-            .setProfile("test-profile")
-            .setUID("test-uid")
-            .set("whatever", "...")
-            .set("whatever1", "...")
-            .set("whatever2", "...")
-            .setAction(new Action.Builder()
-                    .setReference("test-ref-\"fefds$432`^")
-                    .setIn("in-test")
-                    .addOut(new String[]{"tata", "tutu", "tete"})
-                    .build())
-            .setProperty(new SiteCentricProperty.Builder()
-                    .set("cle1", new String[]{"poisson", "viande"})
-                    .set("cle2", "choucroute")
-                    .build())
-            .build();
     private Product bonnet = new Product.Builder("ref-bonnet-rouge")
             .setName("spiderbonnet")
             .setParams(new Params.Builder()
@@ -101,6 +81,26 @@ public class MainActivity extends ActionBarActivity {
     }
 
     public void onClickProperties(View v) {
+        EAProperties properties = new EAProperties.Builder("the_path")
+                .setNewCustomer(true)
+                .setEmail("test-email")
+                .setPageGroup("test-group")
+                .setLocation(latitude, longitude)
+                .setProfile("test-profile")
+                .setUID("test-uid")
+                .set("whatever", "...")
+                .set("whatever1", "...")
+                .set("whatever2", "...")
+                .setAction(new Action.Builder()
+                        .setReference("test-ref-\"fefds$432`^")
+                        .setIn("in-test")
+                        .addOut(new String[]{"tata", "tutu", "tete"})
+                        .build())
+                .setProperty(new SiteCentricProperty.Builder()
+                        .set("cle1", new String[]{"poisson", "viande"})
+                        .set("cle2", "choucroute")
+                        .build())
+                .build();
         EAnalytics.getInstance().track(properties);
     }
 
