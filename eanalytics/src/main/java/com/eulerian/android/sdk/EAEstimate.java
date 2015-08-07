@@ -36,7 +36,7 @@ public class EAEstimate extends EAProperties {
             set(KEY_REF, ref);
         }
 
-        public Builder setAmount(int amount) {
+        public Builder setAmount(double amount) {
             set(KEY_ESTIMATE_AMOUNT, String.valueOf(amount));
             return this;
         }
