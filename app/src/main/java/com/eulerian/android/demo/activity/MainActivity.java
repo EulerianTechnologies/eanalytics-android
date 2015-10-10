@@ -2,6 +2,7 @@ package com.eulerian.android.demo.activity;
 
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.View;
 
 import com.eulerian.android.demo.R;
@@ -20,6 +21,7 @@ import com.eulerian.android.sdk.SiteCentricProperty;
 
 public class MainActivity extends ActionBarActivity {
 
+    private static final String TAG = MainActivity.class.getSimpleName();
     private double latitude = 48.871835;
     private double longitude = 2.382430;
     private Product pasta = new Product.Builder("ref-rrr")
@@ -78,6 +80,7 @@ public class MainActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Log.v(TAG, "EUIDL : " + EAnalytics.getEuidl());
     }
 
     public void onClickProperties(View v) {
