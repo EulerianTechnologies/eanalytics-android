@@ -6,6 +6,8 @@ import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
+import android.provider.Settings;
+import android.telephony.TelephonyManager;
 
 import com.google.android.gms.ads.identifier.AdvertisingIdClient;
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
@@ -54,6 +56,15 @@ public class EAnalytics {
 
     public static String getSDKVersion() {
         return Config.SDK_VERSION;
+    }
+
+    public static String getEuidl() {
+        Context context = EAnalytics.getContext();
+        TelephonyManager telephonyManager = (TelephonyManager) context.getSystemService(Context
+                .TELEPHONY_SERVICE);
+        return telephonyManager != null && telephonyManager.getDeviceId() != null ?
+                telephonyManager.getDeviceId() :
+                Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
     }
 
     /**

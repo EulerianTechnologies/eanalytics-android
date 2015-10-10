@@ -5,8 +5,6 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.wifi.WifiManager;
 import android.os.Build;
-import android.provider.Settings;
-import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 
 import org.json.JSONObject;
@@ -81,7 +79,7 @@ public class EAProperties {
         private void initInternalParams() {
             JSONUtils.put(internals, KEY_EOS, "Android" + Build.VERSION.RELEASE);
             JSONUtils.put(internals, KEY_EHW, Build.MANUFACTURER + " " + Build.MODEL);
-            JSONUtils.put(internals, KEY_EUIDL, getEuidl());
+            JSONUtils.put(internals, KEY_EUIDL, EAnalytics.getEuidl());
             JSONUtils.put(internals, KEY_MAC, getMacAddress());
             String packageName = EAnalytics.getContext().getApplicationInfo().packageName;
             JSONUtils.put(internals, KEY_URL, "http://" + packageName);
@@ -103,15 +101,6 @@ public class EAProperties {
                 EALog.e("Error while getting package manager / package info. Error : " +
                         (e == null ? "null" : e.getMessage()));
             }
-        }
-
-        private String getEuidl() {
-            Context context = EAnalytics.getContext();
-            TelephonyManager telephonyManager = (TelephonyManager) context.getSystemService(Context
-                    .TELEPHONY_SERVICE);
-            return telephonyManager != null && telephonyManager.getDeviceId() != null ?
-                    telephonyManager.getDeviceId() :
-                    Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
         }
 
         private String getMacAddress() {
