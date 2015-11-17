@@ -30,11 +30,18 @@ class EALog {
         Log.w(TAG, msg);
     }
 
-    public static boolean assertCondition(boolean condition, String msg) {
+    public static void assertCondition(boolean condition, String msg) {
         if (condition) {
-            return true;
+            return;
         }
         throw new IllegalStateException(msg);
+    }
+
+    public static void warnCondition(boolean condition, String msg) {
+        if (condition) {
+            return;
+        }
+        w(msg);
     }
 
 //    public static boolean isDebug() {

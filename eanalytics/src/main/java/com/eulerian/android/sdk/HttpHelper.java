@@ -16,7 +16,7 @@ import javax.net.ssl.HttpsURLConnection;
 class HttpHelper {
 
     public static boolean postData(String value) {
-        EALog.d("-> posting data");
+        EALog.d("-> posting data : " + value);
         // FOR TEST
 //        try {
 //            Thread.sleep(1000);
