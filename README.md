@@ -1,6 +1,6 @@
 # Eulerian Analytics #
 
-# Get started #
+## Get started
 (Tested with Android Studio 1.1.0)
 
 Drag and drop Eulerian Analytics JAR library to you app/libs folder. Then, add the following dependencies to your app build.gradle.
