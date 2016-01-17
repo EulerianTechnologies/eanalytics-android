@@ -1,15 +1,30 @@
 apply plugin: 'com.android.library'
+apply plugin: 'com.jfrog.bintray'
+apply plugin: "com.github.dcendents.android-maven"
+
+def libName = 'eanalytics'
+def libDescription = 'Android tracking library for Eulerian Technologies Analytics.'
+def libVersion = '1.6.0'
+def publishedGroupId = 'com.eulerian.android.sdk'
+def artifact = 'eanalytics'
+def siteUrl = 'https://bitbucket.org/euleriantechnologies/eanalytics-android'      // Homepage URL of the library
+def gitUrl = 'https://bitbucket.org/euleriantechnologies/eanalytics-android.git'   // Git repository URL
+def developerId = 'frouo'
+def developerName = 'Francois Rouault'
+def developerEmail = 'francois@eulerian.com'
 
 android {
     compileSdkVersion 21
-    buildToolsVersion "23.0.1"
+    buildToolsVersion "21.1.2"
+    resourcePrefix "eanalytics__"
 
     defaultConfig {
         minSdkVersion 9
         targetSdkVersion 21
         versionCode 1
-        versionName "1.0"
+        versionName libVersion
     }
+
     buildTypes {
         release {
             minifyEnabled false
@@ -20,4 +35,53 @@ android {
 
 dependencies {
     compile 'com.google.android.gms:play-services:6.5.+'
+}
+
+// Specify POM Details :
+version = libVersion // This is the library version used when deploying the artifact
+group = publishedGroupId // Maven Group ID for the artifact
+
+task generateSourcesJar(type: Jar) {
+    from android.sourceSets.main.java.srcDirs
+    classifier 'sources'
+}
+
+task generateJavaDocs(type: Javadoc) {
+    source = android.sourceSets.main.java.srcDirs
+    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+}
+
+task generateJavaDocsJar(type: Jar) {
+    from generateJavaDocs.destinationDir
+    classifier 'javadoc'
+}
+generateJavaDocsJar.dependsOn generateJavaDocs
+
+//---
+// Configure the Bintray Plugin
+//---
+
+Properties properties = new Properties()
+properties.load(project.rootProject.file('local.properties').newDataInputStream())
+
+bintray {
+    user = properties.getProperty("bintray.user")
+    key = properties.getProperty("bintray.apikey")
+
+    configurations = ['archives']
+    pkg {
+        repo = "maven"
+        name = libName
+        desc = libDescription
+        websiteUrl = siteUrl
+        vcsUrl = gitUrl
+        licenses = ["Apache-2.0"]
+        publish = true
+        publicDownloadNumbers = true
+    }
+}
+
+artifacts {
+    archives generateJavaDocsJar
+    archives generateSourcesJar
 }

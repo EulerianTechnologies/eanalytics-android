@@ -1,32 +1,26 @@
 # Eulerian Analytics #
 
-## Get started
-(Tested with Android Studio 1.1.0)
+## Installation
 
-Drag and drop Eulerian Analytics JAR library to you app/libs folder. Then, add the following dependencies to your app build.gradle.
+Grab Eulerian Analytics SDK via Gradle.
 
-```
-#!groovy
+```groovy
 dependencies {
-   compile fileTree(dir: 'libs', include: ['*.jar'])
-   compile 'com.google.android.gms:play-services:6.5.+'
-   ...
+   compile 'com.eulerian.android.sdk:eanalytics:1.6.0'
 }
 ```
 
 In your AndroidManifest.xml, add the following permissions :
 
-```
-#!xml
+```xml
+<uses-permission android:name="android.permission.INTERNET" />
 <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-<uses-permission android:name="android.permission.INTERNET" />
 ```
 
-Also add the following declaration within the <application> element. This tracks the install referrer.
+Also add the following declaration within the <application> element to track the install referrer.
 
-```
-#!xml
+```xml
 <receiver
    android:name="com.eulerian.android.sdk.InstallReferrerReceiver"
    android:exported="true">
@@ -40,21 +34,19 @@ Also add the following declaration within the <application> element. This tracks
 
 Before using the SDK make sure to initialize it, in your Application onCreate() for instance.
 
-```
-#!xml
+```xml
 <!-- in your AndroidManifest.xml-->
 <application
-   android:name=".YourApp">
+   android:name=".DemoApp">
 ```
 
-```
-#!java
-public class YourApp extends Application {
+```java
+public class DemoApp extends Application {
 
     @Override
     public void onCreate() {
         super.onCreate();
-        EAnalytics.init(this, "example.test.com", false);
+        EAnalytics.init(this, "example.demo.com", false);
     }
 
 }
@@ -62,8 +54,7 @@ public class YourApp extends Application {
 Now you can track any properties you want. The generic properties is EAProperties, and the SDK provides convenience classes for the most common usage (ie. EACart, EAEstimate, EAProducts, etc...)
 
 
-```
-#!java
+```java
 EASearch search = new EASearch.Builder("/path-example", "banana")
                 .setParams(new Params.Builder()
                         .addParam("provenance", "martinique")
@@ -77,7 +68,7 @@ EAnalytics.getInstance().track(search)
 
 ## Tutorial screenshots
 
-![Capture d’écran 2015-04-17 à 10.15.42.png](https://bitbucket.org/repo/kA6LdM/images/1900818051-Capture%20d%E2%80%99%C3%A9cran%202015-04-17%20%C3%A0%2010.15.42.png)
+Step 1 to 3 has been reduced in simply grabbing Eulerian Analytics sdk via Gradle.
 
 ![Capture d’écran 2015-04-17 à 10.20.12.png](https://bitbucket.org/repo/kA6LdM/images/3850475813-Capture%20d%E2%80%99%C3%A9cran%202015-04-17%20%C3%A0%2010.20.12.png)
 

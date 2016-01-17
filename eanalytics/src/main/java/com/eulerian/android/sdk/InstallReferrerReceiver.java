@@ -11,12 +11,10 @@ import java.util.Map;
 /**
  * Created by Francois Rouault on 09/03/2015.
  * BroadcastReceiver for automatically storing Google Play Store referrer information as Eulerian Properties.
- * <p/>
  * <p>You can use InstallReferrerReceiver to capture and store referrer information,
  * and use that information to track how users from different sources are using your app.
  * To enable InstallReferrerReceiver, add a clause like the following
  * to the &lt;application&gt; tag of your AndroidManifest.xml.</p>
- * <p/>
  * <pre>
  * {@code
  * <receiver android:name="com.eulerian.android.sdk.InstallReferrerReceiver"
@@ -29,13 +27,11 @@ import java.util.Map;
  * </pre>
  * <p>If you plan to use multiple install refer, please refer to this workaround: &nbsp;https://mixpanel
  * .com/help/questions/articles/how-can-i-use-multiple-install-trackers-with-the-android-library&nbsp;</p>
- * <p/>
  * <p>Once you've added the &lt;receiver&gt; tag to your manifest,
  * the first call to {@link com.eulerian.android.sdk.EAnalytics#track(EAProperties)}
  * will include the user's Google Play Referrer as metadata. In addition, if
  * you include utm parameters in your link to Google Play, they will be parsed and
  * provided as individual properties in your track calls.</p>
- * <p/>
  * <p>InstallReferrerReceiver looks for any of the following parameters. All are optional.</p>
  * <ul>
  * <li>utm_source: often represents the source of your traffic (for example, a search engine or an ad)</li>
@@ -45,7 +41,6 @@ import java.util.Map;
  * which email message was sent)</li>
  * <li>utm_campaign: the name of the marketing campaign associated with the link.</li>
  * </ul>
- * <p/>
  * <p>Whether or not the utm parameters are present, the InstallReferrerReceiver will
  * also create a "referrer" super property with the complete referrer string.</p>
  */

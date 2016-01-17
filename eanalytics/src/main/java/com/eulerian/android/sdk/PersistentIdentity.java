@@ -36,7 +36,7 @@ class PersistentIdentity {
     }
 
     public String getAdvertisingId() {
-        return mSharedPreferences.getString(KEY_ADVERTISING_ID, "unknown");
+        return mSharedPreferences.getString(KEY_ADVERTISING_ID, null);
     }
 
     public boolean getAdvertisingIsLat() {
