@@ -117,15 +117,15 @@ public class EAnalytics {
             try {
                 adInfo = AdvertisingIdClient.getAdvertisingIdInfo(getContext());
             } catch (IOException e) {
-                EALog.e("Unrecoverable error connecting to Google Play services (e.g. the old version of the service " +
+                EALog.w("Unrecoverable error connecting to Google Play services (e.g. the old version of the service " +
                         "doesn't support getting AdvertisingId)");
             } catch (GooglePlayServicesRepairableException e) {
-                EALog.e("Google Play Services is not installed, up-to-date, or enabled");
+                EALog.w("Google Play Services is not installed, up-to-date, or enabled");
             } catch (GooglePlayServicesNotAvailableException e) {
-                EALog.e("Google Play services is not available entirely.");
+                EALog.w("Google Play services is not available entirely.");
             }
             if (adInfo == null) {
-                EALog.d("AdvertisingIdClient null");
+                EALog.d("AdvertisingIdClient has not been found");
                 return;
             }
             sAdInfoId = adInfo.getId();

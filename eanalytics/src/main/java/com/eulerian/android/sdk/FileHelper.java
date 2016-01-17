@@ -5,6 +5,7 @@ import android.content.Context;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -33,8 +34,10 @@ class FileHelper {
                 }
                 is.close();
             }
+        } catch (FileNotFoundException e1) {
+            // no file because no properties has been stored yet
         } catch (IOException e) {
-            EALog.e("Unable to get lines from file");
+            EALog.e("Unable to get lines from file. Exception: " + e);
         }
         return res;
     }
