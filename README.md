@@ -18,13 +18,10 @@ In your AndroidManifest.xml, add the following permissions :
 
 ```
 #!xml
-<uses-permission android:name="android.permission.READ_PHONE_STATE" />
 <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
 <uses-permission android:name="android.permission.INTERNET" />
 ```
-
-Note that READ_PHONE_STATE has been considered as a 'Dangerous Permission' since Android 6, so it is no more mandatory for the SDK to work.
 
 Also add the following declaration within the <application> element. This tracks the install referrer.
 

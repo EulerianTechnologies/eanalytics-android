@@ -2,13 +2,12 @@ package com.eulerian.android.sdk;
 
 
 import android.Manifest;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.provider.Settings;
-import android.telephony.TelephonyManager;
-import android.text.TextUtils;
 
 import com.google.android.gms.ads.identifier.AdvertisingIdClient;
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
@@ -60,12 +59,8 @@ public class EAnalytics {
     }
 
     public static String getEuidl() {
-        Context context = EAnalytics.getContext();
-        TelephonyManager telephonyManager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
-        if (telephonyManager != null && !TextUtils.isEmpty(telephonyManager.getDeviceId())) {
-            return telephonyManager.getDeviceId();
-        }
-        return Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
+        ContentResolver contentResolver = EAnalytics.getContext().getContentResolver();
+        return Settings.Secure.getString(contentResolver, Settings.Secure.ANDROID_ID);
     }
 
     /**
@@ -80,9 +75,6 @@ public class EAnalytics {
         EALog.assertCondition(Helper.isPermissionGranted(context, Manifest.permission.INTERNET),
                 "Init failed : permission is missing. You must add permission " +
                         Manifest.permission.INTERNET + " in your app Manifest.xml.");
-        EALog.warnCondition(Helper.isPermissionGranted(context, Manifest.permission.READ_PHONE_STATE),
-                "Init failed : permission is missing. You must add permission " +
-                        android.Manifest.permission.READ_PHONE_STATE + " in your app Manifest.xml.");
         EALog.assertCondition(Helper.isPermissionGranted(context, Manifest.permission.ACCESS_NETWORK_STATE),
                 "Init failed : permission is missing: Your must add permission " + Manifest.permission
                         .ACCESS_NETWORK_STATE + " in your app Manifest.xml");
