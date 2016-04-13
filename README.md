@@ -1,4 +1,4 @@
-# Eulerian Analytics #
+# Android SDK for Eulerian Analytics #
 
 ## Installation
 
