@@ -6,7 +6,7 @@ Grab Eulerian Analytics SDK via Gradle.
 
 ```groovy
 dependencies {
-   compile 'com.eulerian.android.sdk:eanalytics:1.6.0'
+   compile 'com.eulerian.android.sdk:eanalytics:1.6.1'
 }
 ```
 

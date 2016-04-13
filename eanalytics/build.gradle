@@ -4,11 +4,11 @@ apply plugin: "com.github.dcendents.android-maven"
 
 def libName = 'eanalytics'
 def libDescription = 'Android tracking library for Eulerian Technologies Analytics.'
-def libVersion = '1.6.0'
+def libVersion = '1.6.1'
 def publishedGroupId = 'com.eulerian.android.sdk'
 def artifact = 'eanalytics'
-def siteUrl = 'https://bitbucket.org/euleriantechnologies/eanalytics-android'      // Homepage URL of the library
-def gitUrl = 'https://bitbucket.org/euleriantechnologies/eanalytics-android.git'   // Git repository URL
+def siteUrl = 'https://github.com/EulerianTechnologies/eanalytics-android'      // Homepage URL of the library
+def gitUrl = 'https://github.com/EulerianTechnologies/eanalytics-android.git'   // Git repository URL
 def developerId = 'frouo'
 def developerName = 'Francois Rouault'
 def developerEmail = 'francois@eulerian.com'
