@@ -39,14 +39,16 @@ Notre **SDK** a été conçu pour faciliter au maximum l'intégration en offrant
 
 Les paramètres disponibles et les possibilités sont exactement les mêmes que pour notre Tag collector. Vous pourrez donc suivre les chemins de navigation sur votre application et les comparer avec votre site web classique en intégrant les mêmes variables.
 
-Les appels générés par ces marqueurs sont également très proches de l'appel collector classique et ont été conçus pour être le plus léger possible afin de ne pas perturber l'application.\\
+Les appels générés par ces marqueurs sont également très proches de l'appel collector classique et ont été conçus pour être le plus léger possible afin de ne pas perturber l'application.
+
 Certains paramètres de notre collector sont spécifiques au tracking d'une application mobile. Pour plus d'informations à ce sujet consultez [[fr:collect:technical_implementation:eacollectortag:general:applicationparameters#parametres_specifiques_aux_applications_mobiles|cette documentation]].
 
-<note>Notre SDK est également capable de collecter un nombre illimité d'interactions offline et de les envoyer une fois l'utilisateur connecté. Ce procédé nous permet de continuer à tracker l'internaute même si ce dernier interagit avec votre application hors connection. La navigation est enregistrée et réattribuée à posteriori via notre paramètre ereplay-time.</note>
+Notre SDK est également capable de collecter un nombre illimité d'interactions offline et de les envoyer une fois l'utilisateur connecté. Ce procédé nous permet de continuer à tracker l'internaute même si ce dernier interagit avec votre application hors connection. La navigation est enregistrée et réattribuée à posteriori via notre paramètre ereplay-time.
 
 ## Règle d'affectation de trafic
 
-Sur un site web classique, notre système identifie et affecte le trafic en fonction de l'**URL** sur lequel le marqueur est appelé. Nous n'avons cependant pas accès à cette information dans le contexte d'une application.\\
+Sur un site web classique, notre système identifie et affecte le trafic en fonction de l'**URL** sur lequel le marqueur est appelé. Nous n'avons cependant pas accès à cette information dans le contexte d'une application.
+
 Pour définir la règle d'attribution de traffic, nous nous basons donc sur le sous domaine de tracking utilisé et passé en paramètre de la méthode **init** de l'objet EAnalytics défini dans notre SDK:
 
 ```xml
@@ -271,10 +273,9 @@ EAnalytics.getInstance().track(productPage);
 Ce marqueur permet d'envoyer à vos partenaires les 3 premières références produit listées dans la page de résultat pour optimiser le retargeting des internautes sur votre site. 
 Son utilisation se limite principalement à notre produit Eulerian TMS et n'impacte pas le rapport Acquisition & performance produit dans Eulerian DDP.
 
-<WRAP center round info 80%>
-**Est considéré comme une page de résultat tout marqueur contenant plusieurs références produit sans les paramètres __scart__ __estimate__ __ref__ et __amount__.** 
+**Note : Est considéré comme une page de résultat tout marqueur contenant plusieurs références produit sans les paramètres __scart__ __estimate__ __ref__ et __amount__.** 
+
 Dans le cas ou votre page de résultat ne contiendrait qu'une seule référence produit et donc un seul paramètre **prdref**, le marqueur sera interprété comme une page produit et non une page de résultat.
-</WRAP>
 
 
 
@@ -329,9 +330,7 @@ EAnalytics.getInstance().track(resultPage);
 
 Le marqueur de moteur de recherche interne permet de remonter dans l'interface les requêtes tapées par les internautes ainsi qu'un nombre illimité de paramètres additionnels. Toutes ces informations sont croisées avec les ventes générées et les leviers d'acquisition activés pendant la session.
 
-<WRAP center round info 60%>
-**Est considéré comme une page de moteur de recherche interne tout marqueur contenant le paramètre __isearchengine__.**
-</WRAP>
+**Note : Est considéré comme une page de moteur de recherche interne tout marqueur contenant le paramètre __isearchengine__.**
 
 A noter que le marqueur de moteur interne n'est pas exclusif. Si vous ajoutez une référence produit avec le paramètre **prdref** par exemple, le marqueur sera également considéré comme une page produit.
 
@@ -425,17 +424,13 @@ Ce marqueur comptabilise les devis et l'ensemble des informations associées à 
 
 Chaque nouveau devis est ainsi détaillé avec tous les leviers et l'historique de navigation qui a conduit à sa génération. 
 
-<WRAP center round important 60%>
-**Les devis sont dédoublonnés en fonction de la référence fournie dans le marqueur.**
-</WRAP>
+**Note : Les devis sont dédoublonnés en fonction de la référence fournie dans le marqueur.**
 
 
 Si vous utilisez 2 fois la même référence pour 2 devis différents, le second appel est ignoré en vertu du principe d'unicité de la conversion. 
 Eulerian Analytics vous permet d'annuler ou de valider des devis pour mesurer la performance réelle de vos campagnes dans le temps. 
 
-<WRAP center round info 60%>
-**Est considéré comme une page de devis tout marqueur contenant les paramètres __ref__ et __estimate__.**
-</WRAP>
+**Note : Est considéré comme une page de devis tout marqueur contenant les paramètres __ref__ et __estimate__.**
 
 ## Liste des paramètres
 
@@ -497,9 +492,7 @@ Vous pouvez également passer les produits et catégories de produits associées
 
 La durée de vie d'un panier est de 30 minutes glissantes soit la session de l'internaute selon [[fr:glossary|notre définition]]. 
 
-<WRAP center round info 60%>
-**Est considéré comme une page panier tout marqueur contenant le paramètre __scart__.**
-</WRAP>
+**Note : Est considéré comme une page panier tout marqueur contenant le paramètre __scart__.**
 
 
 ## Liste des paramètres
@@ -556,9 +549,7 @@ EAnalytics.getInstance().track(cartPage);
 
 Ce marqueur comptabilise les conversions et permet le calcul du ROI pour l'ensemble de vos leviers marketing. En plus du montant global de la commande, vous pouvez passer les produits associés, le mode de paiement, la devise ou le type de vente. Ces propriétés enrichissent le niveau de détail disponible dans vos reportings et peuvent être exploités dans toute notre suite produit. Chaque nouvelle conversion est ainsi détaillée avec tous les leviers et l'historique de navigation. 
 
-<WRAP center round important 60%>
-**Les commande sont dédoublonnées en fonction de la référence fournie dans le marqueur de vente.**
-</WRAP>
+**Note : Les commande sont dédoublonnées en fonction de la référence fournie dans le marqueur de vente.**
 
 
 Si vous utilisez 2 fois la même référence pour 2 commandes différentes, le second appel est ignoré en vertu du principe d'unicité de la commande.
@@ -567,13 +558,9 @@ Eulerian Analytics vous permet d'annuler des commandes pour mesurer la performan
 
 En effet, si la plateforme de paiement ne force pas l'internaute à repasser par le site marchand pour valider sa commande, un marqueur positionné après la plateforme de paiement ne sera pas toujours appelé.
 
-<WRAP center round important 60%>
-**En dehors du statut de la commande (pending, valid ou invalid), il est impossible de redéfinir le contenu d'une commande à posteriori de son enregistrement. On ne peut pas ajouter ou retirer un produit mais il est possible par contre de modifier le montant global de la commande.**
-</WRAP>
+**Note : En dehors du statut de la commande (pending, valid ou invalid), il est impossible de redéfinir le contenu d'une commande à posteriori de son enregistrement. On ne peut pas ajouter ou retirer un produit mais il est possible par contre de modifier le montant global de la commande.**
 
-<WRAP center round info 60%>
-**Est considéré comme une page de confirmation de commande tout marqueur contenant les paramètres __ref__ et __amount__ et ne contenant ni __scart__ ni __estimate__.**
-</WRAP>
+**Note : Est considéré comme une page de confirmation de commande tout marqueur contenant les paramètres __ref__ et __amount__ et ne contenant ni __scart__ ni __estimate__.**
 
 
 ## Liste des paramètres
