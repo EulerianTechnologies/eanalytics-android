@@ -68,7 +68,22 @@ A noter également que l'absence d'URL signifie aussi l'absence d'un nom de page
 
 Le trafic généré par votre application peut remonter sur un site Eulerian dédié ou être fusionné avec celui d'un autre site web existant. Comme indiqué plus haut, si votre application passe en mode webview pour certaines pages l'ajout du paramètre [from](https://eulerian.wiki/doku.php?id=fr:collect:technical_implementation:parameters_list) est obligatoire pour nous permettre de rediriger le trafic correctement dans nos systèmes. 
 
+## Métriques téléchargement et mise à jour
 
+Déscription des paramètres associés : 
+  * **ea-appname** : NOM_APPLICATION , correspond au nom de l’application. Ce dernier ne doit pas changer
+  * **ea-appversion** : VERSION_APPLICATION , correspond à la version de l’application
+  * **ea-appinstalled** : 1 , il doit être ajouté à tous les utilisateurs ayant déjà téléchargé l’application avant la mise à jour de l’url d’appel contenant les deux paramètres ci-dessus
+
+La présence du paramètre **ea-appname** déclenche un traitement au niveau du système. 
+
+Le système va alimenter la métrique **téléchargement** si :
+  * Le user n’a jamais été exposé à la valeur du paramètre **ea-appname** au moment de l’ouverture de l’application et le paramètre **ea-appinstalled** n’est pas présent dans l’appel
+
+Le système va alimenter la métrique **Mise à jour** si :
+  * Le user a déjà été exposé au paramètre **ea-appname** et sa valeur est identique à celle présente lors de la dernière ouverture de l’application. Par contre, la valeur du paramètre **ea-appversion** est différente.
+
+![download_upgrade.png](https://bitbucket.org/repo/kA6LdM/images/3930826066-download_upgrade.png)
 
 ## Intégration via jCenter
 
