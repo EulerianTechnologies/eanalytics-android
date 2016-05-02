@@ -2,7 +2,7 @@
 
 ## Installation
 
-Grab Eulerian Analytics SDK via Gradle.
+Grab Eulerian Analytics SDK via [Gradle](http://gradle.org/).
 
 ```groovy
 dependencies {
