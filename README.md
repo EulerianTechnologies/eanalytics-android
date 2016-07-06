@@ -66,6 +66,12 @@ EASearch search = new EASearch.Builder("/path-example", "banana")
 EAnalytics.getInstance().track(search)
 ```
 
+## Dependencies
+
+Please note that Eulerian Analytics SDK includes the following dependencies :
+
+* com.google.android.gms:play-services-base:9.2.0
+
 ## Tutorial screenshots
 
 Step 1 to 3 has been reduced in simply grabbing Eulerian Analytics sdk via Gradle.
