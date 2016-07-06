@@ -5,6 +5,7 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.wifi.WifiManager;
 import android.os.Build;
+import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
 import org.json.JSONObject;
@@ -87,7 +88,7 @@ public class EAProperties {
             JSONUtils.put(internals, KEY_ADINFO_IS_LAT, String.valueOf(EAnalytics.sAdInfoIsLAT));
             JSONUtils.put(internals, KEY_ADINFO_ID, EAnalytics.sAdInfoId);
             JSONUtils.put(internals, KEY_EPOCH, String.valueOf(System.currentTimeMillis() / 1000));
-            JSONUtils.put(internals, KEY_SDK_VERSION, Config.SDK_VERSION);
+            JSONUtils.put(internals, KEY_SDK_VERSION, BuildConfig.VERSION_NAME);
             setVersionCodeAndVersionName();
         }
 
@@ -103,6 +104,7 @@ public class EAProperties {
             }
         }
 
+        @Nullable
         private String getMacAddress() {
             WifiManager wifiManager = (WifiManager) EAnalytics.getContext().getSystemService(Context.WIFI_SERVICE);
             return wifiManager != null && wifiManager.getConnectionInfo() != null ?

@@ -4,7 +4,6 @@ apply plugin: "com.github.dcendents.android-maven"
 
 def libName = 'eanalytics'
 def libDescription = 'Android tracking library for Eulerian Technologies Analytics.'
-def libVersion = '1.6.1'
 def publishedGroupId = 'com.eulerian.android.sdk'
 def artifact = 'eanalytics'
 def siteUrl = 'https://github.com/EulerianTechnologies/eanalytics-android'      // Homepage URL of the library
@@ -22,7 +21,7 @@ android {
         minSdkVersion 9
         targetSdkVersion 21
         versionCode 1
-        versionName libVersion
+        versionName rootProject.ext.eanalyticsVersionName
     }
 
     buildTypes {
@@ -38,7 +37,7 @@ dependencies {
 }
 
 // Specify POM Details :
-version = libVersion // This is the library version used when deploying the artifact
+version = rootProject.ext.eanalyticsVersionName // This is the library version used when deploying the artifact
 group = publishedGroupId // Maven Group ID for the artifact
 
 task generateSourcesJar(type: Jar) {
@@ -70,8 +69,9 @@ bintray {
 
     configurations = ['archives']
     pkg {
-        repo = "maven"
+        repo = 'maven'
         name = libName
+        userOrg = 'euleriantechnologies'
         desc = libDescription
         websiteUrl = siteUrl
         vcsUrl = gitUrl

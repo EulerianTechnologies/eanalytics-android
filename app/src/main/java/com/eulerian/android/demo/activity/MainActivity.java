@@ -24,9 +24,9 @@ public class MainActivity extends ActionBarActivity {
     private static final String TAG = MainActivity.class.getSimpleName();
     private double latitude = 48.871835;
     private double longitude = 2.382430;
-    private Product pasta = new Product.Builder("ref-rrr")
+    private Product pates = new Product.Builder("ref-rrr")
             .setParams(new Params.Builder()
-                    .addParam("marque", "barilla")
+                    .addParam("marque", "pasta4ever")
                     .addParam("categorie", "frais")
                     .addParam("stock", 4)
                     .build())
@@ -34,11 +34,11 @@ public class MainActivity extends ActionBarActivity {
             .build();
     private Product lardons = new Product.Builder("ref-lll")
             .setParams(new Params.Builder()
-                    .addParam("marque", "herta")
-                    .addParam("categorie", "lard")
+                    .addParam("marque", "Miam Lardons")
+                    .addParam("categorie", "viande")
                     .addParam("stock", 98)
                     .build())
-            .setName("Lardons herta")
+            .setName("Lardons Premium")
             .build();
     private Product bonnet = new Product.Builder("ref-bonnet-rouge")
             .setName("spiderbonnet")
@@ -109,7 +109,7 @@ public class MainActivity extends ActionBarActivity {
 
     public void onClickProducts(View v) {
         EAProducts products = new EAProducts.Builder("test-path")
-                .setEmail("francois.rouault.fr@gmail.com")
+                .setEmail("prenom.nom@mail.com")
                 .setLocation(latitude, longitude)
                 .addProduct(product1)
                 .addProduct(product2)
@@ -119,7 +119,7 @@ public class MainActivity extends ActionBarActivity {
     }
 
     public void onClickSearch(View v) {
-        EASearch search = new EASearch.Builder("search-path", "banana")
+        EASearch search = new EASearch.Builder("search-path", "banane")
                 .setParams(new Params.Builder()
                         .addParam("provenance", "martinique")
                         .addParam("couleur", "jaune")
@@ -145,7 +145,7 @@ public class MainActivity extends ActionBarActivity {
                 .setAmount(432)
                 .setCurrency(CurrencyISO.EUR)
                 .setType("test-type")
-                .addProduct(pasta, 32.111, 1)
+                .addProduct(pates, 32.111, 1)
                 .addProduct(lardons, 3.99, 21)
                 .build();
 
@@ -159,7 +159,7 @@ public class MainActivity extends ActionBarActivity {
                 .setType("test-type")
                 .setPayment("test-payment")
                 .setEstimateRef("test-estimate-ref")
-                .addProduct(pasta, 32.32, 1)
+                .addProduct(pates, 32.32, 1)
                 .addProduct(lardons, 3.01, 21)
                 .build();
 

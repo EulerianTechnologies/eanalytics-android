@@ -8,6 +8,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.provider.Settings;
+import android.support.annotation.Nullable;
 
 import com.google.android.gms.ads.identifier.AdvertisingIdClient;
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
@@ -28,6 +29,7 @@ public class EAnalytics {
     private static EAnalytics sInstance;
     private static Context sAppContext;
     protected Executor mExecutor = Executors.newSingleThreadExecutor();
+    @Nullable
     static String sAdInfoId;
     static boolean sAdInfoIsLAT = false;
 
@@ -55,7 +57,7 @@ public class EAnalytics {
     }
 
     public static String getSDKVersion() {
-        return Config.SDK_VERSION;
+        return BuildConfig.VERSION_NAME;
     }
 
     public static String getEuidl() {
