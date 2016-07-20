@@ -83,4 +83,4 @@ Los pasos de 1 a 3 se han reducido y puedes acceder a Eulerian Analytics sdk a t
 
 # Tagging plan
 
-Link to [Android tagging plan](https://github.com/EulerianTechnologies/eanalytics-android/blob/master/TAGGINGPLAN.md)
+Link to [Android tagging plan](https://github.com/EulerianTechnologies/eanalytics-android/blob/master/TAGGINGPLAN_EN.md)
