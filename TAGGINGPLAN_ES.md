@@ -18,7 +18,7 @@ http://www.vpg.fr/ios-landing-webview?ea-euidl-bypass=$euidl_de_l_app
 Si el ea.js detecta este parámetro, lo utilizará y lo guardará durante toda la sesión, para evitar que el sitio lo reenvíe con cada página visitada.
 Una vez se pasa este parámetro, el tracking de una aplicación iOS en contexto webview no difiere de los formatos JavaScript que usamos para una web clásica.
 
-La documentación disponible en [esta dirección](https://eulerian.wiki/doku.php?id=fr:collect:technical_implementation:general) contiene toda la información necesaria para la implementación de nuestros Tags JavaScript.
+La documentación disponible en [esta dirección](https://eulerian.wiki/doku.php?id=es:collect:technical_implementation:general) contiene toda la información necesaria para la implementación de nuestros Tags JavaScript.
 
 
 
@@ -36,7 +36,7 @@ Los parámetros disponibles y las posibilidades son exactamente las mismas. Podr
 
 Las llamadas generadas por estos marcadores se acercan también a las del colector clásico, y han sido concebidas para ser lo más ligeras posible para no perturbar la aplicación.
 
-Algunos parámetros de nuestro colector son específicos al tracking de una aplicación móvil. Para saber más acerca de esto puedes consultar  [esta documentación] (https://eulerian.wiki/doku.php?id=fr:collect:technical_implementation:parameters_list).
+Algunos parámetros de nuestro colector son específicos al tracking de una aplicación móvil. Para saber más acerca de esto puedes consultar  [esta documentación] (https://eulerian.wiki/doku.php?id=es:collect:technical_implementation:parameters_list).
 
 Nuestra SDK también puede recoger un número ilimitado de interacciones offline y enviarlas una vez el usuario se conecta. Este procedimiento nos permite hacer un seguimiento del usuario incluso si éste usa la aplicación sin conexión. La navegación queda registrada y se reatribuye posteriormente a través de nuestro parámetro ereplay-time.
 
@@ -59,11 +59,11 @@ public class YourApp extends Application {
 ```
 
 <note important>
-Esto significa también que si usas el mismo subdominio de tracking para varias de tus aplicaciones, tendremos que distinguirlos añadiendo el parámetro [from] (https://eulerian.wiki/doku.php?id=fr:collect:technical_implementation:parameters_list) en nuestros marcadores. Así será automáticamente para una aplicación hibrida que comparte páginas en común con tu sitio web.</note>
+Esto significa también que si usas el mismo subdominio de tracking para varias de tus aplicaciones, tendremos que distinguirlos añadiendo el parámetro [from] (https://eulerian.wiki/doku.php?id=es:collect:technical_implementation:parameters_list) en nuestros marcadores. Así será automáticamente para una aplicación hibrida que comparte páginas en común con tu sitio web.</note>
 
-Igualmente cabe señalar que la ausencia de URL significa también la ausencia de un nombre de página por defecto. El parámetro [path](https://eulerian.wiki/doku.php?id=fr:collect:technical_implementation:parameters_list) no es opcional sino __obligatorio__ en el seguimiento de una aplicación.
+Igualmente cabe señalar que la ausencia de URL significa también la ausencia de un nombre de página por defecto. El parámetro [path](https://eulerian.wiki/doku.php?id=es:collect:technical_implementation:parameters_list) no es opcional sino __obligatorio__ en el seguimiento de una aplicación.
 
-El tráfico generado por tu aplicación se puede rastrear en un sitio de Eulerian dedicado o fusionarse con el de otro sitio web existente. Como se ha indicado anteriormente, si tu aplicación pasa a modo webview para algunas páginas es obligatorio añadir el parámetro [from](https://eulerian.wiki/doku.php?id=fr:collect:technical_implementation:parameters_list) para que podamos redirigir el tráfico correctamente a nuestros sistemas. 
+El tráfico generado por tu aplicación se puede rastrear en un sitio de Eulerian dedicado o fusionarse con el de otro sitio web existente. Como se ha indicado anteriormente, si tu aplicación pasa a modo webview para algunas páginas es obligatorio añadir el parámetro [from](https://eulerian.wiki/doku.php?id=es:collect:technical_implementation:parameters_list) para que podamos redirigir el tráfico correctamente a nuestros sistemas. 
 
 ## Configuración de descargas y actualizaciones
 
@@ -174,8 +174,8 @@ Para tener informes más completos puedes añadir los parámetros a continuació
 
 ### Liste des paramètres
 
-  * __**path :**__ (NOM_PAGE) Este parámetro permite nombrar la página para identificarla más tarde en los informes. Para saber más puedes consultar el [artículo siguiente] (https://eulerian.wiki/doku.php?id=fr:collect:technical_implementation:parameters_list).
-  * __**uid :**__ (UID) Este parámetro debe completarse con tu ID interna cuando el internauta está conectado para consolidar los datos del historial provenientes de diferentes dispositivos. Puedes reconciliar un clic con la descarga de la aplicación. Para saber más puedes consultar el [artículo siguiente](https://eulerian.wiki/doku.php?id=fr:collect:technical_implementation:parameters_list).
+  * __**path :**__ (NOM_PAGE) Este parámetro permite nombrar la página para identificarla más tarde en los informes. Para saber más puedes consultar el [artículo siguiente] (https://eulerian.wiki/doku.php?id=es:collect:technical_implementation:parameters_list).
+  * __**uid :**__ (UID) Este parámetro debe completarse con tu ID interna cuando el internauta está conectado para consolidar los datos del historial provenientes de diferentes dispositivos. Puedes reconciliar un clic con la descarga de la aplicación. Para saber más puedes consultar el [artículo siguiente](https://eulerian.wiki/doku.php?id=es:collect:technical_implementation:parameters_list).
 
 ## Implementación
 
@@ -218,12 +218,12 @@ En general, nuestro sistema no reconocerá como marcador de página de producto 
 
 ## Lista de parámetros
 
-  * __**path:**__ (NOM_PAGE) Este parámetro permite nombrar la página para identificarla más tarde en los informes. Para saber más puedes consultar el [artículo siguiente](https://eulerian.wiki/doku.php?id=fr:collect:technical_implementation:parameters_list).
-  * __**uid:**__ (UID) Este parámetro debe completarse con tu ID interna cuando el internauta está conectado para consolidar los datos del historial provenientes de diferentes dispositivos. Puedes reconciliar un clic con la descarga de la aplicación. Para saber más puedes consultar el [artículo siguiente](https://eulerian.wiki/doku.php?id=fr:collect:technical_implementation:parameters_list).
-  * __**prdref:**__ (ID_PRODUIT) Ce paramètre doit être valorisé avec la référence du produit consulté par l'internaute. Pour plus d'informations, veuillez consulter [l'article suivant](https://eulerian.wiki/doku.php?id=fr:collect:technical_implementation:parameters_list).
-  * __**prdname :**__ (NOM_PRODUIT) Este parámetro debe valorarse con la referencia de producto consultada por el internauta. Para saber más puedes consultar el [artículo siguiente](https://eulerian.wiki/doku.php?id=fr:collect:technical_implementation:parameters_list).
-  * __**prdgroup :**__ (GROUPE) Puedes asociar un grupo a una referencia de producto. Este parámetro permite asocia un margen a un producto a través de una asociación a un grupo “A” o “B”. Por tanto, cada una de las etiquetas designa el grupo de margen sin divulgar el total exacto en nuestro colector de tags. Para saber más puedes consultar el [artículo siguiente](https://eulerian.wiki/doku.php?id=fr:collect:technical_implementation:parameters_list).
-  * __**prdparam-xxxxx:**__ (VALEUR_PARAM, NOM_PARAM) Este parámetro permite asociar una categoría a la referencia del producto. Debes precisar el nombre de la categoría tras el prefijo **prdparam-**. Por ejemplo, prdparam-universo, prdparam-talla, etc. También puedes añadir tantas categorías como quieras. Para saber más puedes consultar el [artículo siguiente](https://eulerian.wiki/doku.php?id=fr:collect:technical_implementation:parameters_list).
+  * __**path:**__ (NOM_PAGE) Este parámetro permite nombrar la página para identificarla más tarde en los informes. Para saber más puedes consultar el [artículo siguiente](https://eulerian.wiki/doku.php?id=es:collect:technical_implementation:parameters_list).
+  * __**uid:**__ (UID) Este parámetro debe completarse con tu ID interna cuando el internauta está conectado para consolidar los datos del historial provenientes de diferentes dispositivos. Puedes reconciliar un clic con la descarga de la aplicación. Para saber más puedes consultar el [artículo siguiente](https://eulerian.wiki/doku.php?id=es:collect:technical_implementation:parameters_list).
+  * __**prdref:**__ (ID_PRODUIT) Ce paramètre doit être valorisé avec la référence du produit consulté par l'internaute. Pour plus d'informations, veuillez consulter [l'article suivant](https://eulerian.wiki/doku.php?id=es:collect:technical_implementation:parameters_list).
+  * __**prdname :**__ (NOM_PRODUIT) Este parámetro debe valorarse con la referencia de producto consultada por el internauta. Para saber más puedes consultar el [artículo siguiente](https://eulerian.wiki/doku.php?id=es:collect:technical_implementation:parameters_list).
+  * __**prdgroup :**__ (GROUPE) Puedes asociar un grupo a una referencia de producto. Este parámetro permite asocia un margen a un producto a través de una asociación a un grupo “A” o “B”. Por tanto, cada una de las etiquetas designa el grupo de margen sin divulgar el total exacto en nuestro colector de tags. Para saber más puedes consultar el [artículo siguiente](https://eulerian.wiki/doku.php?id=es:collect:technical_implementation:parameters_list).
+  * __**prdparam-xxxxx:**__ (VALEUR_PARAM, NOM_PARAM) Este parámetro permite asociar una categoría a la referencia del producto. Debes precisar el nombre de la categoría tras el prefijo **prdparam-**. Por ejemplo, prdparam-universo, prdparam-talla, etc. También puedes añadir tantas categorías como quieras. Para saber más puedes consultar el [artículo siguiente](https://eulerian.wiki/doku.php?id=es:collect:technical_implementation:parameters_list).
 
 ## Implementación
 
@@ -290,9 +290,9 @@ En caso de que tu página de resultado solo tenga una referencia de producto, y 
 
 ## Lista de parámetros
 
-  * __**path :**__ (NOM_PAGE) Este parámetro permite nombrar la página para identificarla más tarde en los informes. Para saber más puedes consultar el [artículo siguiente](https://eulerian.wiki/doku.php?id=fr:collect:technical_implementation:parameters_list).
-  * __**uid :**__ (UID) Este parámetro debe completarse con tu ID interna cuando el internauta está conectado para consolidar los datos del historial provenientes de diferentes dispositivos. Puedes reconciliar un clic con la descarga de la aplicación. Para saber más puedes consultar el [artículo siguiente](https://eulerian.wiki/doku.php?id=fr:collect:technical_implementation:parameters_list).
-  * __**prdref :**__ (ID_PRODUIT) Este parámetro debe valorarse con la referencia de producto consultada por el internauta. Para saber más puedes consultar el [artículo siguiente](https://eulerian.wiki/doku.php?id=fr:collect:technical_implementation:parameters_list).
+  * __**path :**__ (NOM_PAGE) Este parámetro permite nombrar la página para identificarla más tarde en los informes. Para saber más puedes consultar el [artículo siguiente](https://eulerian.wiki/doku.php?id=es:collect:technical_implementation:parameters_list).
+  * __**uid :**__ (UID) Este parámetro debe completarse con tu ID interna cuando el internauta está conectado para consolidar los datos del historial provenientes de diferentes dispositivos. Puedes reconciliar un clic con la descarga de la aplicación. Para saber más puedes consultar el [artículo siguiente](https://eulerian.wiki/doku.php?id=es:collect:technical_implementation:parameters_list).
+  * __**prdref :**__ (ID_PRODUIT) Este parámetro debe valorarse con la referencia de producto consultada por el internauta. Para saber más puedes consultar el [artículo siguiente](https://eulerian.wiki/doku.php?id=es:collect:technical_implementation:parameters_list).
 
 ## Implementación
 
@@ -345,12 +345,12 @@ Debe tenerse en cuenta que el marcador de motor de búsqueda no es exclusivo. Si
 
 ## Lista de parámetros
 
-  * __**path:**__ (NOM_PAGE) Este parámetro permite nombrar la página para identificarla más tarde en los informes. Para saber más puedes consultar el [artículo siguiente](https://eulerian.wiki/doku.php?id=fr:collect:technical_implementation:parameters_list).
-  * __**uid:**__ (UID) Este parámetro debe completarse con tu ID interna cuando el internauta está conectado para consolidar los datos del historial provenientes de diferentes dispositivos. Puedes reconciliar un clic con la descarga de la aplicación. Para saber más puedes consultar el [artículo siguiente](https://eulerian.wiki/doku.php?id=fr:collect:technical_implementation:parameters_list).
-  * __**isearchengine:**__ (NOM_MOTEUR_INTERNE) Este parámetro permite nombre el motor de búsqueda interna y distinguirlo de los otros campos de búsqueda si hay varios en tu página. Para saber más puedes consultar el [artículo siguiente](https://eulerian.wiki/doku.php?id=fr:collect:technical_implementation:parameters_list).
-  * __**isearchresults:**__ (NOMBRE_DE_RESULTATS) Este parámetro debe contener el número de resultados de búsqueda generados por el internauta. Para saber más puedes consultar el [artículo siguiente](https://eulerian.wiki/doku.php?id=fr:collect:technical_implementation:parameters_list).
-  * __**isearchkey :**__ (CLE_DU_PARAMETRE_RECHERCHE) Este parámetro debe completarse con la llave del campo adicional que deseas integrar en tu marcador de búsqueda interna. Para saber más puedes consultar [artículo siguiente](https://eulerian.wiki/doku.php?id=fr:collect:technical_implementation:parameters_list).
-  * __**isearchdata :**__ (VALEUR_DU_PARAMETRE_RECHERCHE) Este parámetro debe contener el valor del campo isearchkey citado más arriba. A cada campo de búsqueda suplementaria deben añadirse los parámetros  isearchkey y isearchdata. Para saber más puedes consultar el [artículo siguiente](https://eulerian.wiki/doku.php?id=fr:collect:technical_implementation:parameters_list).
+  * __**path:**__ (NOM_PAGE) Este parámetro permite nombrar la página para identificarla más tarde en los informes. Para saber más puedes consultar el [artículo siguiente](https://eulerian.wiki/doku.php?id=es:collect:technical_implementation:parameters_list).
+  * __**uid:**__ (UID) Este parámetro debe completarse con tu ID interna cuando el internauta está conectado para consolidar los datos del historial provenientes de diferentes dispositivos. Puedes reconciliar un clic con la descarga de la aplicación. Para saber más puedes consultar el [artículo siguiente](https://eulerian.wiki/doku.php?id=es:collect:technical_implementation:parameters_list).
+  * __**isearchengine:**__ (NOM_MOTEUR_INTERNE) Este parámetro permite nombre el motor de búsqueda interna y distinguirlo de los otros campos de búsqueda si hay varios en tu página. Para saber más puedes consultar el [artículo siguiente](https://eulerian.wiki/doku.php?id=es:collect:technical_implementation:parameters_list).
+  * __**isearchresults:**__ (NOMBRE_DE_RESULTATS) Este parámetro debe contener el número de resultados de búsqueda generados por el internauta. Para saber más puedes consultar el [artículo siguiente](https://eulerian.wiki/doku.php?id=es:collect:technical_implementation:parameters_list).
+  * __**isearchkey :**__ (CLE_DU_PARAMETRE_RECHERCHE) Este parámetro debe completarse con la llave del campo adicional que deseas integrar en tu marcador de búsqueda interna. Para saber más puedes consultar [artículo siguiente](https://eulerian.wiki/doku.php?id=es:collect:technical_implementation:parameters_list).
+  * __**isearchdata :**__ (VALEUR_DU_PARAMETRE_RECHERCHE) Este parámetro debe contener el valor del campo isearchkey citado más arriba. A cada campo de búsqueda suplementaria deben añadirse los parámetros  isearchkey y isearchdata. Para saber más puedes consultar el [artículo siguiente](https://eulerian.wiki/doku.php?id=es:collect:technical_implementation:parameters_list).
 
 ## Implementación
 
@@ -405,8 +405,8 @@ Puedes usarlo para estar al tanto de problemas recurrentes en una etapa concreta
 
 ## Lista de parámetros
 
-  * __**error:**__ (Obligatorio) Este parámetro es siempre **1** y puede añadirse a todos los tipos de marcador. Su presencia contabiliza una página vista en el informe más arriba. Para saber más puedes consultar el [artículo siguiente](https://eulerian.wiki/doku.php?id=fr:collect:technical_implementation:parameters_list).
-  * __**path:**__ (Obligatorio) Este parámetro permite nombrar la página para identificarla más tarde en los informes. Para saber más puedes consultar el [artículo siguiente](https://eulerian.wiki/doku.php?id=fr:collect:technical_implementation:parameters_list).
+  * __**error:**__ (Obligatorio) Este parámetro es siempre **1** y puede añadirse a todos los tipos de marcador. Su presencia contabiliza una página vista en el informe más arriba. Para saber más puedes consultar el [artículo siguiente](https://eulerian.wiki/doku.php?id=es:collect:technical_implementation:parameters_list).
+  * __**path:**__ (Obligatorio) Este parámetro permite nombrar la página para identificarla más tarde en los informes. Para saber más puedes consultar el [artículo siguiente](https://eulerian.wiki/doku.php?id=es:collect:technical_implementation:parameters_list).
 
 ## Implementación
 
@@ -441,14 +441,14 @@ Eulerian Analytics te permite anular o validar presupuestos para medir el rendim
 
 ## Lista de parámetros
 
-  * __**path :**__ (NOM_PAGE) Este parámetro permite nombrar la página para identificarla más tarde en los informes. Para saber más puedes consultar el [artículo siguiente](https://eulerian.wiki/doku.php?id=fr:collect:technical_implementation:parameters_list).
-  * __**uid :**__ (UID) Este parámetro debe completarse con tu ID interna cuando el internauta está conectado para consolidar los datos del historial provenientes de diferentes dispositivos. Puedes reconciliar un clic con la descarga de la aplicación. Para saber más puedes consultar el [artículo siguiente](https://eulerian.wiki/doku.php?id=fr:collect:technical_implementation:parameters_list).
-  * __**ref :**__ (REFERENCE_DEVIS) Se trata de una referencia única del presupuesto que permite identificarlo y encontrarlo el nuestro sistema. Para saber más puedes consultar el [artículo siguiente](https://eulerian.wiki/doku.php?id=fr:collect:technical_implementation:parameters_list).
-  * __**amount :**__ (MONTANT_DEVIS) Este parámetro debe contener el total del presupuesto, IVA incluido. Los decimales se separán por un punto. Para saber más puedes consultar el [artículo siguiente](https://eulerian.wiki/doku.php?id=fr:collect:technical_implementation:parameters_list).
-  * __**type :**__ (TYPE_DE_DEVIS) Este parámetro permite categorizar el presupuesto según tu propio sistema de referencia. Para saber más puedes consultar el [artículo siguiente](https://eulerian.wiki/doku.php?id=fr:collect:technical_implementation:parameters_list).
-  * __**prdref :**__ (ID_PRODUIT) Este parámetro debe completarse con la referencia de producto asociada al presupuesto y repetida en cada valor diferente. Para saber más puedes consultar el [artículo siguiente](https://eulerian.wiki/doku.php?id=fr:collect:technical_implementation:parameters_list).
-  * __**prdamount :**__ (MONTANT_PRODUIT) Este parámetro permite especificar el total unitario de cada producto asociado al presupuesto. Para saber más puedes consultar el [artículo siguiente](https://eulerian.wiki/doku.php?id=fr:collect:technical_implementation:parameters_list).
-  * __**prdquantity :**__ (QUANTITE_PRODUIT) Este parámetro permite especificar las cantidades de cada producto asociado al presupuesto. Para saber más puedes consultar el [artículo siguiente](https://eulerian.wiki/doku.php?id=fr:collect:technical_implementation:parameters_list).
+  * __**path :**__ (NOM_PAGE) Este parámetro permite nombrar la página para identificarla más tarde en los informes. Para saber más puedes consultar el [artículo siguiente](https://eulerian.wiki/doku.php?id=es:collect:technical_implementation:parameters_list).
+  * __**uid :**__ (UID) Este parámetro debe completarse con tu ID interna cuando el internauta está conectado para consolidar los datos del historial provenientes de diferentes dispositivos. Puedes reconciliar un clic con la descarga de la aplicación. Para saber más puedes consultar el [artículo siguiente](https://eulerian.wiki/doku.php?id=es:collect:technical_implementation:parameters_list).
+  * __**ref :**__ (REFERENCE_DEVIS) Se trata de una referencia única del presupuesto que permite identificarlo y encontrarlo el nuestro sistema. Para saber más puedes consultar el [artículo siguiente](https://eulerian.wiki/doku.php?id=es:collect:technical_implementation:parameters_list).
+  * __**amount :**__ (MONTANT_DEVIS) Este parámetro debe contener el total del presupuesto, IVA incluido. Los decimales se separán por un punto. Para saber más puedes consultar el [artículo siguiente](https://eulerian.wiki/doku.php?id=es:collect:technical_implementation:parameters_list).
+  * __**type :**__ (TYPE_DE_DEVIS) Este parámetro permite categorizar el presupuesto según tu propio sistema de referencia. Para saber más puedes consultar el [artículo siguiente](https://eulerian.wiki/doku.php?id=es:collect:technical_implementation:parameters_list).
+  * __**prdref :**__ (ID_PRODUIT) Este parámetro debe completarse con la referencia de producto asociada al presupuesto y repetida en cada valor diferente. Para saber más puedes consultar el [artículo siguiente](https://eulerian.wiki/doku.php?id=es:collect:technical_implementation:parameters_list).
+  * __**prdamount :**__ (MONTANT_PRODUIT) Este parámetro permite especificar el total unitario de cada producto asociado al presupuesto. Para saber más puedes consultar el [artículo siguiente](https://eulerian.wiki/doku.php?id=es:collect:technical_implementation:parameters_list).
+  * __**prdquantity :**__ (QUANTITE_PRODUIT) Este parámetro permite especificar las cantidades de cada producto asociado al presupuesto. Para saber más puedes consultar el [artículo siguiente](https://eulerian.wiki/doku.php?id=es:collect:technical_implementation:parameters_list).
 
 ## Implementación
 
@@ -502,12 +502,12 @@ La duración de vida de una cesta es de 30 minutos durante la sesión del intern
 
 ## Lista de parámetros
 
-  * __**path:**__ (Obligatorio) Este parámetro permite nombrar la página para identificarla más tarde en los informes. Para saber más puedes consultar el [artículo siguiente](https://eulerian.wiki/doku.php?id=fr:collect:technical_implementation:parameters_list).
-  * __**uid :**__ (Opcional) Este parámetro debe completarse con tu ID interna cuando el internauta está conectado para consolidar los datos del historial provenientes de diferentes dispositivos Puedes reconciliar un clic con la descarga de la aplicación. Para saber más puedes consultar el [artículo siguiente](https://eulerian.wiki/doku.php?id=fr:collect:technical_implementation:parameters_list).
-  * __**scartcumul :**__ (Obligatorio) El valor de este parámetro indica el modo de contabilización de los productos en la cesta. Cuando es igual a 0, nuestro sistema interpreta los productos pasados por el marcador como constituyentes de la integridad de la cesta. Cuando es igual a 1, los productos pasados por el marcador se añaden a cada llamada sucesiva. Para saber más puedes consultar [artículo siguiente](https://eulerian.wiki/doku.php?id=fr:collect:technical_implementation:parameters_list).
-  * __**prdref :**__ (Obligatoire) Este parámetro debe completarse con la referencia del producto incluido por el internauta en la cesta y repetido para cada producto diferente. Para saber más puedes consultar el [artículo siguiente](https://eulerian.wiki/doku.php?id=fr:collect:technical_implementation:parameters_list).
-  * __**prdamount :**__ (Obligatorio) Este parámetro permite especificar el total unitario de cada producto asociado al presupuesto. Para saber más puedes consultar el [artículo siguiente](https://eulerian.wiki/doku.php?id=fr:collect:technical_implementation:parameters_list).
-  * __**prdquantity :**__ (Obligatorio) Este parámetro permite especificar las cantidades de cada producto asociado al presupuesto. Para saber más puedes consultar el [artículo siguiente](https://eulerian.wiki/doku.php?id=fr:collect:technical_implementation:parameters_list).
+  * __**path:**__ (Obligatorio) Este parámetro permite nombrar la página para identificarla más tarde en los informes. Para saber más puedes consultar el [artículo siguiente](https://eulerian.wiki/doku.php?id=es:collect:technical_implementation:parameters_list).
+  * __**uid :**__ (Opcional) Este parámetro debe completarse con tu ID interna cuando el internauta está conectado para consolidar los datos del historial provenientes de diferentes dispositivos Puedes reconciliar un clic con la descarga de la aplicación. Para saber más puedes consultar el [artículo siguiente](https://eulerian.wiki/doku.php?id=es:collect:technical_implementation:parameters_list).
+  * __**scartcumul :**__ (Obligatorio) El valor de este parámetro indica el modo de contabilización de los productos en la cesta. Cuando es igual a 0, nuestro sistema interpreta los productos pasados por el marcador como constituyentes de la integridad de la cesta. Cuando es igual a 1, los productos pasados por el marcador se añaden a cada llamada sucesiva. Para saber más puedes consultar [artículo siguiente](https://eulerian.wiki/doku.php?id=es:collect:technical_implementation:parameters_list).
+  * __**prdref :**__ (Obligatoire) Este parámetro debe completarse con la referencia del producto incluido por el internauta en la cesta y repetido para cada producto diferente. Para saber más puedes consultar el [artículo siguiente](https://eulerian.wiki/doku.php?id=es:collect:technical_implementation:parameters_list).
+  * __**prdamount :**__ (Obligatorio) Este parámetro permite especificar el total unitario de cada producto asociado al presupuesto. Para saber más puedes consultar el [artículo siguiente](https://eulerian.wiki/doku.php?id=es:collect:technical_implementation:parameters_list).
+  * __**prdquantity :**__ (Obligatorio) Este parámetro permite especificar las cantidades de cada producto asociado al presupuesto. Para saber más puedes consultar el [artículo siguiente](https://eulerian.wiki/doku.php?id=es:collect:technical_implementation:parameters_list).
 
 ## Implementación
 
@@ -568,17 +568,17 @@ De hecho, si la plataforma de pago no obliga al internauta a pasar de nuevo por 
 
 ## Lista de parámetros
 
-  * __**path:**__ (NOM_PAGE) Este parámetro permite nombrar la página para identificarla más tarde en los informes. Para saber más puedes consultar el [artículo siguiente](https://eulerian.wiki/doku.php?id=fr:collect:technical_implementation:parameters_list).
-  * __**uid :**__ (UID) Este parámetro debe completarse con tu ID interna cuando el internauta está conectado para consolidar los datos del historial provenientes de diferentes dispositivos. Puedes reconciliar un clic con la descarga de la aplicación. Para saber más puedes consultar el [artículo siguiente](https://eulerian.wiki/doku.php?id=fr:collect:technical_implementation:parameters_list).
-  * __**ref :**__ (REFERENCE_VENTE) Se trata de una referencia única del presupuesto que permite identificarlo y encontrarlo el nuestro sistema. Para saber más puedes consultar el [artículo siguiente](https://eulerian.wiki/doku.php?id=fr:collect:technical_implementation:parameters_list).
-  * __**amount :**__ (MONTANT_VENTE) Este parámetro debe contener el total del presupuesto, IVA incluido. Los decimales se separan por un punto. Para saber más puedes consultar el [artículo siguiente](https://eulerian.wiki/doku.php?id=fr:collect:technical_implementation:parameters_list).
-  * __**payment :**__ (MOYEN_DE_PAIEMENT) Este parámetro permite identificar el tipo de pago usado por el internauta. Para saber más puedes consultar el [artículo siguiente](https://eulerian.wiki/doku.php?id=fr:collect:technical_implementation:parameters_list).
-  * __**type :**__ (TYPE_DE_VENTE) Este parámetro permite categorizar el presupuesto según tu propio sistema de referencia. Para saber más puedes consultar el [artículo siguiente](https://eulerian.wiki/doku.php?id=fr:collect:technical_implementation:parameters_list).
-  * __**currency :**__ (DEVISE_DU_MONTANT) Este parámetro permite convertir el total indicado en el parámetro amount si este tiene una divisa diferente a la configurada en la interfaz. Para saber más puedes consultar el [artículo siguiente](https://eulerian.wiki/doku.php?id=fr:collect:technical_implementation:parameters_list).
-  * __**newcustomer :**__ (0_OU_1) Este parámetro se suele usar en el marcador de pedido para diferenciar los nuevos compradores de los clientes asiduos. Para saber más puedes consultar el [artículo siguiente](https://eulerian.wiki/doku.php?id=fr:collect:technical_implementation:parameters_list).
-  * __**prdref :**__ (ID_PRODUIT) Este parámetro debe completarse con la referencia de producto asociada al presupuesto y repetida en cada valor diferente. Para saber más puedes consultar el [artículo siguiente](https://eulerian.wiki/doku.php?id=fr:collect:technical_implementation:parameters_list).
-  * __**prdamount :**__ (MONTANT_PRODUIT) Este parámetro permite especificar el total unitario de cada producto asociado al presupuesto. Para saber más puedes consultar el [artículo siguiente](https://eulerian.wiki/doku.php?id=fr:collect:technical_implementation:parameters_list).
-  * __**prdquantity :**__ (QUANTITE_PRODUIT) Este parámetro permite especificar las cantidades de cada producto asociado al presupuesto. Para saber más puedes consultar el [artículo siguiente](https://eulerian.wiki/doku.php?id=fr:collect:technical_implementation:parameters_list).
+  * __**path:**__ (NOM_PAGE) Este parámetro permite nombrar la página para identificarla más tarde en los informes. Para saber más puedes consultar el [artículo siguiente](https://eulerian.wiki/doku.php?id=es:collect:technical_implementation:parameters_list).
+  * __**uid :**__ (UID) Este parámetro debe completarse con tu ID interna cuando el internauta está conectado para consolidar los datos del historial provenientes de diferentes dispositivos. Puedes reconciliar un clic con la descarga de la aplicación. Para saber más puedes consultar el [artículo siguiente](https://eulerian.wiki/doku.php?id=es:collect:technical_implementation:parameters_list).
+  * __**ref :**__ (REFERENCE_VENTE) Se trata de una referencia única del presupuesto que permite identificarlo y encontrarlo el nuestro sistema. Para saber más puedes consultar el [artículo siguiente](https://eulerian.wiki/doku.php?id=es:collect:technical_implementation:parameters_list).
+  * __**amount :**__ (MONTANT_VENTE) Este parámetro debe contener el total del presupuesto, IVA incluido. Los decimales se separan por un punto. Para saber más puedes consultar el [artículo siguiente](https://eulerian.wiki/doku.php?id=es:collect:technical_implementation:parameters_list).
+  * __**payment :**__ (MOYEN_DE_PAIEMENT) Este parámetro permite identificar el tipo de pago usado por el internauta. Para saber más puedes consultar el [artículo siguiente](https://eulerian.wiki/doku.php?id=es:collect:technical_implementation:parameters_list).
+  * __**type :**__ (TYPE_DE_VENTE) Este parámetro permite categorizar el presupuesto según tu propio sistema de referencia. Para saber más puedes consultar el [artículo siguiente](https://eulerian.wiki/doku.php?id=es:collect:technical_implementation:parameters_list).
+  * __**currency :**__ (DEVISE_DU_MONTANT) Este parámetro permite convertir el total indicado en el parámetro amount si este tiene una divisa diferente a la configurada en la interfaz. Para saber más puedes consultar el [artículo siguiente](https://eulerian.wiki/doku.php?id=es:collect:technical_implementation:parameters_list).
+  * __**newcustomer :**__ (0_OU_1) Este parámetro se suele usar en el marcador de pedido para diferenciar los nuevos compradores de los clientes asiduos. Para saber más puedes consultar el [artículo siguiente](https://eulerian.wiki/doku.php?id=es:collect:technical_implementation:parameters_list).
+  * __**prdref :**__ (ID_PRODUIT) Este parámetro debe completarse con la referencia de producto asociada al presupuesto y repetida en cada valor diferente. Para saber más puedes consultar el [artículo siguiente](https://eulerian.wiki/doku.php?id=es:collect:technical_implementation:parameters_list).
+  * __**prdamount :**__ (MONTANT_PRODUIT) Este parámetro permite especificar el total unitario de cada producto asociado al presupuesto. Para saber más puedes consultar el [artículo siguiente](https://eulerian.wiki/doku.php?id=es:collect:technical_implementation:parameters_list).
+  * __**prdquantity :**__ (QUANTITE_PRODUIT) Este parámetro permite especificar las cantidades de cada producto asociado al presupuesto. Para saber más puedes consultar el [artículo siguiente](https://eulerian.wiki/doku.php?id=es:collect:technical_implementation:parameters_list).
 
 ## Implementación
 
