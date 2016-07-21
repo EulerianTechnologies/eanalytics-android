@@ -84,4 +84,4 @@ Step 1 to 3 has been reduced in simply grabbing Eulerian Analytics sdk via Gradl
 
 # Tagging plan
 
-Link to [Android tagging plan](https://github.com/EulerianTechnologies/eanalytics-android/blob/master/TAGGINGPLAN.md)
+Link to [Android tagging plan](https://github.com/EulerianTechnologies/eanalytics-android/blob/master/TAGGINGPLAN_FR.md)
