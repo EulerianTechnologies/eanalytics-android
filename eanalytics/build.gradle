@@ -13,13 +13,13 @@ def developerName = 'Francois Rouault'
 def developerEmail = 'francois@eulerian.com'
 
 android {
-    compileSdkVersion 21
-    buildToolsVersion "21.1.2"
+    compileSdkVersion 24
+    buildToolsVersion "24.0.2"
     resourcePrefix "eanalytics__"
 
     defaultConfig {
         minSdkVersion 9
-        targetSdkVersion 21
+        targetSdkVersion 24
         versionCode 1
         versionName rootProject.ext.eanalyticsVersionName
     }
