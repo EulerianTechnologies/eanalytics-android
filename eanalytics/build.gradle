@@ -14,7 +14,7 @@ def developerEmail = 'francois@eulerian.com'
 
 android {
     compileSdkVersion 24
-    buildToolsVersion "24.0.2"
+    buildToolsVersion '25.0.2'
     resourcePrefix "eanalytics__"
 
     defaultConfig {
@@ -58,6 +58,7 @@ generateJavaDocsJar.dependsOn generateJavaDocs
 
 //---
 // Configure the Bintray Plugin
+// READ ME: write your bintray user and apiKey in local.properties file.
 //---
 
 Properties properties = new Properties()
@@ -65,7 +66,10 @@ properties.load(project.rootProject.file('local.properties').newDataInputStream(
 
 bintray {
     user = properties.getProperty("bintray.user")
-    key = properties.getProperty("bintray.apikey")
+    key = properties.getProperty("bintray.apiKey")
+
+    publish = true
+    override = true //Whether to override version artifacts already published
 
     configurations = ['archives']
     pkg {
@@ -76,7 +80,6 @@ bintray {
         websiteUrl = siteUrl
         vcsUrl = gitUrl
         licenses = ["Apache-2.0"]
-        publish = true
         publicDownloadNumbers = true
     }
 }
