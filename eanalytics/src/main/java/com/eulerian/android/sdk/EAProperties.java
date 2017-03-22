@@ -27,6 +27,7 @@ public class EAProperties {
     private static final String KEY_EPOCH = "ereplay-time";
     private static final String KEY_APP_VERSION_NAME = "ea-appversion";
     private static final String KEY_APP_VERSION_CODE = "ea-appversionbuild";
+    private static final String KEY_IS_TV = "ea-apptv";
 
     //- page keys
     private static final String KEY_PAGE_LATITUDE = "ea-lat";
@@ -90,6 +91,7 @@ public class EAProperties {
             JSONUtils.put(internals, KEY_EPOCH, String.valueOf(System.currentTimeMillis() / 1000));
             JSONUtils.put(internals, KEY_SDK_VERSION, BuildConfig.VERSION_NAME);
             setVersionCodeAndVersionName();
+            JSONUtils.put(internals, KEY_IS_TV, Helper.androidTV(EAnalytics.getContext()) ? 1 : 0);
         }
 
         private void setVersionCodeAndVersionName() {
