@@ -34,7 +34,7 @@ class EALog {
         if (condition) {
             return;
         }
-        throw new IllegalStateException(msg);
+        throw new EulerianException(msg);
     }
 
     public static void warnCondition(boolean condition, String msg) {

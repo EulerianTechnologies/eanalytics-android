@@ -23,16 +23,15 @@ import java.util.concurrent.Executors;
  */
 public class EAnalytics {
 
-    private static final String TAG = EAnalytics.class.getSimpleName();
     protected static final int HANDLER_MESSAGE_RETRY = 1;
+    private static final String TAG = EAnalytics.class.getSimpleName();
     static String sRTDomain;
-    private static EAnalytics sInstance;
-    private static Context sAppContext;
-    protected Executor mExecutor = Executors.newSingleThreadExecutor();
     @Nullable
     static String sAdInfoId;
     static boolean sAdInfoIsLAT = false;
-
+    private static EAnalytics sInstance;
+    private static Context sAppContext;
+    protected Executor mExecutor = Executors.newSingleThreadExecutor();
     protected Handler mUiHandler = new Handler(Looper.getMainLooper()) {
         @Override
         public void handleMessage(Message msg) {
@@ -74,6 +73,7 @@ public class EAnalytics {
     public static void init(Context context, String host, boolean log) {
         EALog.LOG_ENABLED = log;
         EALog.assertCondition(sAppContext == null && sRTDomain == null, "Init must be called only once.");
+        EALog.assertCondition(!host.contains(".eulerian.com"), "Host cannot contain '.eulerian.com'.");
         EALog.assertCondition(Helper.isPermissionGranted(context, Manifest.permission.INTERNET),
                 "Init failed : permission is missing. You must add permission " +
                         Manifest.permission.INTERNET + " in your app Manifest.xml.");
