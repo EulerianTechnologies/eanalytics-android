@@ -42,6 +42,7 @@ public class EAProperties {
     private static final String KEY_PAGE_NEW_CUSTOMER = "newcustomer";
     private static final String KEY_MAC = "ea-android-mac";
     private static final String KEY_SDK_VERSION = "ea-android-sdk-version";
+    private static final String KEY_PAGE_CFLAG = "cflag";
 
     JSONObject mProperties;
     private JSONObject mInternals;
@@ -171,6 +172,11 @@ public class EAProperties {
 
         public T setProperty(SiteCentricProperty property) {
             JSONUtils.put(pages, KEY_PAGE_PROPERTY, property.getJson());
+            return (T) this;
+        }
+
+        public T setCFlag(SiteCentricCFlag cFlag) {
+            JSONUtils.put(pages, KEY_PAGE_CFLAG, cFlag.getJson());
             return (T) this;
         }
 

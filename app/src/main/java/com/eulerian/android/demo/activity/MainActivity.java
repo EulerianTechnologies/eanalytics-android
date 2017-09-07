@@ -17,6 +17,7 @@ import com.eulerian.android.sdk.EASearch;
 import com.eulerian.android.sdk.EAnalytics;
 import com.eulerian.android.sdk.Params;
 import com.eulerian.android.sdk.Product;
+import com.eulerian.android.sdk.SiteCentricCFlag;
 import com.eulerian.android.sdk.SiteCentricProperty;
 
 public class MainActivity extends ActionBarActivity {
@@ -102,6 +103,11 @@ public class MainActivity extends ActionBarActivity {
                 .setProperty(new SiteCentricProperty.Builder()
                         .set("cle1", new String[]{"poisson", "viande"})
                         .set("cle2", "choucroute")
+                        .build())
+                .setCFlag(new SiteCentricCFlag.Builder()
+                        .set("categorie_1", "rolandgarros", "wimbledon")
+                        .set("categorie_2", "tennis")
+                        .set("categorie_3", "usopen")
                         .build())
                 .build();
         EAnalytics.getInstance().track(properties);
