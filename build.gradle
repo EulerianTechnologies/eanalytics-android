@@ -32,8 +32,5 @@ allprojects {
 
 ext {
     // LIB VERSION
-    major = 1
-    minor = 6
-    patch = 5
-    eanalyticsVersionName = "${major}.${minor}.${patch}"
+    eanalyticsVersionName = "1.7.0"
 }

@@ -69,7 +69,7 @@ bintray {
     key = properties.getProperty("bintray.apiKey")
 
     publish = true
-    override = true //Whether to override version artifacts already published
+    override = false //Whether to override version artifacts already published
 
     configurations = ['archives']
     pkg {
