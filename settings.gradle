@@ -1,1 +1,1 @@
-include ':app', ':eanalytics', ':app tv'
+include ':app', ':eanalytics', ':app tv', ':sample'
