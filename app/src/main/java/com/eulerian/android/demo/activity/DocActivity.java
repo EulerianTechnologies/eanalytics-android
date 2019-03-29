@@ -1,6 +1,6 @@
 package com.eulerian.android.demo.activity;
 
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 
 import com.eulerian.android.sdk.EACart;
 import com.eulerian.android.sdk.EAEstimate;
@@ -15,7 +15,7 @@ import com.eulerian.android.sdk.Product;
 /**
  * Created by Francois Rouault on 07/08/2015.
  */
-public class DocActivity extends ActionBarActivity {
+public class DocActivity extends AppCompatActivity {
 
     private void exempleTagGenerique() {
         //Tag générique:

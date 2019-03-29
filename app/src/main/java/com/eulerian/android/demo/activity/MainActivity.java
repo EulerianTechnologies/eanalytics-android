@@ -1,7 +1,7 @@
 package com.eulerian.android.demo.activity;
 
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 
@@ -20,7 +20,7 @@ import com.eulerian.android.sdk.Product;
 import com.eulerian.android.sdk.SiteCentricCFlag;
 import com.eulerian.android.sdk.SiteCentricProperty;
 
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = MainActivity.class.getSimpleName();
     private double latitude = 48.871835;

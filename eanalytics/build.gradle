@@ -13,13 +13,13 @@ def developerName = 'Francois Rouault'
 def developerEmail = 'francois@eulerian.com'
 
 android {
-    compileSdkVersion 24
-    buildToolsVersion '25.0.2'
+    compileSdkVersion 28
+    buildToolsVersion '28.0.3'
     resourcePrefix "eanalytics__"
 
     defaultConfig {
         minSdkVersion 9
-        targetSdkVersion 24
+        targetSdkVersion 28
         versionCode 1
         versionName rootProject.ext.eanalyticsVersionName
     }
@@ -33,7 +33,7 @@ android {
 }
 
 dependencies {
-    compile 'com.google.android.gms:play-services-base:9.2.0'
+    api "com.google.android.gms:play-services-ads:16.0.0"
 }
 
 // Specify POM Details :
@@ -81,6 +81,25 @@ bintray {
         vcsUrl = gitUrl
         licenses = ["Apache-2.0"]
         publicDownloadNumbers = true
+    }
+}
+
+install {
+    repositories.mavenInstaller {
+        pom {
+            project {
+                packaging 'aar'
+                name 'EAnalytics'
+                description 'Android tracking library for Eulerian Technologies Analytics.'
+                url 'eulerian.com'
+                developers {
+                    developer {
+                        name 'François Rouault'
+                        email 'francois@eulerian.com'
+                    }
+                }
+            }
+        }
     }
 }
 
