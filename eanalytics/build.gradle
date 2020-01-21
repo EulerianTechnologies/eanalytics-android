@@ -18,7 +18,7 @@ android {
     resourcePrefix "eanalytics__"
 
     defaultConfig {
-        minSdkVersion 9
+        minSdkVersion 14
         targetSdkVersion 28
         versionCode 1
         versionName rootProject.ext.eanalyticsVersionName
