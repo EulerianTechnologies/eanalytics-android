@@ -105,18 +105,6 @@ You must allow the following permissions in the file **AndroidManifest.xml**:
 <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
 ```
 
-Also, add the following wording to the element of the app in order to track the referrer’s installation.
-
-```javascript
-<receiver
-   android:name="com.eulerian.android.sdk.InstallReferrerReceiver"
-   android:exported="true">
-   <intent-filter>
-      <action android:name="com.android.vending.INSTALL_REFERRER" />
-   </intent-filter>
-</receiver>
-```
-
 ## Start Eulerian Analytics
 
 Before using the SDK, make sure you start it through the function **onCreate()** as shown below.

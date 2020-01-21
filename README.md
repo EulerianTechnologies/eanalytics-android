@@ -6,7 +6,7 @@ Grab Eulerian Analytics SDK via [Gradle](http://gradle.org/).
 
 ```groovy
 dependencies {
-   compile 'com.eulerian.android.sdk:eanalytics:1.7.0'
+   compile 'com.eulerian.android.sdk:eanalytics:1.8.0'
 }
 ```
 
@@ -16,18 +16,6 @@ In your AndroidManifest.xml, add the following permissions :
 <uses-permission android:name="android.permission.INTERNET" />
 <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-```
-
-Also add the following declaration within the <application> element to track the install referrer.
-
-```xml
-<receiver
-   android:name="com.eulerian.android.sdk.InstallReferrerReceiver"
-   android:exported="true">
-   <intent-filter>
-      <action android:name="com.android.vending.INSTALL_REFERRER" />
-   </intent-filter>
-</receiver>
 ```
 
 ## Run Eulerian Analytics

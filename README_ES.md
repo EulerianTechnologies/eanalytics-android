@@ -6,7 +6,7 @@ Insertar el SDK de Android en la herramienta [Gradle](http://gradle.org/).
 
 ```groovy
 dependencies {
-   compile 'com.eulerian.android.sdk:eanalytics:1.7.0'
+   compile 'com.eulerian.android.sdk:eanalytics:1.8.0'
 }
 ```
 
@@ -16,18 +16,6 @@ En el archivo AndroidManifest.xml, añadir los siguientes permisos :
 <uses-permission android:name="android.permission.INTERNET" />
 <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-```
-
-Añadir también el siguiente enunciado en el elemento de la aplicación para hacer un seguimiento de la instalación del referrer.
-
-```xml
-<receiver
-   android:name="com.eulerian.android.sdk.InstallReferrerReceiver"
-   android:exported="true">
-   <intent-filter>
-      <action android:name="com.android.vending.INSTALL_REFERRER" />
-   </intent-filter>
-</receiver>
 ```
 
 ## Iniciar Eulerian Analytics

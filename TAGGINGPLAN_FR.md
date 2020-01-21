@@ -106,18 +106,6 @@ Dans le fichier **AndroidManifest.xml**, ajouter les permissions suivantes :
 <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
 ```
 
-Ajouter également la déclaration suivante au sein de l'élément de l'application pour tracker l'installation du refereur
-
-```javascript
-<receiver
-   android:name="com.eulerian.android.sdk.InstallReferrerReceiver"
-   android:exported="true">
-   <intent-filter>
-      <action android:name="com.android.vending.INSTALL_REFERRER" />
-   </intent-filter>
-</receiver>
-```
-
 ## Démarrer Eulerian Analytics
 
 Avant d'utiliser le SDK, assurez vous de l'initialiser, grâce à la fonction **onCreate()** ci-dessous.
