@@ -3,8 +3,7 @@ package com.eulerian.android.sdk;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Build;
-
-import java.util.Map;
+import android.support.annotation.NonNull;
 
 /**
  * Created by Francois Rouault on 09/03/2015.
@@ -16,11 +15,6 @@ class PersistentIdentity {
     private final SharedPreferences mSharedPreferences;
 
     static final String KEY_REFERRER = "referrer";
-    static final String KEY_UTM_MEDIUM = "utm_medium";
-    static final String KEY_UTM_CONTENT = "utm_content";
-    static final String KEY_UTM_TERM = "utm_term";
-    static final String KEY_UTM_CAMPAIGN = "utm_campaign";
-    static final String KEY_UTM_SOURCE = "utm_source";
     static final String KEY_ADVERTISING_ID = "id";
     static final String KEY_ADVERTISING_IS_LAT = "isLAT";
 
@@ -50,14 +44,6 @@ class PersistentIdentity {
         writeEdits(editor);
     }
 
-    public synchronized void save(Map<String, String> map) {
-        SharedPreferences.Editor editor = mSharedPreferences.edit();
-        for (String key : map.keySet()) {
-            editor.putString(key, map.get(key));
-        }
-        writeEdits(editor);
-    }
-
     private void writeEdits(final SharedPreferences.Editor editor) {
         if (Build.VERSION.SDK_INT >= 9) {
             editor.apply();
@@ -66,8 +52,19 @@ class PersistentIdentity {
         }
     }
 
+    public void saveInstallReferrer(@NonNull String referrer) {
+        SharedPreferences.Editor editor = mSharedPreferences.edit();
+        editor.putString(PersistentIdentity.KEY_REFERRER, referrer);
+        writeEdits(editor);
+    }
+
     public String getInstallReferrer() {
         return mSharedPreferences.getString(KEY_REFERRER, null);
+    }
+
+    boolean shouldFetchInstallReferrer() {
+        boolean isInstallReferrerSent = mSharedPreferences.getBoolean(INSTALL_REFERRER_HAS_ALREADY_BEEN_SENT_ONCE, false);
+        return !isInstallReferrerSent;
     }
 
     public boolean shouldSendInstallReferrer() {

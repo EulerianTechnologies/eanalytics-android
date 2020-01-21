@@ -23,7 +23,7 @@ class PropertiesTracker implements Runnable {
 
         if (PersistentIdentity.getInstance().shouldSendInstallReferrer()) {
             String installReferrer = PersistentIdentity.getInstance().getInstallReferrer();
-            EALog.d("Tracking properties for the fist time, add install referrer to it");
+            EALog.d("Tracking properties for the first time, add install referrer to it");
             JSONUtils.put(properties.mProperties, EAProperties.KEY_INSTALL_REFERRER, installReferrer);
             PersistentIdentity.getInstance().setInstallReferrerSent();
         }

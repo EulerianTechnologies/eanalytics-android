@@ -93,6 +93,10 @@ public class EAnalytics {
         EALog.d("SDK initialized with " + host, true);
         getInstance().mExecutor.execute(new GetAdInfo());
         getInstance().track(null);
+
+        if (PersistentIdentity.getInstance().shouldFetchInstallReferrer()) {
+            InstallReferrerManager.startConnection(context);
+        }
     }
 
     static Context getContext() {

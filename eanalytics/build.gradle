@@ -34,6 +34,7 @@ android {
 
 dependencies {
     api "com.google.android.gms:play-services-ads:16.0.0"
+    api 'com.android.installreferrer:installreferrer:1.1'
 }
 
 // Specify POM Details :
