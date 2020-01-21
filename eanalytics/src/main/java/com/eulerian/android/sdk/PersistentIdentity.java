@@ -10,7 +10,7 @@ import android.support.annotation.NonNull;
  */
 class PersistentIdentity {
 
-    private static final String INSTALL_REFERRER_HAS_ALREADY_BEEN_SENT_ONCE = "referrer_sent";
+    private static final String INSTALL_REFERRER_HAS_ALREADY_BEEN_SENT_ONCE = "referrer_sent_v1_8_0";
     private static PersistentIdentity mInstance;
     private final SharedPreferences mSharedPreferences;
 
@@ -68,14 +68,14 @@ class PersistentIdentity {
     }
 
     public boolean shouldSendInstallReferrer() {
-        return mSharedPreferences.getBoolean(INSTALL_REFERRER_HAS_ALREADY_BEEN_SENT_ONCE, false)
-                && getInstallReferrer() != null;
+        boolean isInstallReferrerSent = mSharedPreferences.getBoolean(INSTALL_REFERRER_HAS_ALREADY_BEEN_SENT_ONCE, false);
+        boolean isInstallReferrerAvailable = getInstallReferrer() != null;
+        return isInstallReferrerAvailable && !isInstallReferrerSent;
     }
 
     public void setInstallReferrerSent() {
         mSharedPreferences.edit()
                 .putBoolean(INSTALL_REFERRER_HAS_ALREADY_BEEN_SENT_ONCE, true)
-                .putString(KEY_REFERRER, null)
                 .apply();
     }
 }
