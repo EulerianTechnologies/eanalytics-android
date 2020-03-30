@@ -32,5 +32,5 @@ allprojects {
 
 ext {
     // LIB VERSION
-    eanalyticsVersionName = "1.8.0"
+    eanalyticsVersionName = "1.8.1"
 }

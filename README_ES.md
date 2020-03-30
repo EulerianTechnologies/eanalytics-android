@@ -6,7 +6,7 @@ Insertar el SDK de Android en la herramienta [Gradle](http://gradle.org/).
 
 ```groovy
 dependencies {
-   compile 'com.eulerian.android.sdk:eanalytics:1.8.0'
+   compile 'com.eulerian.android.sdk:eanalytics:1.8.1'
 }
 ```
 
