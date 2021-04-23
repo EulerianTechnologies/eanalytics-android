@@ -630,3 +630,33 @@ EAOrder orderPage = new EAOrder.Builder("Tunnel|Confirmation", "F654335671")
  
 EAnalytics.getInstance().track(orderPage);
 ```
+
+# Context Flag (CFLAG)
+
+L'objet SiteCentricCFlag est la classe dédiée au context flag.
+
+Vous pouvez donc creer un ou plusieurs context flag via l'objet SiteCentricCFlag et l'as ajouter avec la function ".setCFlag" à l'interne de n'importe quel tag Eulerian. La function ".set" prend comme arguments "string key","string...value" avec un ou plusieurs valeurs avec un maximum de 10 values
+
+__**Exemple:**__
+
+```xml
+
+import com.eulerian.android.sdk.SiteCentricCFlag;
+
+// exemple for a generic tag
+EAProperties genericTag = new EAProperties.Builder(path) //path
+                        .setUID(UID) // UID
+                        .setEmail("email")
+                        .setProfile("profile")
+                        .set("asd","dsa")
+                        .set(key0, data0) //generic tag
+                        .setCFlag(new SiteCentricCFlag.Builder()
+                                .set("categorie_1", "rolandgarros", "wimbledon")
+                                .set("categorie_2", "tennis")
+                                .set("categorie_3", "usopen")
+                                .build())
+                        .build();
+
+                EAnalytics.getInstance().track(genericTag); //come EA_push
+```
+
