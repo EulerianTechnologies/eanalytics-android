@@ -1,6 +1,8 @@
-apply plugin: 'com.android.library'
-apply plugin: 'com.jfrog.bintray'
-apply plugin: "com.github.dcendents.android-maven"
+plugins {
+    id 'com.android.library'
+    id 'com.jfrog.bintray'
+    id 'com.github.dcendents.android-maven'
+}
 
 def libName = 'eanalytics'
 def libDescription = 'Android tracking library for Eulerian Technologies Analytics.'
@@ -13,28 +15,43 @@ def developerName = 'Francois Rouault'
 def developerEmail = 'francois@eulerian.com'
 
 android {
-    compileSdkVersion 28
-    buildToolsVersion '28.0.3'
+    compileSdkVersion 30
+    buildToolsVersion "30.0.3"
     resourcePrefix "eanalytics__"
 
     defaultConfig {
-        minSdkVersion 14
-        targetSdkVersion 28
+        minSdkVersion 16
+        targetSdkVersion 30
         versionCode 1
         versionName rootProject.ext.eanalyticsVersionName
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
     }
 
     buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        debug {
+            buildConfigField("String", "VERSION_NAME", "\"${defaultConfig.versionName}\"")
         }
+        release {
+            buildConfigField("String","VERSION_NAME","\"${defaultConfig.versionName}\"")
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
 }
 
 dependencies {
-    api "com.google.android.gms:play-services-ads:16.0.0"
-    api 'com.android.installreferrer:installreferrer:1.1.2'
+    implementation 'com.google.android.gms:play-services-ads-identifier:17.0.0'
+    implementation 'com.android.installreferrer:installreferrer:2.2'
+    implementation 'androidx.annotation:annotation:1.2.0'
+    testImplementation 'junit:junit:4.+'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.2'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 }
 
 // Specify POM Details :

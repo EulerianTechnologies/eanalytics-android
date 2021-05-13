@@ -1,6 +1,6 @@
 package com.eulerian.android.demo.activity;
 
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.eulerian.android.sdk.EACart;
 import com.eulerian.android.sdk.EAEstimate;

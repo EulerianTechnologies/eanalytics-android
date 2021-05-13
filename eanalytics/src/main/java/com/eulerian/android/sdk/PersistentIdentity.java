@@ -3,7 +3,8 @@ package com.eulerian.android.sdk;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Build;
-import android.support.annotation.NonNull;
+
+import androidx.annotation.NonNull;
 
 /**
  * Created by Francois Rouault on 09/03/2015.

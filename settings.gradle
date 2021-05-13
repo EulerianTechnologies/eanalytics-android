@@ -1,1 +1,4 @@
-include ':app', ':eanalytics', ':apptv', ':sample'
+rootProject.name = "Demo App"
+include ':app'
+include ':eanalytics'
+include ':apptv'
