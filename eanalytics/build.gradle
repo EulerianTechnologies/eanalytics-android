@@ -13,6 +13,7 @@ def gitUrl = 'https://github.com/EulerianTechnologies/eanalytics-android.git'   
 def developerId = 'frouo'
 def developerName = 'Francois Rouault'
 def developerEmail = 'francois@eulerian.com'
+def eanalyticsVersionName = "1.8.1"
 
 android {
     compileSdkVersion 30
@@ -23,7 +24,7 @@ android {
         minSdkVersion 16
         targetSdkVersion 30
         versionCode 1
-        versionName rootProject.ext.eanalyticsVersionName
+        versionName eanalyticsVersionName
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
@@ -55,7 +56,7 @@ dependencies {
 }
 
 // Specify POM Details :
-version = rootProject.ext.eanalyticsVersionName // This is the library version used when deploying the artifact
+version = eanalyticsVersionName // This is the library version used when deploying the artifact
 group = publishedGroupId // Maven Group ID for the artifact
 
 task generateSourcesJar(type: Jar) {

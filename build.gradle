@@ -29,8 +29,3 @@ allprojects {
 //task clean(type: Delete) {
 //    delete rootProject.buildDir
 //}
-
-ext {
-    // LIB VERSION
-    eanalyticsVersionName = "1.8.1"
-}
