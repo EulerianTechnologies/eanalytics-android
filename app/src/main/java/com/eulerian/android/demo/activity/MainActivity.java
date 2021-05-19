@@ -1,7 +1,6 @@
 package com.eulerian.android.demo.activity;
-
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 

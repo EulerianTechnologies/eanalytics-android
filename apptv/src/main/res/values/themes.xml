@@ -1,0 +1,4 @@
+<resources>
+
+    <style name="Theme.DemoApp" parent="@style/Theme.Leanback" />
+</resources>

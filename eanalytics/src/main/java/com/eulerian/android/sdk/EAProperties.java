@@ -5,8 +5,9 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.wifi.WifiManager;
 import android.os.Build;
-import android.support.annotation.Nullable;
 import android.text.TextUtils;
+
+import androidx.annotation.Nullable;
 
 import org.json.JSONObject;
 
@@ -109,7 +110,7 @@ public class EAProperties {
 
         @Nullable
         private String getMacAddress() {
-            WifiManager wifiManager = (WifiManager) EAnalytics.getContext().getSystemService(Context.WIFI_SERVICE);
+            WifiManager wifiManager = (WifiManager) EAnalytics.getContext().getApplicationContext().getSystemService(Context.WIFI_SERVICE);
             return wifiManager != null && wifiManager.getConnectionInfo() != null ?
                     wifiManager.getConnectionInfo().getMacAddress() :
                     null;

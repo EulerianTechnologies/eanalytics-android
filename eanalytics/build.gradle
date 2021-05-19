@@ -1,45 +1,48 @@
-apply plugin: 'com.android.library'
-apply plugin: 'com.jfrog.bintray'
-apply plugin: "com.github.dcendents.android-maven"
+plugins {
+    id 'com.android.library'
+}
 
-def libName = 'eanalytics'
-def libDescription = 'Android tracking library for Eulerian Technologies Analytics.'
-def publishedGroupId = 'com.eulerian.android.sdk'
-def artifact = 'eanalytics'
-def siteUrl = 'https://github.com/EulerianTechnologies/eanalytics-android'      // Homepage URL of the library
-def gitUrl = 'https://github.com/EulerianTechnologies/eanalytics-android.git'   // Git repository URL
-def developerId = 'frouo'
-def developerName = 'Francois Rouault'
-def developerEmail = 'francois@eulerian.com'
+def eanalyticsVersionName = "1.9.0"
 
 android {
-    compileSdkVersion 28
-    buildToolsVersion '28.0.3'
+    compileSdkVersion 30
+    buildToolsVersion "30.0.3"
     resourcePrefix "eanalytics__"
 
     defaultConfig {
-        minSdkVersion 14
-        targetSdkVersion 28
+        minSdkVersion 16
+        targetSdkVersion 30
         versionCode 1
-        versionName rootProject.ext.eanalyticsVersionName
+        versionName eanalyticsVersionName
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
     }
 
     buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        debug {
+            buildConfigField("String", "VERSION_NAME", "\"${defaultConfig.versionName}\"")
         }
+        release {
+            buildConfigField("String","VERSION_NAME","\"${defaultConfig.versionName}\"")
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
 }
 
 dependencies {
-    api "com.google.android.gms:play-services-ads:16.0.0"
-    api 'com.android.installreferrer:installreferrer:1.1.2'
+    implementation 'com.google.android.gms:play-services-ads-identifier:17.0.0'
+    implementation 'com.android.installreferrer:installreferrer:2.2'
+    implementation 'androidx.annotation:annotation:1.2.0'
+    testImplementation 'junit:junit:4.+'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.2'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 }
-
-// Specify POM Details :
-version = rootProject.ext.eanalyticsVersionName // This is the library version used when deploying the artifact
-group = publishedGroupId // Maven Group ID for the artifact
 
 task generateSourcesJar(type: Jar) {
     from android.sourceSets.main.java.srcDirs
@@ -56,53 +59,6 @@ task generateJavaDocsJar(type: Jar) {
     classifier 'javadoc'
 }
 generateJavaDocsJar.dependsOn generateJavaDocs
-
-//---
-// Configure the Bintray Plugin
-// READ ME: write your bintray user and apiKey in local.properties file.
-//---
-
-Properties properties = new Properties()
-properties.load(project.rootProject.file('local.properties').newDataInputStream())
-
-bintray {
-    user = properties.getProperty("bintray.user")
-    key = properties.getProperty("bintray.apiKey")
-
-    publish = true
-    override = false //Whether to override version artifacts already published
-
-    configurations = ['archives']
-    pkg {
-        repo = 'maven'
-        name = libName
-        userOrg = 'euleriantechnologies'
-        desc = libDescription
-        websiteUrl = siteUrl
-        vcsUrl = gitUrl
-        licenses = ["Apache-2.0"]
-        publicDownloadNumbers = true
-    }
-}
-
-install {
-    repositories.mavenInstaller {
-        pom {
-            project {
-                packaging 'aar'
-                name 'EAnalytics'
-                description 'Android tracking library for Eulerian Technologies Analytics.'
-                url 'eulerian.com'
-                developers {
-                    developer {
-                        name 'François Rouault'
-                        email 'francois@eulerian.com'
-                    }
-                }
-            }
-        }
-    }
-}
 
 artifacts {
     archives generateJavaDocsJar
