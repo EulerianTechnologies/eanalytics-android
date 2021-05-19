@@ -17,7 +17,7 @@ allprojects {
 
 ```groovy
 dependencies {
-    implementation 'com.github.EulerianTechnologies:eanalytics-android:1.8.1'
+    implementation 'com.github.EulerianTechnologies:eanalytics-android:1.9.0'
 }
 ```
 
