@@ -2,15 +2,24 @@
 
 ## Installation
 
-Grab Eulerian Analytics SDK via [Gradle](http://gradle.org/).
+*Step 1.* Add the JitPack repository to your build file
 
 ```groovy
-dependencies {
-   compile 'com.eulerian.android.sdk:eanalytics:1.8.1'
+allprojects {
+    repositories {
+        ...
+        maven { url 'https://jitpack.io' }
+    }
 }
 ```
 
-In your AndroidManifest.xml, add the following permissions :
+*Step 2.* Add the dependency
+
+```groovy
+dependencies {
+    implementation 'com.github.EulerianTechnologies:eanalytics-android:1.8.1'
+}
+```
 
 ```xml
 <uses-permission android:name="android.permission.INTERNET" />

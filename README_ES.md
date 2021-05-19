@@ -5,8 +5,15 @@
 Insertar el SDK de Android en la herramienta [Gradle](http://gradle.org/).
 
 ```groovy
+allprojects {
+    repositories {
+        ...
+        maven { url 'https://jitpack.io' }
+    }
+}
+
 dependencies {
-   compile 'com.eulerian.android.sdk:eanalytics:1.8.1'
+   implementation 'com.github.EulerianTechnologies:eanalytics-android:1.8.1'
 }
 ```
 
