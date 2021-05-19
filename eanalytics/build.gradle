@@ -1,18 +1,7 @@
 plugins {
     id 'com.android.library'
-    id 'com.jfrog.bintray'
-    id 'com.github.dcendents.android-maven'
 }
 
-def libName = 'eanalytics'
-def libDescription = 'Android tracking library for Eulerian Technologies Analytics.'
-def publishedGroupId = 'com.eulerian.android.sdk'
-def artifact = 'eanalytics'
-def siteUrl = 'https://github.com/EulerianTechnologies/eanalytics-android'      // Homepage URL of the library
-def gitUrl = 'https://github.com/EulerianTechnologies/eanalytics-android.git'   // Git repository URL
-def developerId = 'frouo'
-def developerName = 'Francois Rouault'
-def developerEmail = 'francois@eulerian.com'
 def eanalyticsVersionName = "1.8.1"
 
 android {
@@ -55,10 +44,6 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 }
 
-// Specify POM Details :
-version = eanalyticsVersionName // This is the library version used when deploying the artifact
-group = publishedGroupId // Maven Group ID for the artifact
-
 task generateSourcesJar(type: Jar) {
     from android.sourceSets.main.java.srcDirs
     classifier 'sources'
@@ -74,53 +59,6 @@ task generateJavaDocsJar(type: Jar) {
     classifier 'javadoc'
 }
 generateJavaDocsJar.dependsOn generateJavaDocs
-
-//---
-// Configure the Bintray Plugin
-// READ ME: write your bintray user and apiKey in local.properties file.
-//---
-
-Properties properties = new Properties()
-properties.load(project.rootProject.file('local.properties').newDataInputStream())
-
-bintray {
-    user = properties.getProperty("bintray.user")
-    key = properties.getProperty("bintray.apiKey")
-
-    publish = true
-    override = false //Whether to override version artifacts already published
-
-    configurations = ['archives']
-    pkg {
-        repo = 'maven'
-        name = libName
-        userOrg = 'euleriantechnologies'
-        desc = libDescription
-        websiteUrl = siteUrl
-        vcsUrl = gitUrl
-        licenses = ["Apache-2.0"]
-        publicDownloadNumbers = true
-    }
-}
-
-install {
-    repositories.mavenInstaller {
-        pom {
-            project {
-                packaging 'aar'
-                name 'EAnalytics'
-                description 'Android tracking library for Eulerian Technologies Analytics.'
-                url 'eulerian.com'
-                developers {
-                    developer {
-                        name 'François Rouault'
-                        email 'francois@eulerian.com'
-                    }
-                }
-            }
-        }
-    }
-}
 
 artifacts {
     archives generateJavaDocsJar
