@@ -210,7 +210,7 @@ En clair, un marqueur collector qui contient un des paramètres cités ci-dessus
 
 ## Liste des paramètres
 
-  * __**path :**__ (NOM_PAGE) Ce paramètre permet de donner un nom à la page afin de l'identifier dans les rapports. Pour en savoir plus veuillez vous reporter à [l'article suivant](https://eulerian.wiki/doku.php?id=fr:collect:technical_implementation:parameters_list).
+  * __**path :**__ (NOM_PAGE) Ce paramètre permet de donner un nom à la page afin de l'identifier dans les rapports. Il n'est pas recuperé automatiquement s'il n'est pas peuplé (comme pour la partie web) donc il doit etre parametré en function de votre usage. Pour en savoir plus veuillez vous reporter à [l'article suivant](https://eulerian.wiki/doku.php?id=fr:collect:technical_implementation:parameters_list).
   * __**uid :**__ (UID) Ce paramètre doit être valorisé avec votre ID interne quand l'internaute est loggé afin de consolider l'historique accumulée sur les différents devices utilisés. Vous pouvez ainsi réconciler un clic avec le téléchargement de l'application. Pour en savoir plus, veuillez consulter [l'article suivant](https://eulerian.wiki/doku.php?id=fr:collect:technical_implementation:parameters_list).
   * __**prdref :**__ (ID_PRODUIT) Ce paramètre doit être valorisé avec la référence du produit consulté par l'internaute. Pour plus d'informations, veuillez consulter [l'article suivant](https://eulerian.wiki/doku.php?id=fr:collect:technical_implementation:parameters_list).
   * __**prdname :**__ (NOM_PRODUIT) Vous pouvez associer à une référence produit un nom plus lisible pour faciliter votre reporting. Pour plus d'informations, veuillez consulter [l'article suivant](https://eulerian.wiki/doku.php?id=fr:collect:technical_implementation:parameters_list).
@@ -284,7 +284,7 @@ Dans le cas ou votre page de résultat ne contiendrait qu'une seule référence 
 
 ## Liste des paramètres
 
-  * __**path :**__ (NOM_PAGE) Ce paramètre permet de donner un nom à la page afin de l'identifier dans les rapports. Pour en savoir plus veuillez vous reporter à [l'article suivant](https://eulerian.wiki/doku.php?id=fr:collect:technical_implementation:parameters_list).
+  * __**path :**__ (NOM_PAGE) Ce paramètre permet de donner un nom à la page afin de l'identifier dans les rapports. Il n'est pas recuperé automatiquement s'il n'est pas peuplé (comme pour la partie web) donc il doit etre parametré en function de votre usage. Pour en savoir plus veuillez vous reporter à [l'article suivant](https://eulerian.wiki/doku.php?id=fr:collect:technical_implementation:parameters_list).
   * __**uid :**__ (UID) Ce paramètre doit être valorisé avec votre ID interne quand l'internaute est loggé afin de consolider l'historique accumulée sur les différents devices utilisés. Vous pouvez ainsi réconciler un clic avec le téléchargement de l'application. Pour en savoir plus, veuillez consulter [l'article suivant](https://eulerian.wiki/doku.php?id=fr:collect:technical_implementation:parameters_list).
   * __**prdref :**__ (ID_PRODUIT) Ce paramètre doit être valorisé avec la référence du produit consulté par l'internaute. Pour plus d'informations, veuillez consulter [l'article suivant](https://eulerian.wiki/doku.php?id=fr:collect:technical_implementation:parameters_list).
 
@@ -339,7 +339,7 @@ A noter que le marqueur de moteur interne n'est pas exclusif. Si vous ajoutez un
 
 ## Liste des paramètres
 
-  * __**path :**__ (NOM_PAGE) Ce paramètre permet de donner un nom à la page afin de l'identifier dans les rapports. Pour en savoir plus veuillez vous reporter à [l'article suivant](https://eulerian.wiki/doku.php?id=fr:collect:technical_implementation:parameters_list).
+  * __**path :**__ (NOM_PAGE) Ce paramètre permet de donner un nom à la page afin de l'identifier dans les rapports. Il n'est pas recuperé automatiquement s'il n'est pas peuplé (comme pour la partie web) donc il doit etre parametré en function de votre usage. Pour en savoir plus veuillez vous reporter à [l'article suivant](https://eulerian.wiki/doku.php?id=fr:collect:technical_implementation:parameters_list).
   * __**uid :**__ (UID) Ce paramètre doit être valorisé avec votre ID interne quand l'internaute est loggé afin de consolider l'historique accumulée sur les différents devices utilisés. Vous pouvez ainsi réconciler un clic avec le téléchargement de l'application. Pour en savoir plus, veuillez consulter [l'article suivant](https://eulerian.wiki/doku.php?id=fr:collect:technical_implementation:parameters_list).
   * __**isearchengine :**__ (NOM_MOTEUR) Ce paramètre désigne le nom du moteur interne et permet de le distinguer des autres champs de recherche si vous en avez plusieurs sur votre site. Pour plus d'informations, veuillez consulter [l'article suivant](https://eulerian.wiki/doku.php?id=fr:collect:technical_implementation:parameters_list).
   * __**isearchresults :**__ (NOMBRE_DE_RESULTATS) Ce paramètre doit contenir le nombre de résultats de recherche générés par l'internaute. Pour plus d'informations, veuillez consulter [l'article suivant](https://eulerian.wiki/doku.php?id=fr:collect:technical_implementation:parameters_list).
@@ -402,7 +402,7 @@ Vous pouvez notamment l'utiliser pour être alerté en cas de problème récurre
 ## Liste des paramètres
 
   * __**error :**__ Ce paramètre vaut toujours **1** et peut être ajouté sur tous les types de marqueur. Sa présence dans le marqueur comptabilise une page vue dans le rapport cité ci-dessus. Pour plus d'informations, veuillez consulter [l'article suivant](https://eulerian.wiki/doku.php?id=fr:collect:technical_implementation:parameters_list).
-  * __**path :**__ (NOM_DE_LA_PAGE) Ce paramètre permet de donner un nom à la page afin de l'identifier dans les rapports.Pour en savoir plus veuillez vous reporter à [l'article suivant](https://eulerian.wiki/doku.php?id=fr:collect:technical_implementation:parameters_list).
+  * __**path :**__ (NOM_PAGE) Ce paramètre permet de donner un nom à la page afin de l'identifier dans les rapports. Il n'est pas recuperé automatiquement s'il n'est pas peuplé (comme pour la partie web) donc il doit etre parametré en function de votre usage. Pour en savoir plus veuillez vous reporter à [l'article suivant](https://eulerian.wiki/doku.php?id=fr:collect:technical_implementation:parameters_list).
 
 ## Implémentation
 
@@ -437,7 +437,7 @@ Eulerian Analytics vous permet d'annuler ou de valider des devis pour mesurer la
 
 ## Liste des paramètres
 
-  * __**path :**__ (NOM_PAGE) Ce paramètre permet de donner un nom à la page afin de l'identifier dans les rapports. Pour en savoir plus veuillez vous reporter à [l'article suivant](https://eulerian.wiki/doku.php?id=fr:collect:technical_implementation:parameters_list).
+  * __**path :**__ (NOM_PAGE) Ce paramètre permet de donner un nom à la page afin de l'identifier dans les rapports. Il n'est pas recuperé automatiquement s'il n'est pas peuplé (comme pour la partie web) donc il doit etre parametré en function de votre usage. Pour en savoir plus veuillez vous reporter à [l'article suivant](https://eulerian.wiki/doku.php?id=fr:collect:technical_implementation:parameters_list).
   * __**uid :**__ (UID) Ce paramètre doit être valorisé avec votre ID interne quand l'internaute est loggé afin de consolider l'historique accumulée sur les différents devices utilisés. Vous pouvez ainsi réconciler un clic avec le téléchargement de l'application. Pour en savoir plus, veuillez consulter [l'article suivant](https://eulerian.wiki/doku.php?id=fr:collect:technical_implementation:parameters_list).
   * __**ref :**__ (REFERENCE_DU_DEVIS) Il s'agit de la référence unique du devis permettant d'identifier et de retrouver ce dernier dans notre système. Pour plus d'informations, veuillez consulter [l'article suivant](https://eulerian.wiki/doku.php?id=fr:collect:technical_implementation:parameters_list).
   * __**amount :**__ (MONTANT_DU_DEVIS) Ce paramètre doit contenir le montant total TTC du devis. Les décimales doivent être séparées par un point. Pour plus d'informations, veuillez consulter [l'article suivant](https://eulerian.wiki/doku.php?id=fr:collect:technical_implementation:parameters_list).
@@ -500,7 +500,7 @@ La durée de vie d'un panier est de 30 minutes glissantes soit la session de l'i
 
 ## Liste des paramètres
 
-  * __**path :**__ (NOM_PAGE) Ce paramètre permet de donner un nom à la page afin de l'identifier dans les rapports. Pour en savoir plus veuillez vous reporter à [l'article suivant](https://eulerian.wiki/doku.php?id=fr:collect:technical_implementation:parameters_list).
+  * __**path :**__ (NOM_PAGE) Ce paramètre permet de donner un nom à la page afin de l'identifier dans les rapports. Il n'est pas recuperé automatiquement s'il n'est pas peuplé (comme pour la partie web) donc il doit etre parametré en function de votre usage. Pour en savoir plus veuillez vous reporter à [l'article suivant](https://eulerian.wiki/doku.php?id=fr:collect:technical_implementation:parameters_list).
   * __**uid :**__ (UID) Ce paramètre doit être valorisé avec votre ID interne quand l'internaute est loggé afin de consolider l'historique accumulée sur les différents devices utilisés. Vous pouvez ainsi réconciler un clic avec le téléchargement de l'application. Pour en savoir plus, veuillez consulter [l'article suivant](https://eulerian.wiki/doku.php?id=fr:collect:technical_implementation:parameters_list).
   * __**scartcumul :**__ (0_OU_1) La valeur de ce paramètre indique le mode de comptabilisation des produits dans le panier. Lorsqu'il est égal à 0 notre système interprète les produits passés dans le marqueur comme constituant l'intégralité du panier. Lorsqu'il est égal à 1 les produits passés dans le marqueur s'additionneront à chaque appel successif. Pour plus d'informations, veuillez consulter [l'article suivant](https://eulerian.wiki/doku.php?id=fr:collect:technical_implementation:parameters_list).
   * __**prdref :**__ (ID_PRODUIT) Ce paramètre doit être valorisé avec la référence du produit mis en panier par l'internaute et répété pour chaque produit différent. Pour plus d'informations, veuillez consulter [l'article suivant](https://eulerian.wiki/doku.php?id=fr:collect:technical_implementation:parameters_list).
@@ -568,7 +568,7 @@ En effet, si la plateforme de paiement ne force pas l'internaute à repasser par
 
 ## Liste des paramètres
 
-  * __**path :**__ (NOM_PAGE) Ce paramètre permet de donner un nom à la page afin de l'identifier dans les rapports. Pour en savoir plus veuillez vous reporter à [l'article suivant](https://eulerian.wiki/doku.php?id=fr:collect:technical_implementation:parameters_list).
+  * __**path :**__ (NOM_PAGE) Ce paramètre permet de donner un nom à la page afin de l'identifier dans les rapports. Il n'est pas recuperé automatiquement s'il n'est pas peuplé (comme pour la partie web) donc il doit etre parametré en function de votre usage. Pour en savoir plus veuillez vous reporter à [l'article suivant](https://eulerian.wiki/doku.php?id=fr:collect:technical_implementation:parameters_list).
   * __**uid :**__ (UID) Ce paramètre doit être valorisé avec votre ID interne quand l'internaute est loggé afin de consolider l'historique accumulée sur les différents devices utilisés. Vous pouvez ainsi réconciler un clic avec le téléchargement de l'application. Pour en savoir plus, veuillez consulter [l'article suivant](https://eulerian.wiki/doku.php?id=fr:collect:technical_implementation:parameters_list).
   * __**ref :**__ (REFERENCE_DE_LA_VENTE) Il s'agit de la référence unique de la commande permettant d'identifier et de retrouver cette dernière dans notre système. Pour plus d'informations, veuillez consulter [l'article suivant](https://eulerian.wiki/doku.php?id=fr:collect:technical_implementation:parameters_list).
   * __**amount :**__ (MONTANT_DE_LA_VENTE) Ce paramètre doit contenir le montant total de la commande TTC hors frais de ports. Les décimales doivent être séparées par un point. Pour plus d'informations, veuillez consulter [l'article suivant](https://eulerian.wiki/doku.php?id=fr:collect:technical_implementation:parameters_list).
