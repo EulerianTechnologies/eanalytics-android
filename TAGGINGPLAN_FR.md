@@ -648,8 +648,8 @@ EAProperties genericTag = new EAProperties.Builder(path) //path
                         .setUID(UID) // UID
                         .setEmail("email")
                         .setProfile("profile")
-                        .set("asd","dsa")
-                        .set(key0, data0) //generic tag
+                        .set("NOM_PARAM_PERSO","VALEUR_PARAM_PERSO")
+                        .set("NOM_PARAM_PERSO","VALEUR_PARAM_PERSO")
                         .setCFlag(new SiteCentricCFlag.Builder()
                                 .set("categorie_1", "rolandgarros", "wimbledon")
                                 .set("categorie_2", "tennis")
