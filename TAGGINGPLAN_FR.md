@@ -106,6 +106,18 @@ Dans le fichier **AndroidManifest.xml**, ajouter les permissions suivantes :
 <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
 ```
 
+Dans le même fichier, complétez avec le code suivant pour le tracking des téléchargements :
+
+```javascript
+<receiver
+   android:name="com.eulerian.android.sdk.InstallReferrerReceiver"
+   android:exported="true">
+   <intent-filter>
+      <action android:name="com.android.vending.INSTALL_REFERRER" />
+   </intent-filter>
+</receiver>
+```
+
 ## Démarrer Eulerian Analytics
 
 Avant d'utiliser le SDK, assurez vous de l'initialiser, grâce à la fonction **onCreate()** ci-dessous.
