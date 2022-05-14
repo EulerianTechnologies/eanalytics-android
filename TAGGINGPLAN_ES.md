@@ -82,16 +82,16 @@ El sistema abastecerá el valor **Actualización** si:
 
 ![download_upgrade.png](https://bitbucket.org/repo/kA6LdM/images/3930826066-download_upgrade.png)
 
-## Integración a través de jCenter
+## Integración a través de jitpack
 
-Dentro del tracking de aplicaciones móviles, **jCenter** te permite simplificar el proceso de integración de la.
+Dentro del tracking de aplicaciones móviles, **jitpack** te permite simplificar el proceso de integración de la.
 
 ### Instalación
 
 Inserta la SDK Android en la herramienta [Gradle](http://gradle.org/|Gradle).
 ```xml
 dependencies {
-   compile 'com.eulerian.android.sdk:eanalytics:1.6.0'
+   compile 'com.eulerian.android.sdk:eanalytics:1.9.0'
 }
 ```
 
