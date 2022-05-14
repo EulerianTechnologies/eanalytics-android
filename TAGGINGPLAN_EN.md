@@ -84,16 +84,16 @@ The system will feed the metric **update** if:
 
 ![download_upgrade.png](https://bitbucket.org/repo/kA6LdM/images/3930826066-download_upgrade.png)
 
-## Integration through jCenter 
+## Integration through jitpack 
 
-For mobile applications, **jCenter** allows you to simplify the integration of the SDK.
+For mobile applications, **jitpack** allows you to simplify the integration of the SDK.
 
 ### Installation
 
 Insert the Android SDK in the tool [Gradle](http://gradle.org/|Gradle).
 ```xml
 dependencies {
-   compile 'com.eulerian.android.sdk:eanalytics:1.6.0'
+   compile 'com.eulerian.android.sdk:eanalytics:1.9.0'
 }
 ```
 
