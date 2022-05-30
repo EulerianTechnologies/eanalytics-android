@@ -748,6 +748,6 @@ EAProperties genericTag = new EAProperties.Builder(path) //path
                                 .build())
                         .build();
 
-                EAnalytics.getInstance().track(genericTag); //come EA_push
+                EAnalytics.getInstance().track(genericTag);
 ```
 
