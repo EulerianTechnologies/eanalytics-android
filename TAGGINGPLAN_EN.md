@@ -720,8 +720,8 @@ EAProperties genericTag = new EAProperties.Builder(path) //path
                         .setUID(UID) // UID
                         .setEmail("email")
                         .setProfile("profile")
-                        .set("NOM_PARAM_PERSO","VALEUR_PARAM_PERSO")
-                        .set("NOM_PARAM_PERSO","VALEUR_PARAM_PERSO")
+                        .set("KEY","VALUE")
+                        .set("KEY2","VALU1,VALUE2,VALUE3")
                         .setCFlag(new SiteCentricCFlag.Builder()
                                 .set("categorie_1", "rolandgarros", "wimbledon")
                                 .set("categorie_2", "tennis")
@@ -729,4 +729,4 @@ EAProperties genericTag = new EAProperties.Builder(path) //path
                                 .build())
                         .build();
 
-                EAnalytics.getInstance().track(genericTag); //come EA_push
+                EAnalytics.getInstance().track(genericTag);
