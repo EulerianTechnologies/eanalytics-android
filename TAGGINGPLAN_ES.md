@@ -175,21 +175,27 @@ __**Ejemplo:**__
 
 
 ```xml
-EAProperties genericTag = new EAProperties.Builder("NOM_PAGE")
-.setUID("UID")
-.set("NOM_PARAM_PERSO","VALEUR_PARAM_PERSO")
-.build();
-Eanalytics.getInstance().track(genericTag);
+EAProperties genericTag = new EAProperties.Builder(path: String)
+                        .setPageGroup(String)
+                        .setUID(String)
+                        .setEmail(String)
+                        .setProfile(String)
+                        .set(String - KEY,String - VALUE)
+                        .build();
+EAnalytics.getInstance().track(genericTag);
 ```
 
 __**Con valores:**__
 
 ```xml
-EAProperties genericTag = new EAProperties.Builder("|univers|rubrique|page")
-.setUID("5434742")
-.set("abonnement","mensuel")
-.build();
-Eanalytics.getInstance().track(genericTag);
+EAProperties genericTag = new EAProperties.Builder("NOM_PAGE")
+                        .setPageGroup("MY-PAGEGROUP")
+                        .setUID("123asd")
+                        .setEmail("test@test.fr")
+                        .setProfile("visitor")
+                        .set("KEY-CUSTOM-PARAMETER","VALUE")
+                        .build();
+EAnalytics.getInstance().track(genericTag);;
 ```
 
 # Página de producto
@@ -224,20 +230,25 @@ Una vez se ha iniciado y completado el producto con los parámetros deseados, in
 __**Ejemplo:**__
 
 ```xml
-Params param1 = new Params.Builder()
-.addParam("NOM_PARAM","VALEUR_PARAM")
-.addParam("marque", "MARQUE")
-.addParam("categorie", "CATEGORIE")
+// custom product parameters
+Params paramProduct = new Params.Builder()
+.addParam(String - key, String - Value) //prdparam-category
+.addParam(String - key, String - Value) //prdparam-brand
 .build();
 
-Product produit1 = new Product.Builder("ID_PRODUIT")
-.setName("NOM_PRODUIT")
-.setGroup("GROUPE")
-.setParams(param1)
+
+Product product1 = new Product.Builder(String - prdref) //prdref
+.setName(String -prdname) //prdname
+.setGroup(String -prdgroup) //prdgroup
+.setParams(Params paramProduct)
 .build();
+
 
 EAProducts productPage = new EAProducts.Builder("NOM_PAGE")
-.setUID("UID")                
+.setPageGroup(String)
+.setUID(String)
+.setEmail(String)
+.setProfile(String)             
 .addProduct(produit1)
 .build();
 
@@ -247,21 +258,25 @@ EAnalytics.getInstance().track(productPage);
 __**Con valores:**__
 
 ```xml
-Params param1 = new Params.Builder()
-.addParam("univers", "Vetement")
-.addParam("categorie", "Tshirt")
+Params paramProduct = new Params.Builder()
+.addParam("categoyr", "clothes") //prdparam-category
+.addParam("brand", "nike") //prdparam-brand
 .build();
 
-Product produit1 = new Product.Builder("G73624623")
-.setName("Tshirt_bleu")
-.setGroup("A")
-.setParams(param1)
+
+Product product1 = new Product.Builder("ref-product") //prdref
+.setName("name-product") //prdname
+.setGroup("group-product") //prdgroup
+.setParams(paramProduct)
 .build();
 
-EAProducts productPage = new EAProducts.Builder("Vetements|Tshirts|Tshirt_bleu_marqueA")
-.setUID("63726")
-.set("newsletter", "oui")
-.addProduct(produit1)
+
+EAProducts productPage = new EAProducts.Builder("NOM_PAGE")
+.setPageGroup("my-pagegroup")
+.setUID("123asd")
+.setEmail("test@test.fr")
+.setProfile("looker")             
+.addProduct(product1)
 .build();
 
 EAnalytics.getInstance().track(productPage);
@@ -292,15 +307,17 @@ Una vez que éste se inicia y se completa con los parámetros deseados, intégra
 __**Ejemplo:**__
 
 ```xml
-Product produit1 = new Product.Builder("ID_PRODUIT_1").build();
-Product produit2 = new Product.Builder("ID_PRODUIT_2").build();
-Product produit3 = new Product.Builder("ID_PRODUIT_3").build();
+Product produit1 = new Product.Builder(String - product ref).build(); 
+Product produit2 = new Product.Builder(String - product ref).build(); 
+Product produit3 = new Product.Builder(String - product ref).build(); 
  
-EAProducts resultPage = new EAProducts.Builder("NOM_PAGE")
-.setUID("UID")                
-.addProduct(produit1)
-.addProduct(produit2)
-.addProduct(produit3)
+EAProducts resultPage = new EAProducts.Builder(path: String)
+.setPageGroup(String!)
+.setUID(String!)
+.setEmail(String!)             
+.addProduct(Product product)
+.addProduct(Product product)
+.addProduct(Product product)
 .build();
  
 EAnalytics.getInstance().track(resultPage);
@@ -309,12 +326,14 @@ EAnalytics.getInstance().track(resultPage);
 __**Con valores:**__
 
 ```xml
-Product produit1 = new Product.Builder("CH32452").build();
-Product produit2 = new Product.Builder("C654322").build();
-Product produit3 = new Product.Builder("V643536").build();
+Product produit1 = new Product.Builder("ref-product1").build(); 
+Product produit2 = new Product.Builder("ref-product2").build(); 
+Product produit3 = new Product.Builder("ref-product3").build(); 
  
-EAProducts resultPage = new EAProducts.Builder("Categorie|Vestes")
-.setUID("73646")                
+EAProducts resultPage = new EAProducts.Builder("nom-de-page")
+.setPageGroup("my-pagegroup")
+.setUID("123asd")
+.setEmail("test@test.fr")             
 .addProduct(produit1)
 .addProduct(produit2)
 .addProduct(produit3)
@@ -447,15 +466,18 @@ Un presupuesto puede contener uno o varios productos. Cada producto que constitu
 __**Ejemplo:**__
 
 ```xml
-Product produit1 = new Product.Builder("ID_PRODUIT_1").build();
-Product produit2 = new Product.Builder("ID_PRODUIT_2").build();
+Product produit1 = new Product.Builder(String - id-product).build();
+Product produit2 = new Product.Builder(String - id-product).build();
 
-EAEstimate estimatePage = new EAEstimate.Builder("NOM_PAGE", "REFERENCE_DU_DEVIS")
-.setAmount(MONTANT_DU_DEVIS)
-.setType("TYPE_DE_DEVIS")
-.setUID("UID")          
-.addProduct(produit1, MONTANT_PRODUIT_1, QUANTITE_PRODUIT_1)
-.addProduct(produit2, MONTANT_PRODUIT_2, QUANTITE_PRODUIT_2)
+EAEstimate estimatePage = new EAEstimate.Builder(String - page-name, String - id-estimate)
+.setPageGroup(String!)
+.setUID(String!)
+.setEmail(String!) 
+.setType(String!)
+.setAmount(Double!)
+.set(String key, String value) //custom param
+.addProduct(Product product, Double - amount,Int - quantity)
+.addProduct(Product product, Double - amount,Int - quantity)
 .build();
  
 EAnalytics.getInstance().track(estimatePage);
@@ -467,9 +489,12 @@ __**Con valores:**__
 Product produit1 = new Product.Builder("505").build();
 
 EAEstimate estimatePage = new EAEstimate.Builder("Credit|devis", "C4536567")
+.setPageGroup("my-pagegroup")
+.setUID("123asd")
+.setEmail("test@test.fr") 
 .setAmount(5000.00)
 .setType("Credit_48mois")
-.setUID("627253")          
+.set("custom-param-KEY", "custom-param-value") //custom param
 .addProduct(produit1, 5000.00, 1)
 .build();
  
@@ -507,16 +532,26 @@ Cada objeto **Product** debe iniciarse y completarse con los parámetros deseado
 __**Ejemplo:**__
 
 ```xml
-Product produit1 = new Product.Builder("ID_PRODUIT_1").build();
-Product produit2 = new Product.Builder("ID_PRODUIT_2").build();
-Product produit3 = new Product.Builder("ID_PRODUIT_3").build();
- 
-EACart cartPage = new EACart.Builder("NOM_PAGE")
-.setCartCumul(true_OU_false)
-.setUID("UID")
-.addProduct(produit1, MONTANT_PRODUIT_1, QUANTITE_PRODUIT_1)
-.addProduct(produit2, MONTANT_PRODUIT_2, QUANTITE_PRODUIT_2)
-.addProduct(produit3, MONTANT_PRODUIT_3, QUANTITE_PRODUIT_3)
+Params paramProduct = new Params.Builder()
+.addParam(String Key, String value) 
+.addParam(StringKey, String value)  
+.build();
+//add more if more products
+
+Product product1 = new Product.Builder(String ref-product)
+.setName(String!)
+.setParams(Params paramProduct)
+.build(); 
+//add more if more products
+
+EACart cartPage = new EACart.Builder(String path)
+.setPageGroup(String!)
+.setUID(String!)
+.setEmail(String!) 
+.setProfile(String!)
+.setCartCumul(Bool!) 
+.addProduct(produit1, Double amount, Int quantity)
+//add more if more products
 .build();
  
 EAnalytics.getInstance().track(cartPage);
@@ -525,17 +560,29 @@ EAnalytics.getInstance().track(cartPage);
 __**Con valores:**__
 
 ```xml
-Product produit1 = new Product.Builder("XY65643").build();
-Product produit2 = new Product.Builder("XV12345").build();
- 
-EACart cartPage = new EACart.Builder("Panier")
-.setCartCumul(false)
-.setUID("57483")
-.addProduct(produit1, 65.00, 1)
-.addProduct(produit2, 20.00, 3)
+Params paramProduct = new Params.Builder()
+.addParam("category", "T-Shirt") //prdparam-category
+.addParam("brand", "Nike")       //prdparam-brand  
+.build();
+//add more if more products
+
+Product product1 = new Product.Builder("product-123")
+.setName("product-name")
+.setParams(paramProduct)
+.build(); 
+//add more if more products
+
+EACart cartPage = new EACart.Builder("page-name")
+.setPageGroup("my-page-group")
+.setUID("123asd")
+.setEmail("test@test.fr") 
+.setProfile("shopper")
+.setCartCumul(true or false) 
+.addProduct(produit1, 50.30, 2)
+//add more if more products
 .build();
  
-EAnalytics.getInstance().track(cartPage);
+EAnalytics.getInstance().track(cartPage);;
 ```
 
 # Página de pedido
@@ -578,21 +625,35 @@ Cada objeto **Product** debe iniciarse y completarse con los parámetros elegido
 __**Ejemplo:**__
 
 ```xml
-Product produit1 = new Product.Builder("ID_PRODUIT_1").build();
-Product produit2 = new Product.Builder("ID_PRODUIT_2").build();
-Product produit3 = new Product.Builder("ID_PRODUIT_3").build();
+Params paramProduct = new Params.Builder()
+.addParam(String Key, String value) 
+.addParam(StringKey, String value)  
+.build();
+//add more if more products
+
+Product product1 = new Product.Builder(String ref-product)
+.setName(String!)
+.setParams(Params paramProduct)
+.build(); 
+//add more if more products
  
-EAOrder orderPage = new EAOrder.Builder("NOM_PAGE", "REFERENCE_DE_LA_VENTE")
-.setAmount(MONTANT_DE_LA_VENTE)
-.setType("TYPE_DE_VENTE")
-.setPayment("MOYEN_DE_PAIEMENT")
-.setCurrency("DEVISE_DU_MONTANT")
-.setEstimateRef("REFERENCE_DU_DEVIS_ASSOCIE")
-.setUID("UID")
-.set("profile", "NOUVEAU_OU_ANCIEN_CLIENT")
-.addProduct(produit1, MONTANT_PRODUIT_1, QUANTITE_PRODUIT_1)
-.addProduct(produit2, MONTANT_PRODUIT_2, QUANTITE_PRODUIT_2)
-.addProduct(produit3, MONTANT_PRODUIT_3, QUANTITE_PRODUIT_3)
+EAOrder orderPage = new EAOrder.Builder(String path, String id-sale)
+.setPageGroup(String!)
+.setUID(String!)
+.setEmail(String!) 
+.setProfile(String!)
+.setNewCustomer(Bool!)
+
+.setAmount(Double!)
+.setType(String!)
+.setPayment(String!)
+.setCurrency(String!)
+
+.setEstimateRef(String!)
+
+.set(String key, String value) //custom param
+.addProduct(produit1, Double amount, Int quantity)
+//add more if more products
 .build();
  
 EAnalytics.getInstance().track(orderPage);
@@ -601,20 +662,60 @@ EAnalytics.getInstance().track(orderPage);
 __**Con valores:**__
 
 ```xml
-Product produit1 = new Product.Builder("HA1432245").build();
-Product produit2 = new Product.Builder("VE98373626").build();
- 
+Params paramProduct = new Params.Builder()
+.addParam("category", "T-Shirt") //prdparam-category
+.addParam("brand", "Nike")       //prdparam-brand  
+.build();
+//add more if more products
+
+Product product1 = new Product.Builder("product-123")
+.setName("product-name")
+.setParams(paramProduct)
+.build(); 
+//add more if more products
+
 EAOrder orderPage = new EAOrder.Builder("Tunnel|Confirmation", "F654335671")
-.setAmount(460.00)
-.setType("Vol+Hotel")
-.setPayment("CB")
-.setCurrency("USD")
-.setEstimateRef("D872635671")
-.setUID("62524")
-.set("profile", "nouveau_client")
-.addProduct(produit1, 60.00, 1)
-.addProduct(produit2, 400.00, 1)
+.setPageGroup("my-pagegroup")
+.setUID("123asd")
+.setEmail("test@test.fr") 
+.setProfile("buyer")
+.setNewCustomer(true ou false)
+
+.setAmount(50.30)
+.setType("online")
+.setPayment("credit card")
+.setCurrency("EUR")
+
+.setEstimateRef("asd123qwe")
+
+.set("custom-param-key", "custom-param-value") //custom param
+.addProduct(product1, 25.15, 2)
+//add more if more products
 .build();
  
 EAnalytics.getInstance().track(orderPage);
 ```
+
+El objeto SiteCentricCFlag es la clase dedicada al "Context Flag"
+
+Puede crear uno o más "Context Flags" a través del objeto SiteCentricCFlag y añadirlos con la función ".setCFlag". La función ".set" toma como argumentos "string key", "string...value" con uno o más valores con un máximo de 10 valores
+
+__**Exemple:**__
+
+```xml
+
+import com.eulerian.android.sdk.SiteCentricCFlag;
+
+// exemple for a generic tag
+EAProperties genericTag = new EAProperties.Builder(path) //path
+                        .setUID(UID) // UID
+                        .setEmail("email")
+                        .setProfile("profile")
+                        .set("KEY","VALUE")
+                        .set("KEY2","VALU1,VALUE2,VALUE3")
+                        .setCFlag(new SiteCentricCFlag.Builder()
+                                .set("categorie_1", "rolandgarros", "wimbledon")
+                                .set("categorie_2", "tennis")
+                                .set("categorie_3", "usopen")
+                                .build())
+                        .build();
