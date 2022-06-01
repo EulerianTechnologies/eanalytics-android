@@ -73,7 +73,13 @@ Le trafic généré par votre application peut remonter sur un site Eulerian dé
 Déscription des paramètres associés : 
   * **ea-appname** : NOM_APPLICATION , correspond au nom de l’application. Ce dernier ne doit pas changer
   * **ea-appversion** : VERSION_APPLICATION , correspond à la version de l’application
-  * **ea-appinstalled** : 1 , il doit être ajouté à tous les utilisateurs ayant déjà téléchargé l’application avant la mise à jour de l’url d’appel contenant les deux paramètres ci-dessus
+  * **ea-appinstalled** : 1 , il doit être ajouté à tous les utilisateurs ayant déjà téléchargé l’application avant la mise à jour de l’url d’appel contenant les deux paramètres ci-dessus. Donc le paramètre **ea-appinstalled** doit être initialisé toujours à 1, SAUF à la première ouverture de l'app en absolut. Exemple:
+
+1) l'user télécharge l'app pour la première fois
+2) au premier déclenchement du tag eulerian, on ne doit pas avoir le paramètre ea-appinstalled
+3) à partir du 2 déclenchements ( et pendant la navigation user) on doit recevoir ea-appinstalled = 1
+
+Par contre, pour tous les users qui ont téléchargé l'application avant la mise en prod de l'SDK Eulerian, on doit recevoir **ea-appinstalled** = 1 du premier appel pour éviter de les comptabiliser comme des nouvelles installations.
 
 La présence du paramètre **ea-appname** déclenche un traitement au niveau du système. 
 
