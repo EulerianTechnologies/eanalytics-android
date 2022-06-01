@@ -70,7 +70,10 @@ El tráfico generado por tu aplicación se puede rastrear en un sitio de Euleria
 Descripción de parámetros asociados: 
   * **ea-appname**: NOM_APPLICATION, corresponde al nombre de la aplicación. Este último no debe cambiar 
   * **ea-appversion**: VERSION_APPLICATION, corresponde a la versión de la aplicación 
-  * **ea-appinstalled**: 1, debe añadirse a todos los usuarios que hayan descargado la aplicación antes de la actualización de la URL de llamada que contiene los dos parámetros más arriba
+  * **ea-appinstalled**: 1, Este parámetro indica que no deben contarse nuevas instalaciones para este dispositivo.
+Se utiliza para gestionar la inicialización de los usuarios que ya tenían la aplicación antes de la implementación con Eulerian.
+
+Este parámetro puede ser proporcionado en cualquier momento, en paralelo del appversion y appname, siempre y cuando la aplicación considere que ya ha sido lanzada previamente en este dispositivo/usuario.
 
 La presencia del parámetro **ea-appname** inicia un tratamiento a nivel de sistema.
 
