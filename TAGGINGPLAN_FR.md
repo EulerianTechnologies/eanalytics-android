@@ -22,6 +22,8 @@ http://www.vpg.fr/ios-landing-webview?ea-euidl-bypass=$euidl_de_l_app
 Si le ea.js détecte ce paramètre alors il l'utilise et le stocke en interne tout le long de la session, ceci afin d'éviter que le site ne le repasse a chaque page visitée.
 Une fois ce passage de paramètre effectué, le tracking d'une application IOS en contexte webview ne diffère pas des formats Javascript que nous utilisons pour un site web classique.
 
+**IMPORTANT** "ea-euidl-bypass" doit etre resegné tout le temps (à chaque changement d'url), autrement on perde le lien entre la naviagation app et web.
+
 La documentation disponible à [cette adresse](https://eulerian.wiki/doku.php?id=fr:modules:collect:onsite_collection:taggingplan_web&s[]=webview#tab__mobiles) contient toutes les informations nécessaires à l'implémentation de nos Tags Javascript.
 
 
