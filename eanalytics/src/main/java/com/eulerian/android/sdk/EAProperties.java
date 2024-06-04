@@ -9,6 +9,8 @@ import android.text.TextUtils;
 
 import androidx.annotation.Nullable;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
@@ -39,11 +41,13 @@ public class EAProperties {
     private static final String KEY_PAGE_PROFILE = "profile";
     private static final String KEY_PAGE_GROUP = "pagegroup";
     private static final String KEY_PAGE_ACTION = "action";
+    private static final String KEY_PAGE_ACTIONS = "actions";
     private static final String KEY_PAGE_PROPERTY = "property";
     private static final String KEY_PAGE_NEW_CUSTOMER = "newcustomer";
     private static final String KEY_MAC = "ea-android-mac";
     private static final String KEY_SDK_VERSION = "ea-android-sdk-version";
     private static final String KEY_PAGE_CFLAG = "cflag";
+    private static final String KEY_STANDALONE = "ereplay-notag";
 
     JSONObject mProperties;
     private JSONObject mInternals;
@@ -171,6 +175,20 @@ public class EAProperties {
             return (T) this;
         }
 
+        public T putAction(Action action) {
+            try {
+                JSONArray array = new JSONArray();
+                if (!pages.isNull(KEY_PAGE_ACTIONS)) {
+                    array = pages.getJSONArray(KEY_PAGE_ACTIONS);
+                }
+                array.put(action.getJson());
+                JSONUtils.put(pages, KEY_PAGE_ACTIONS, array);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            return (T) this;
+        }
+
         public T setProperty(SiteCentricProperty property) {
             JSONUtils.put(pages, KEY_PAGE_PROPERTY, property.getJson());
             return (T) this;
@@ -178,6 +196,11 @@ public class EAProperties {
 
         public T setCFlag(SiteCentricCFlag cFlag) {
             JSONUtils.put(pages, KEY_PAGE_CFLAG, cFlag.getJson());
+            return (T) this;
+        }
+
+        public T setStandalone() {
+            JSONUtils.put(pages, KEY_STANDALONE, 1);
             return (T) this;
         }
 
