@@ -1,5 +1,24 @@
 # Plan de taggage SDK Android #
 
+## Sommaire
+<!--ts-->
+- [Plan de taggage android](#plan-de-taggage-sdk-android)
+  - [Tracking d'une application webview](#tracking-dune-application-webview)
+  - [Tracking d'une application native](#tracking-dune-application-native)
+    - [Règle d'affectation de trafic](#règle-daffectation-de-trafic)
+  - [Métriques téléchargement et mise à jour](#métriques-téléchargement-et-mise-à-jour)
+- [Liste des pages](#liste-des-pages)
+  - [Page générique](#page-générique)
+  - [Page produit](#page-produit)
+  - [Page catégorie](#page-catégorie)
+  - [Page moteur de recherche](#page-moteur-de-recherche)
+  - [Page d'erreur 404](#page-derreur-404)
+  - [Page devis](#page-de-devis)
+  - [Page panier](#page-panier)
+  - [Page commande](#page-de-commande)
+  - [Context Flag (CFLAG)](#context-flag-cflag)
+- [Le consentement dans une application android (GDPR / RGPD)](#le-consentement-dans-une-application-android-gdpr--rgpd)
+<!--te-->
 
 ## Tracking d'une application webview
 
@@ -16,11 +35,11 @@ Une fois cette valeur fournie dans le paramètre **ea-euidl-bypass**, on débray
 **Exemple:**
 
 ```xml
-http://www.vpg.fr/ios-landing-webview?ea-euidl-bypass=$euidl_de_l_app
+http://www.demo.fr/android-landing-webview?ea-euidl-bypass=$euidl_de_l_app
 ```
 
 Si le ea.js détecte ce paramètre alors il l'utilise et le stocke en interne tout le long de la session, ceci afin d'éviter que le site ne le repasse a chaque page visitée.
-Une fois ce passage de paramètre effectué, le tracking d'une application IOS en contexte webview ne diffère pas des formats Javascript que nous utilisons pour un site web classique.
+Une fois ce passage de paramètre effectué, le tracking d'une application android en contexte webview ne diffère pas des formats Javascript que nous utilisons pour un site web classique.
 
 **IMPORTANT** "ea-euidl-bypass" doit etre resegné tout le temps (à chaque changement d'url), autrement on perde le lien entre la naviagation app et web.
 
@@ -303,7 +322,7 @@ EAProducts productPage = new EAProducts.Builder("NOM_PAGE")
 EAnalytics.getInstance().track(productPage);
 ```
 
-# Page de résultat
+# Page catégorie
 
 Ce marqueur permet d'envoyer à vos partenaires les 3 premières références produit listées dans la page de résultat pour optimiser le retargeting des internautes sur votre site. 
 Son utilisation se limite principalement à notre produit Eulerian TMS et n'impacte pas le rapport Acquisition & performance produit dans Eulerian DDP.
@@ -365,7 +384,7 @@ EAProducts resultPage = new EAProducts.Builder("nom-de-page")
 EAnalytics.getInstance().track(resultPage);
 ```
 
-# Page de recherche interne
+# Page moteur de recherche
 
 Le marqueur de moteur de recherche interne permet de remonter dans l'interface les requêtes tapées par les internautes ainsi qu'un nombre illimité de paramètres additionnels. Toutes ces informations sont croisées avec les ventes générées et les leviers d'acquisition activés pendant la session.
 
@@ -755,3 +774,101 @@ EAProperties genericTag = new EAProperties.Builder(path) //path
                 EAnalytics.getInstance().track(genericTag);
 ```
 
+# Le consentement dans une application Android (GDPR / RGPD)
+
+> **Important : il existe deux approches MUTUELLEMENT EXCLUSIVES.**  
+> Choisissez **l’une ou l’autre**, jamais les deux :
+>
+> 1. **Mode TCF v2 – TCString** : transmettre la chaîne de consentement via `gdpr_consent`.
+> 2. **Mode Catégories – `pmcat`** : transmettre les IDs des catégories refusées.
+
+---
+
+## 1. Mode **TCF v2** — paramètre `gdpr_consent`
+
+Transmettez la **TCString** générée par votre CMP au moment précis où l’utilisateur exprime son opt‑in ou opt‑out. Envoyez‑la **une seule fois par visiteur**.
+
+### Exemple Android
+```xml
+// Android – sans valeurs
+EAProperties genericTag = new EAProperties.Builder("NOM_PAGE")
+.setUID("UID")
+.set("NOM_PARAM_PERSO","VALEUR_PARAM_PERSO")
+.set("gdpr_consent","TCSTRING")
+.build();
+EAnalytics.getInstance().track(genericTag);
+```
+```xml
+// Android – avec valeurs
+EAProperties genericTag = new EAProperties.Builder("|univers|rubrique|page")
+.setUID("5434742")
+.set("abonnement","mensuel")
+.set("gdpr_consent","EADURF214345")
+.build();
+EAnalytics.getInstance().track(genericTag);
+```
+
+---
+
+## 2. Mode **Catégories** — paramètre `pmcat`
+
+Si vous ne souhaitez pas gérer la TCString, utilisez le paramètre `pmcat` pour lister les **IDs Eulerian** des catégories **refusées** par l’utilisateur, séparées par des tirets (`-`).
+
+*Envoyez `-` si l’utilisateur accepte toutes les catégories.*
+
+### Exemple de mappage
+
+| Catégorie | ID Eulerian |
+|-----------|-------------|
+| analytics | 1 |
+| publicité | 10 |
+| fonctionnel | 19 |
+
+Si l’utilisateur refuse « analytics » **et** « publicité », la valeur sera :`1-10`.
+
+### Exemples Android
+```xml
+// Android – sans valeurs
+EAProperties genericTag = new EAProperties.Builder("NOM_PAGE")
+.setUID("UID")
+.set("NOM_PARAM_PERSO","VALEUR_PARAM_PERSO")
+.set("pmcat","CATEGORIES CMP REFUSEES")
+.build();
+EAnalytics.getInstance().track(genericTag);
+```
+```xml
+// Android – avec valeurs
+EAProperties genericTag = new EAProperties.Builder("|univers|rubrique|page")
+.setUID("5434742")
+.set("abonnement","mensuel")
+.set("pmcat","1-2")
+.build();
+EAnalytics.getInstance().track(genericTag);
+```
+
+---
+
+## Opt‑out général inconditionnel
+
+Pour offrir un retrait total, mettez à disposition l’URL :
+```
+<domaine_de_collecte>/optout.html?url=votre_domaine
+```
+Exemple :
+```
+https://mj23.eulerian.com/optout.html?url=www.eulerian.com
+```
+Ajoutez‑la à votre page « Vie privée / RGPD » ou dans la CMP.
+
+---
+
+### Récapitulatif
+
+| Étape | Mode TCF v2 | Mode Catégories |
+|-------|-------------|-----------------|
+| Paramètre clé | `gdpr_consent` | `pmcat` |
+| Quand l’envoyer ? | Lors de l’opt‑in/out | Lors de l’opt‑in/out |
+| Contenu | TCString | IDs refusés (ou `-`) |
+| Compatibilité | CMP TCF v2 | CMP maison / non‑TCF |
+
+**N’utilisez jamais ces deux modes simultanément dans une même application.**
