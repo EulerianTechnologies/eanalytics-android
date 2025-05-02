@@ -43,9 +43,16 @@ Une fois ce passage de paramètre effectué, le tracking d'une application andro
 
 **IMPORTANT** "ea-euidl-bypass" doit etre resegné tout le temps (à chaque changement d'url), autrement on perde le lien entre la naviagation app et web.
 
-La documentation disponible à [cette adresse](https://eulerian.wiki/doku.php?id=fr:modules:collect:onsite_collection:taggingplan_web&s[]=webview#tab__mobiles) contient toutes les informations nécessaires à l'implémentation de nos Tags Javascript.
+**IMPORTANT** :Dans le cas d'une application s'affichant en **WebView**, il est obligatoire d'ajouter le paramètre **`edev`** à l’ouverture de la WebView. Ce paramètre permet de **qualifier le trafic comme provenant d’une application native**.
 
+Il est indispensable pour assurer le **bon suivi des campagnes in-app** et des **notifications push**, ainsi que pour **garantir une remontée correcte dans les appels WebView**.
 
+Les valeurs acceptées pour le paramètre `edev` sont les suivantes :
+
+- `AppNativeIOSphone`  
+- `AppNativeIOStablet`  
+- `AppNativeAndroidphone`  
+- `AppNativeAndroidtablet`
 
 ## Tracking d'une application native
 
