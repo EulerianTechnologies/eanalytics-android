@@ -113,13 +113,22 @@ Le système va alimenter la métrique **téléchargement** si :
 Le système va alimenter la métrique **Mise à jour** si :
   * Le user a déjà été exposé au paramètre **ea-appname** et sa valeur est identique à celle présente lors de la dernière ouverture de l’application. Par contre, la valeur du paramètre **ea-appversion** est différente.
 
-![download_upgrade.png](https://bitbucket.org/repo/kA6LdM/images/3930826066-download_upgrade.png)
-
 ## Intégration via jitpack
 
 Dans le cadre du tracking des applications mobiles, **jitpack** vous permet de simplifier le processus d'intégration du SDK.
 
 ### Installation
+
+ajouter JitPack dans le file build
+
+```groovy
+allprojects {
+    repositories {
+        ...
+        maven { url 'https://jitpack.io' }
+    }
+}
+```
 
 Insérer le SDK Android dans l'outil [Gradle](http://gradle.org/|Gradle).
 ```xml
