@@ -41,7 +41,7 @@ http://www.demo.fr/android-landing-webview?ea-euidl-bypass=$euidl_de_l_app
 Si le ea.js détecte ce paramètre alors il l'utilise et le stocke en interne tout le long de la session, ceci afin d'éviter que le site ne le repasse a chaque page visitée.
 Une fois ce passage de paramètre effectué, le tracking d'une application android en contexte webview ne diffère pas des formats Javascript que nous utilisons pour un site web classique.
 
-**IMPORTANT** "ea-euidl-bypass" doit etre resegné tout le temps (à chaque changement d'url), autrement on perde le lien entre la naviagation app et web.
+**IMPORTANT** "ea-euidl-bypass" doit etre renseigné tout le temps (à chaque changement d'url), autrement nous perdons le lien entre la naviagation app et web.
 
 **IMPORTANT** :Dans le cas d'une application s'affichant en **WebView**, il est obligatoire d'ajouter le paramètre **`edev`** à l’ouverture de la WebView. Ce paramètre permet de **qualifier le trafic comme provenant d’une application native**.
 
