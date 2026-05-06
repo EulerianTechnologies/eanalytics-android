@@ -2,7 +2,9 @@ package com.eulerian.android.sdk;
 
 import android.os.Handler;
 
+import java.io.UnsupportedEncodingException;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Created by Francois Rouault on 28/03/2015.
@@ -12,9 +14,12 @@ class PropertiesTracker implements Runnable {
     private final Handler handler;
     private final EAProperties properties;
 
-    PropertiesTracker(EAProperties properties, Handler ui) {
+    private final String eventType;
+
+    PropertiesTracker(EAProperties properties, Handler ui, String eventType) {
         this.properties = properties;
         this.handler = ui;
+        this.eventType = eventType;
     }
 
     @Override
@@ -45,7 +50,16 @@ class PropertiesTracker implements Runnable {
 
         List<String> storedProperties = FileHelper.getLines();
         if (storedProperties.isEmpty()) {
-            final boolean success = HttpHelper.postData("[" + propertiesToString + "]");
+            boolean success;
+            if (Objects.equals(eventType, "generic")) {
+                success = HttpHelper.postData("[" + propertiesToString + "]");
+            } else {
+                try {
+                    success = HttpHelper.getData(properties);
+                } catch (UnsupportedEncodingException e) {
+                    success = false;
+                }
+            }
             if (!success) {
                 EALog.d("-> synchronization failed. Will retry if no other pending track is found.");
                 FileHelper.appendLine(propertiesToString);

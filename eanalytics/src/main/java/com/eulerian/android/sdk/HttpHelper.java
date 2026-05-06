@@ -5,6 +5,7 @@ import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import java.util.zip.GZIPOutputStream;
 
@@ -58,4 +59,54 @@ class HttpHelper {
         return false;
     }
 
+    public static boolean getData(EAProperties value) throws UnsupportedEncodingException {
+        String sRTDomain = EAnalytics.sRTDomain;
+        String queryString = "";
+        if (value instanceof EATpView) {
+            sRTDomain = EAnalytics.sViewDomain;
+            queryString = ((EATpView) value).toQueryString();
+            EALog.d("-> getting data : " + queryString);
+        } else if (value instanceof EATpClick) {
+            sRTDomain = EAnalytics.sClickDomain;
+            queryString = ((EATpClick) value).toQueryString();
+            EALog.d("-> getting data : " + queryString);
+        } else {
+            EALog.d("-> getting data : " + value);
+        }
+
+
+        // FOR TEST
+//        try {
+//            Thread.sleep(1000);
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
+//        return new Random().nextInt(4) != 0;
+//        END FOR TEST
+        try {
+            URL url = new URL(sRTDomain + queryString);
+            HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();
+
+            conn.setRequestMethod("GET");
+            conn.setRequestProperty("Accept", "application/json");
+
+            conn.setReadTimeout(2000);
+            conn.setConnectTimeout(5000);
+            conn.setDoInput(true);
+
+            int responseCode = conn.getResponseCode();
+
+            EALog.d("-> GET response code: " + responseCode);
+
+            if (responseCode >= 200 && responseCode < 300) {
+                return true;
+            } else {
+                return false;
+            }
+
+        } catch (Exception e) {
+            EALog.e("getData failed: " + e);
+            return false;
+        }
+    }
 }

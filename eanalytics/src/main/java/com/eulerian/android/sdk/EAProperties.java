@@ -84,14 +84,16 @@ public class EAProperties {
             JSONUtils.put(pages, KEY_PAGE_PATH, path);
         }
 
-        private void initInternalParams() {
+        public void initInternalParams() {
             JSONUtils.put(internals, KEY_EOS, "Android" + Build.VERSION.RELEASE);
             JSONUtils.put(internals, KEY_EHW, Build.MANUFACTURER + " " + Build.MODEL);
             JSONUtils.put(internals, KEY_EUIDL, EAnalytics.getEuidl());
             JSONUtils.put(internals, KEY_MAC, getMacAddress());
             String packageName = EAnalytics.getContext().getApplicationInfo().packageName;
-            JSONUtils.put(internals, KEY_URL, "http://" + packageName);
-            JSONUtils.put(internals, KEY_APPNAME, packageName);
+//            JSONUtils.put(internals, KEY_URL, "http://" + packageName);
+//            JSONUtils.put(internals, KEY_APPNAME, packageName);
+            JSONUtils.put(internals, KEY_URL, "com.example.andrea");
+            JSONUtils.put(internals, KEY_APPNAME, "com.example.andrea");
             JSONUtils.put(internals, KEY_ADINFO_IS_LAT, String.valueOf(EAnalytics.sAdInfoIsLAT));
             JSONUtils.put(internals, KEY_ADINFO_ID, EAnalytics.sAdInfoId);
             JSONUtils.put(internals, KEY_EPOCH, String.valueOf(System.currentTimeMillis() / 1000));

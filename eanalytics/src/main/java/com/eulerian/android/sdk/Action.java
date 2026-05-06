@@ -10,8 +10,10 @@ import org.json.JSONObject;
 public class Action {
 
     private static final String KEY_REF = "ref";
-    private static final String KEY_IN = "in";
-    private static final String KEY_OUT = "out";
+    private static final String KEY_MODE = "mode";
+    private static final String KEY_LABEL = "label";
+    private static final String KEY_PARAMS = "params";
+    private static final String KEY_NAME = "name";
 
     private JSONObject mJson;
 
@@ -25,31 +27,36 @@ public class Action {
 
     public static class Builder {
         private final JSONObject mainJson = new JSONObject();
-        private final JSONArray outsJson = new JSONArray();
+
+        public Builder setName(String name) {
+            JSONUtils.put(mainJson, KEY_NAME, name);
+            return this;
+        }
 
         public Builder setReference(String ref) {
             JSONUtils.put(mainJson, KEY_REF, ref);
             return this;
         }
 
-        public Builder setIn(String in) {
-            JSONUtils.put(mainJson, KEY_IN, in);
+        public Builder setMode(String mode) {
+            JSONUtils.put(mainJson, KEY_MODE, mode);
             return this;
         }
 
-        public Builder addOut(String... outs) {
-            for (String out : outs) {
-                outsJson.put(out);
-            }
+        public Builder setLabel(String label) {
+            JSONUtils.put(mainJson, KEY_LABEL, label);
+            return this;
+        }
+
+        public Builder setParams(Params params) {
+            JSONUtils.put(mainJson, KEY_PARAMS, params.getJson());
             return this;
         }
 
         public Action build() {
-            if (outsJson.length() != 0) {
-                JSONUtils.put(mainJson, KEY_OUT, outsJson);
-            }
-            if (!mainJson.has(KEY_IN) && !mainJson.has(KEY_OUT)) {
-                EALog.w(Action.class.getSimpleName() + ": one of setIn() or addOut() method must be called to create " +
+
+            if (!mainJson.has(KEY_MODE)) {
+                EALog.w(Action.class.getSimpleName() + ": setMode() must be called to create " +
                         "a valid Action.");
             }
             return new Action(this);

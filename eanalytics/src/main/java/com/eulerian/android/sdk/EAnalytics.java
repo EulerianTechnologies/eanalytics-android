@@ -27,6 +27,8 @@ public class EAnalytics {
     protected static final int HANDLER_MESSAGE_RETRY = 1;
     private static final String TAG = EAnalytics.class.getSimpleName();
     static String sRTDomain;
+    static String sClickDomain;
+    static String sViewDomain;
     @Nullable
     static String sAdInfoId;
     static boolean sAdInfoIsLAT = false;
@@ -89,6 +91,8 @@ public class EAnalytics {
                 "For instance, test.example.net is a valid.");
         sAppContext = context;
         sRTDomain = "https://" + host + "/collectorjson/-/";
+        sClickDomain = "https://" + host + "/tpclick/";
+        sViewDomain = "https://" + host + "/tpview/";
         sAdInfoId = PersistentIdentity.getInstance().getAdvertisingId();
         sAdInfoIsLAT = PersistentIdentity.getInstance().getAdvertisingIsLat();
         EALog.d("SDK initialized with " + host, true);
@@ -110,11 +114,24 @@ public class EAnalytics {
         EALog.d("track");
         EALog.assertCondition(sRTDomain != null, "The SDK has not been initialized. You must call EAnalytics" +
                 ".init(Context, String) once.");
+
+        String eventType = null;
+
+        if (properties instanceof EATpView) {
+            eventType = "tpview";
+        } else if (properties instanceof EATpClick) {
+            eventType = "tpclick";
+        } else {
+            eventType = "generic";
+        }
+
+        EALog.d("Tracking a " + eventType + " event", true);
         if (properties == null) {
             mExecutor.execute(new StoredPropertiesTracker(mUiHandler));
         } else {
-            mExecutor.execute(new PropertiesTracker(properties, mUiHandler));
+            mExecutor.execute(new PropertiesTracker(properties, mUiHandler, eventType));
         }
+
     }
 
     static class GetAdInfo implements Runnable {

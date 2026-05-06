@@ -1,65 +1,84 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:padding="16dp"
-    tools:context=".activity.MainActivity">
-
-
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/appCompatButton2"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:onClick="onClickProperties"
-        android:text="PROPERTIES"
-        app:layout_constraintBottom_toTopOf="@+id/appCompatButton"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/appCompatButton"
+        android:layout_height="match_parent"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        tools:context=".activity.MainActivity">
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:onClick="onClickProducts"
-        android:text="PRODUCTS"
-        app:layout_constraintBottom_toTopOf="@+id/appCompatButton3"
-        app:layout_constraintTop_toBottomOf="@+id/appCompatButton2" />
+        android:layout_height="match_parent"
+        android:padding="16dp"
+        android:orientation="vertical">
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/appCompatButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="onClickProducts"
+            android:text="PRODUCTS"/>
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/appCompatButton3"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:onClick="onClickSearch"
-        android:text="SEARCH"
-        app:layout_constraintBottom_toTopOf="@+id/appCompatButton4"
-        app:layout_constraintTop_toBottomOf="@+id/appCompatButton" />
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/appCompatButton2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="onClickProperties"
+            android:text="PROPERTIES"/>
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/appCompatButton4"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:onClick="onClickCart"
-        android:text="CART"
-        app:layout_constraintBottom_toTopOf="@+id/appCompatButton5"
-        app:layout_constraintTop_toBottomOf="@+id/appCompatButton3" />
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/appCompatButton3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="onClickSearch"
+            android:text="SEARCH" />
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/appCompatButton5"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:onClick="onClickEstimate"
-        android:text="ESTIMATE"
-        app:layout_constraintBottom_toTopOf="@+id/appCompatButton6"
-        app:layout_constraintTop_toBottomOf="@+id/appCompatButton4" />
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/appCompatButton4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="onClickCart"
+            android:text="CART" />
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/appCompatButton6"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:onClick="onClickSale"
-        android:text="SALE"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/appCompatButton5" />
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/appCompatButton5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="onClickEstimate"
+            android:text="ESTIMATE"
+            />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/appCompatButton6"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="onClickSale"
+            android:text="SALE" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/appCompatButton7"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="onClickAction"
+            android:text="ACTION"/>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/appCompatButton8"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="onClickSale"
+            android:text="SALE" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/appCompatButton9"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="onClickTpView"
+            android:text="TP VIEW" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/appCompatButton10"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="onClickTpClick"
+            android:text="TP CLICK" />
+    </LinearLayout>
+</ScrollView>

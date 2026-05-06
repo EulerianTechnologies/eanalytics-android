@@ -13,6 +13,8 @@ import com.eulerian.android.sdk.EAOrder;
 import com.eulerian.android.sdk.EAProducts;
 import com.eulerian.android.sdk.EAProperties;
 import com.eulerian.android.sdk.EASearch;
+import com.eulerian.android.sdk.EATpClick;
+import com.eulerian.android.sdk.EATpView;
 import com.eulerian.android.sdk.EAnalytics;
 import com.eulerian.android.sdk.Params;
 import com.eulerian.android.sdk.Product;
@@ -94,10 +96,24 @@ public class MainActivity extends AppCompatActivity {
                 .set("whatever", "...")
                 .set("whatever1", "...")
                 .set("whatever2", "...")
-                .setAction(new Action.Builder()
-                        .setReference("test-ref-\"fefds$432`^")
-                        .setIn("in-test")
-                        .addOut(new String[]{"tata", "tutu", "tete"})
+                .putAction(new Action.Builder()
+                        .setName("test-action-andrea-properties-1")
+                        .setReference("ref-XXX")
+                        .setMode("in")
+                        .setLabel("lb1,lb2,lb3")
+                        .setParams(new Params.Builder()
+                                .addParam("provenance", "martinique")
+                                .addParam("couleur", "jaune")
+                                .build())
+                        .build())
+                .putAction(new Action.Builder()
+                        .setName("test-action-andrea-properties-2")
+                        .setReference("test-action-andrea-properties-2")
+                        .setMode("out")
+                        .setLabel("lb4,lb5,lb6")
+                        .setParams(new Params.Builder()
+                                .addParam("couleur", "jaune")
+                                .build())
                         .build())
                 .setProperty(new SiteCentricProperty.Builder()
                         .set("cle1", new String[]{"poisson", "viande"})
@@ -109,6 +125,37 @@ public class MainActivity extends AppCompatActivity {
                         .set("categorie_3", "usopen")
                         .build())
                 .build();
+        EAnalytics.getInstance().track(properties);
+    }
+
+    public void onClickAction(View v) {
+        EAProperties properties = new EAProperties.Builder("the_path")
+                .setStandalone()
+                .setEmail("test-email")
+                .setPageGroup("test-group")
+                .setProfile("test-profile")
+                .setUID("test-uid")
+                .putAction(new Action.Builder()
+                        .setName("test-action-andrea-1")
+                        .setReference("ref-XXX")
+                        .setMode("in")
+                        .setLabel("lb1,lb2,lb3")
+                        .setParams(new Params.Builder()
+                                .addParam("provenance", "martinique")
+                                .addParam("couleur", "jaune")
+                                .build())
+                        .build())
+                .putAction(new Action.Builder()
+                        .setName("test-action-andrea-2")
+                        .setReference("test-action-andrea-2")
+                        .setMode("out")
+                        .setLabel("lb4,lb5,lb6")
+                        .setParams(new Params.Builder()
+                                .addParam("couleur", "jaune")
+                                .build())
+                        .build())
+                .build();
+
         EAnalytics.getInstance().track(properties);
     }
 
@@ -169,6 +216,29 @@ public class MainActivity extends AppCompatActivity {
                 .build();
 
         EAnalytics.getInstance().track(maVente);
+    }
+
+    public void onClickTpView(View v) {
+        EATpView mEaTpView = new EATpView.Builder("homepage")
+                .setSiteName("admin-andrea2")
+                .setCampaign("summer_sale")
+                .setPlacement("banner_top")
+                .addProduct("PROD_001", 0)
+                .addProduct("PROD_002", 1)
+                .setUrl("http://eulerian.net")
+                .build();
+        EAnalytics.getInstance().track(mEaTpView);
+    }
+
+    public void onClickTpClick(View v) {
+        EATpClick mEaTpClick = new EATpClick.Builder("homepage")
+                .setSiteName("admin-andrea2")
+                .setCampaign("summer_sale")
+                .setPlacement("banner_top")
+                .setProduct("PROD_001", 2)
+                .setUrl("http://eulerian.net")
+                .build();
+        EAnalytics.getInstance().track(mEaTpClick);
     }
 
 }
