@@ -1,34 +1,34 @@
 # Android SDK — Eulerian Analytics
 
-Complete installation and tagging guide for the Eulerian Analytics Android SDK.
+Guide complet d'installation et de taggage pour le SDK Android Eulerian Analytics.
 
 ---
 
-## Table of Contents
+## Sommaire
 
 - [Installation](#installation)
-- [Initialization](#initialization)
-- [Tag Types](#tag-types)
-  - [Generic Page](#generic-page) — `EAProperties`
-  - [Product Page](#product-page) — `EAProducts` (1 product)
-  - [Category Page](#category-page) — `EAProducts` (N products)
-  - [Search Page](#search-page) — `EASearch`
-  - [Error 404](#error-404) — `EAProperties`
-  - [Estimate](#estimate) — `EAEstimate`
-  - [Cart](#cart) — `EACart`
-  - [Order](#order) — `EAOrder`
-  - [Merchandise Tracking](#merchandise-tracking) — `EATpView` / `EATpClick`
+- [Initialisation](#initialisation)
+- [Types de tags](#types-de-tags)
+  - [Page générique](#page-générique) — `EAProperties`
+  - [Page produit](#page-produit) — `EAProducts` (1 produit)
+  - [Page catégorie](#page-catégorie) — `EAProducts` (N produits)
+  - [Page moteur de recherche](#page-moteur-de-recherche) — `EASearch`
+  - [Page d'erreur 404](#page-derreur-404) — `EAProperties`
+  - [Page devis](#page-devis) — `EAEstimate`
+  - [Page panier](#page-panier) — `EACart`
+  - [Page commande](#page-commande) — `EAOrder`
+  - [Tracking marchandisage](#tracking-marchandisage) — `EATpView` / `EATpClick`
   - [Context Flag (CFLAG)](#context-flag-cflag) — `SiteCentricCFlag`
-- [WebView Tracking](#webview-tracking)
-- [App Metrics](#app-metrics)
-- [GDPR / Consent](#gdpr--consent)
-- [Dependencies](#dependencies)
+- [Tracking WebView](#tracking-webview)
+- [Métriques application](#métriques-application)
+- [Consentement (GDPR / RGPD)](#consentement-gdpr--rgpd)
+- [Dépendances](#dépendances)
 
 ---
 
 ## Installation
 
-Add the JitPack repository to your project-level `build.gradle`:
+Ajoutez le dépôt JitPack dans votre fichier `build.gradle` racine :
 
 ```groovy
 allprojects {
@@ -38,7 +38,7 @@ allprojects {
 }
 ```
 
-Add the dependency to your module-level `build.gradle`:
+Ajoutez la dépendance dans le `build.gradle` de votre module :
 
 ```groovy
 dependencies {
@@ -46,7 +46,7 @@ dependencies {
 }
 ```
 
-Add the required permissions to your `AndroidManifest.xml`:
+Ajoutez les permissions requises dans votre `AndroidManifest.xml` :
 
 ```xml
 <uses-permission android:name="android.permission.INTERNET" />
@@ -54,7 +54,7 @@ Add the required permissions to your `AndroidManifest.xml`:
 <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
 ```
 
-To track app installs from Google Play, also add this receiver:
+Pour suivre les installations depuis Google Play, ajoutez également ce receiver :
 
 ```xml
 <receiver
@@ -68,9 +68,9 @@ To track app installs from Google Play, also add this receiver:
 
 ---
 
-## Initialization
+## Initialisation
 
-Initialize the SDK in your `Application.onCreate()`. Declare your Application subclass in the manifest first.
+Initialisez le SDK dans votre `Application.onCreate()`. Déclarez d'abord votre sous-classe Application dans le manifest.
 
 ```xml
 <!-- AndroidManifest.xml -->
@@ -83,29 +83,43 @@ public class DemoApp extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        // Replace "example.demo.com" with your tracking subdomain
+        // Remplacez "example.demo.com" par votre sous-domaine de tracking
         EAnalytics.init(this, "example.demo.com", false);
     }
 }
 ```
 
-> The third parameter enables (`true`) or disables (`false`) debug logging.
+> Le troisième paramètre active (`true`) ou désactive (`false`) les logs de debug.
 
-> **Traffic attribution in Eulerian:** unlike web tracking where the URL identifies the site, a native app has no URL. The SDK automatically uses the app's **package name** (e.g. `com.mycompany.myapp`) as the internal URL sent to Eulerian (`ea-appname` and `url` parameters). Eulerian uses the tracking subdomain passed to `init()` to attribute traffic to the correct site in its interface.
+> **Attribution du trafic dans Eulerian :** contrairement au tracking web où l'URL identifie le site, une application native n'a pas d'URL. Le SDK utilise automatiquement le **package name** de l'application (ex. `com.mycompany.myapp`) comme URL interne envoyée à Eulerian (paramètres `ea-appname` et `url`). Eulerian se base sur le sous-domaine de tracking passé à `init()` pour attribuer le trafic au bon site dans son interface.
 
-> If multiple apps share the same tracking subdomain, use the `from` parameter in tags to distinguish them.
-
----
-
-## Tag Types
-
-> `path` (page name) is **required** on every tag. Unlike web tracking, it is never inferred automatically from the URL.
+> Si plusieurs applications partagent le même sous-domaine de tracking, utilisez le paramètre `from` dans les marqueurs pour les distinguer.
 
 ---
 
-### Generic Page — `EAProperties`
+## Types de tags
 
-Use on every page that is not a product, cart, order, or estimate page (including the homepage and conversion funnel steps between cart and order confirmation). Tracks pageviews, visits, and organic traffic sources.
+> `path` (nom de page) est **obligatoire** sur chaque tag. Contrairement au web, il n'est jamais récupéré automatiquement depuis l'URL.
+
+> **Méthode générique `set(String key, String value)` :** disponible sur tous les tags, elle permet d'ajouter n'importe quel paramètre personnalisé non couvert par les méthodes dédiées. Exemple : `.set("abonnement", "mensuel")`.
+
+---
+
+### Page générique — `EAProperties`
+
+À utiliser sur toutes les pages qui ne sont pas des fiches produit, panier, commande ou devis (y compris la homepage et les étapes du tunnel entre panier et confirmation de commande). Remonte le trafic site-centric, les pages vues, les visites et les sources naturelles.
+
+**Méthodes :**
+
+- `Builder(String path)` — nom de la page **(obligatoire)**
+- `setUID(String uid)` — ID interne de l'utilisateur connecté ; consolide l'historique multi-device et permet de réconcilier un clic avec un téléchargement
+- `setEmail(String email)` — email de l'utilisateur
+- `setProfile(String profile)` — profil de l'utilisateur (ex. `visitor`, `buyer`, `looker`)
+- `setPageGroup(String group)` — groupe de pages pour le reporting
+- `set(String key, String value)` — paramètre personnalisé libre
+- `setCFlag(SiteCentricCFlag flag)` — attache un ou plusieurs context flags au tag (voir [Context Flag](#context-flag-cflag))
+
+**Exemple :**
 
 ```java
 EAProperties genericTag = new EAProperties.Builder("NOM_PAGE")
@@ -120,9 +134,32 @@ EAnalytics.getInstance().track(genericTag);
 
 ---
 
-### Product Page — `EAProducts` (1 product)
+### Page produit — `EAProducts` (1 produit)
 
-Tracks product page views and feeds the "Acquisition & Product Performance" report. A tag is treated as a product page when it contains **exactly one** product ref and none of `scart`, `estimate`, `ref`, `amount`.
+Suit les pages vues produit et alimente le rapport « Acquisition & Performance produit ». Un marqueur est considéré comme page produit quand il contient **exactement une** référence produit et aucun des paramètres `scart`, `estimate`, `ref`, `amount`.
+
+**Méthodes :**
+
+- `Builder(String path)` — nom de la page **(obligatoire)**
+- `setUID(String uid)` — ID interne de l'utilisateur connecté
+- `setEmail(String email)` — email de l'utilisateur
+- `setProfile(String profile)` — profil de l'utilisateur
+- `setPageGroup(String group)` — groupe de pages pour le reporting
+- `addProduct(Product product)` — ajoute la référence produit **(obligatoire)**
+- `set(String key, String value)` — paramètre personnalisé libre
+
+**Construction d'un `Product` :**
+
+- `Product.Builder(String ref)` — référence produit **(obligatoire)**
+- `setName(String name)` — nom lisible du produit pour le reporting
+- `setGroup(String group)` — groupe de marge (`A` ou `B`)
+- `setParams(Params params)` — catégories produit (ex. `prdparam-category`, `prdparam-brand`)
+
+**Construction d'un `Params` :**
+
+- `addParam(String key, String value)` — ajoute une catégorie produit ; la clé correspond au suffixe après `prdparam-`
+
+**Exemple :**
 
 ```java
 Params productParams = new Params.Builder()
@@ -148,9 +185,20 @@ EAnalytics.getInstance().track(productPage);
 
 ---
 
-### Category Page — `EAProducts` (N products)
+### Page catégorie — `EAProducts` (N produits)
 
-Sends the first N product refs shown on a results/category page to partners for retargeting. A tag is treated as a category page when it contains **more than one** product ref and none of `scart`, `estimate`, `ref`, `amount`.
+Envoie les N premières références produit affichées sur une page de résultats/catégorie aux partenaires pour le retargeting. Un marqueur est considéré comme page catégorie quand il contient **plus d'une** référence produit et aucun des paramètres `scart`, `estimate`, `ref`, `amount`.
+
+**Méthodes :**
+
+- `Builder(String path)` — nom de la page **(obligatoire)**
+- `setUID(String uid)` — ID interne de l'utilisateur connecté
+- `setEmail(String email)` — email de l'utilisateur
+- `setPageGroup(String group)` — groupe de pages pour le reporting
+- `addProduct(Product product)` — ajoute une référence produit ; répétez pour chaque produit affiché
+- `set(String key, String value)` — paramètre personnalisé libre
+
+**Exemple :**
 
 ```java
 Product product1 = new Product.Builder("ref-product1").build();
@@ -170,9 +218,19 @@ EAnalytics.getInstance().track(resultPage);
 
 ---
 
-### Search Page — `EASearch`
+### Page moteur de recherche — `EASearch`
 
-Tracks internal search queries, result counts, and custom search parameters. A tag is treated as a search page when it contains the `isearchengine` parameter. Not exclusive: can be combined with a product ref on the same tag.
+Suit les requêtes du moteur de recherche interne, le nombre de résultats et les paramètres de recherche personnalisés. Un marqueur est considéré comme page moteur quand il contient `isearchengine`. Non exclusif : peut être combiné avec une référence produit sur le même tag.
+
+**Méthodes :**
+
+- `Builder(String path, String engineName)` — nom de page + nom du moteur de recherche **(obligatoire)**
+- `setResults(int results)` — nombre de résultats retournés par la recherche
+- `setParams(Params params)` — paramètres de recherche supplémentaires (couples clé/valeur correspondant à `isearchkey`/`isearchdata`)
+- `setUID(String uid)` — ID interne de l'utilisateur connecté
+- `set(String key, String value)` — paramètre personnalisé libre
+
+**Exemple :**
 
 ```java
 Params searchParams = new Params.Builder()
@@ -191,9 +249,16 @@ EAnalytics.getInstance().track(searchPage);
 
 ---
 
-### Error 404 — `EAProperties`
+### Page d'erreur 404 — `EAProperties`
 
-Flag a page as a 404 error by adding `set("error", "1")` to any tag. Feeds the "Pages en erreur" report.
+Signalez une page d'erreur 404 en ajoutant `set("error", "1")` à n'importe quel tag. Alimente le rapport « Pages en erreur ».
+
+**Méthodes :**
+
+- `Builder(String path)` — nom de la page **(obligatoire)**
+- `set("error", "1")` — flag la page comme erreur 404 **(obligatoire)**
+
+**Exemple :**
 
 ```java
 EAProperties errorTag = new EAProperties.Builder("erreur|404")
@@ -204,9 +269,22 @@ EAnalytics.getInstance().track(errorTag);
 
 ---
 
-### Estimate — `EAEstimate`
+### Page devis — `EAEstimate`
 
-Tracks quotes and associated products. A tag is treated as an estimate page when it contains both `ref` and `estimate` parameters. Estimates are deduplicated by reference: a second call with the same ref is ignored.
+Suit les devis et les produits associés. Un marqueur est considéré comme page de devis quand il contient les paramètres `ref` et `estimate` — tous deux définis automatiquement par le constructeur. Les devis sont dédoublonnés par référence : un second appel avec la même référence est ignoré.
+
+**Méthodes :**
+
+- `Builder(String path, String ref)` — nom de page + référence unique du devis **(obligatoire)**
+- `setAmount(double amount)` — montant total TTC du devis (décimales séparées par un point)
+- `setType(String type)` — type de devis selon votre propre référentiel
+- `setCurrency(String currency)` — devise si différente de celle configurée dans l'interface
+- `addProduct(Product product, double amount, int quantity)` — ajoute un produit avec son montant unitaire et sa quantité
+- `setUID(String uid)` — ID interne de l'utilisateur connecté
+- `setEmail(String email)` — email de l'utilisateur
+- `set(String key, String value)` — paramètre personnalisé libre
+
+**Exemple :**
 
 ```java
 Product product1 = new Product.Builder("505").build();
@@ -225,9 +303,22 @@ EAnalytics.getInstance().track(estimatePage);
 
 ---
 
-### Cart — `EACart`
+### Page panier — `EACart`
 
-Tracks started carts and feeds conversion/abandonment rate calculations. A tag is treated as a cart page when it contains the `scart` parameter. Cart lifetime is 30 minutes (rolling session).
+Suit les paniers commencés et permet le calcul des taux de conversion et d'abandon. Un marqueur est considéré comme page panier quand il contient le paramètre `scart` — défini automatiquement par le constructeur. Durée de vie d'un panier : 30 minutes glissantes.
+
+**Méthodes :**
+
+- `Builder(String path)` — nom de la page **(obligatoire)**
+- `setCartCumul(boolean cumul)` — `false` : les produits du tag représentent l'intégralité du panier (snapshot) ; `true` : les produits s'accumulent à chaque appel successif
+- `addProduct(Product product, double amount, int quantity)` — ajoute un produit avec son montant unitaire et sa quantité
+- `setUID(String uid)` — ID interne de l'utilisateur connecté
+- `setEmail(String email)` — email de l'utilisateur
+- `setProfile(String profile)` — profil de l'utilisateur
+- `setPageGroup(String group)` — groupe de pages pour le reporting
+- `set(String key, String value)` — paramètre personnalisé libre
+
+**Exemple :**
 
 ```java
 Params productParams = new Params.Builder()
@@ -245,19 +336,34 @@ EACart cartPage = new EACart.Builder("page-name")
         .setUID("123asd")
         .setEmail("test@test.fr")
         .setProfile("shopper")
-        .setCartCumul(false)               // false = full cart snapshot; true = additive
+        .setCartCumul(false)
         .addProduct(product1, 50.30, 2)
         .build();
 EAnalytics.getInstance().track(cartPage);
 ```
 
-> `setCartCumul(false)`: products in the tag represent the entire cart contents. `setCartCumul(true)`: products are accumulated across successive calls.
-
 ---
 
-### Order — `EAOrder`
+### Page commande — `EAOrder`
 
-Tracks conversions and ROI. A tag is treated as an order page when it contains `ref` and `amount` but neither `scart` nor `estimate`. Orders are deduplicated by reference. Implement as early as possible in the payment flow.
+Suit les conversions et le ROI. Un marqueur est considéré comme commande quand il contient `ref` et `amount` sans `scart` ni `estimate`. Les commandes sont dédoublonnées par référence. Implémentez ce tag le plus tôt possible dans le tunnel de paiement pour ne pas le manquer si l'utilisateur ne revient pas sur le site après la plateforme de paiement.
+
+**Méthodes :**
+
+- `Builder(String path, String ref)` — nom de page + référence unique de la commande **(obligatoire)**
+- `setAmount(double amount)` — montant total TTC hors frais de port **(obligatoire)**
+- `setPayment(String payment)` — moyen de paiement utilisé (ex. `credit card`, `paypal`)
+- `setType(String type)` — type de vente selon votre propre référentiel
+- `setCurrency(String currency)` — devise si différente de celle configurée dans l'interface
+- `setNewCustomer(boolean newCustomer)` — `true` : nouvel acheteur ; `false` : client fidèle
+- `setEstimateRef(String ref)` — référence du devis associé à cette commande (optionnel)
+- `addProduct(Product product, double amount, int quantity)` — ajoute un produit avec son montant unitaire et sa quantité
+- `setUID(String uid)` — ID interne de l'utilisateur connecté
+- `setEmail(String email)` — email de l'utilisateur
+- `setProfile(String profile)` — profil de l'utilisateur
+- `set(String key, String value)` — paramètre personnalisé libre
+
+**Exemple :**
 
 ```java
 Params productParams = new Params.Builder()
@@ -280,7 +386,7 @@ EAOrder orderPage = new EAOrder.Builder("Tunnel|Confirmation", "F654335671")
         .setType("online")
         .setPayment("credit card")
         .setCurrency("EUR")
-        .setEstimateRef("asd123qwe")        // optional
+        .setEstimateRef("asd123qwe")
         .set("custom-param-key", "custom-param-value")
         .addProduct(product1, 25.15, 2)
         .build();
@@ -289,28 +395,55 @@ EAnalytics.getInstance().track(orderPage);
 
 ---
 
-### Merchandise Tracking — `EATpView` / `EATpClick`
+### Tracking marchandisage — `EATpView` / `EATpClick`
 
-Tracks impressions and clicks on product showcase blocks (recommendation lists, banners, etc.). Sent as **GET** requests on `/tpview/` and `/tpclick/` — unlike other tags which are POSTed. Supports the same offline retry mechanism as the rest of the SDK.
+Suit les impressions et clics sur les blocs de marchandisage (listes de recommandation, bannières, etc.). Envoyés en **GET** sur `/tpview/` et `/tpclick/` — contrairement aux autres tags envoyés en POST. Supporte le même mécanisme de retry offline que le reste du SDK.
+
+**Méthodes `EATpView` (impression) :**
+
+- `Builder(String path)` — page de référence **(obligatoire)**
+- `setSiteName(String name)` — nom du site marchand
+- `setCampaign(String campaign)` — nom de la campagne
+- `setPlacement(String placement)` — emplacement du bloc dans la page
+- `addProduct(String ref, Integer position)` — référence produit et sa position dans le bloc ; répétez pour chaque produit affiché
+- `setUrl(String url)` — URL de contexte
+- `setPublisher(String publisher)` — éditeur (optionnel)
+- `setMedia(String media)` — type de média (optionnel)
+- `setCategory(String category)` — catégorie du bloc (optionnel)
+
+**Méthodes `EATpClick` (clic) :**
+
+- `Builder(String path)` — page de référence **(obligatoire)**
+- `setSiteName(String name)` — nom du site marchand
+- `setCampaign(String campaign)` — nom de la campagne
+- `setPlacement(String placement)` — emplacement du bloc dans la page
+- `setProduct(String ref, int position)` — référence et position du produit cliqué **(obligatoire)**
+- `setProduct(String ref, int position, Integer totalProducts)` — variante avec le nombre total de produits dans le bloc
+- `setUrl(String url)` — URL de contexte
+- `setPublisher(String publisher)` — éditeur (optionnel)
+- `setMedia(String media)` — type de média (optionnel)
+- `setCategory(String category)` — catégorie du bloc (optionnel)
+
+**Exemple :**
 
 ```java
-// Impression on a merchandise block
+// Impression sur un bloc marchandisage
 EATpView view = new EATpView.Builder("homepage")
         .setSiteName("my-site")
         .setCampaign("summer_sale")
         .setPlacement("banner_top")
-        .addProduct("PROD_001", 0)          // product ref, position
+        .addProduct("PROD_001", 0)
         .addProduct("PROD_002", 1)
         .setUrl("http://eulerian.net")
         .build();
 EAnalytics.getInstance().track(view);
 
-// Click on a product in the block
+// Clic sur un produit du bloc
 EATpClick click = new EATpClick.Builder("homepage")
         .setSiteName("my-site")
         .setCampaign("summer_sale")
         .setPlacement("banner_top")
-        .setProduct("PROD_001", 2)          // product ref, position at click time
+        .setProduct("PROD_001", 2)
         .setUrl("http://eulerian.net")
         .build();
 EAnalytics.getInstance().track(click);
@@ -320,7 +453,18 @@ EAnalytics.getInstance().track(click);
 
 ### Context Flag (CFLAG) — `SiteCentricCFlag`
 
-Attach one or more context flags to any tag to enrich your reports with contextual dimensions. Each flag accepts up to 10 values.
+Associez un ou plusieurs context flags à n'importe quel tag pour enrichir vos rapports de dimensions contextuelles. Chaque flag accepte jusqu'à 10 valeurs.
+
+**Méthodes `SiteCentricCFlag` :**
+
+- `Builder()` — constructeur
+- `set(String key, String... values)` — définit une dimension contextuelle avec une ou plusieurs valeurs (maximum 10)
+
+**Ajout sur un tag via :**
+
+- `setCFlag(SiteCentricCFlag flag)` — disponible sur tous les types de tags
+
+**Exemple :**
 
 ```java
 import com.eulerian.android.sdk.SiteCentricCFlag;
@@ -341,107 +485,107 @@ EAnalytics.getInstance().track(genericTag);
 
 ---
 
-## WebView Tracking
+## Tracking WebView
 
-For hybrid apps that open a WebView, pass the SDK's internal identifier in the opening URL to maintain tracking continuity between the native app and the web session. Also add the `edev` parameter to qualify the traffic as coming from a native app (required for in-app campaign tracking and push notification attribution).
+Pour les applications hybrides ouvrant une WebView, passez l'identifiant interne du SDK dans l'URL d'ouverture pour assurer la continuité du tracking entre l'app native et la session web. Ajoutez aussi le paramètre `edev` pour qualifier le trafic comme natif (obligatoire pour le suivi des campagnes in-app et des notifications push).
 
 ```java
 String euidl = EAnalytics.getEuidl();
-// Build the WebView URL:
+// Construisez l'URL de la WebView :
 // http://www.demo.fr/android-landing?ea-euidl-bypass=<euidl>&edev=AppNativeAndroidphone
 ```
 
-Accepted `edev` values:
+Valeurs acceptées pour `edev` :
 
-| Value | Device |
-|-------|--------|
-| `AppNativeAndroidphone` | Android phone |
-| `AppNativeAndroidtablet` | Android tablet |
+| Valeur | Appareil |
+|--------|----------|
+| `AppNativeAndroidphone` | Téléphone Android |
+| `AppNativeAndroidtablet` | Tablette Android |
 | `AppNativeIOSphone` | iPhone |
 | `AppNativeIOStablet` | iPad |
 
-> `ea-euidl-bypass` must be present on **every URL change** in the WebView, otherwise the link between app and web navigation is lost.
+> `ea-euidl-bypass` doit être présent à **chaque changement d'URL** dans la WebView, sinon le lien entre navigation app et web est perdu.
 
 ---
 
-## App Metrics
+## Métriques application
 
-Track app downloads and updates by including these parameters in the first tag fired on app launch.
+Suivez les téléchargements et mises à jour en incluant ces paramètres dans le premier tag envoyé au lancement de l'application.
 
-| Parameter | Value | Description |
-|-----------|-------|-------------|
-| `ea-appname` | App name | App identifier — **must never change** |
-| `ea-appversion` | Version string | Current version |
-| `ea-appinstalled` | `1` | Present if app existed before Eulerian was integrated |
+| Paramètre | Valeur | Description |
+|-----------|--------|-------------|
+| `ea-appname` | Nom de l'app | Identifiant app — **ne doit jamais changer** |
+| `ea-appversion` | Chaîne de version | Version courante de l'application |
+| `ea-appinstalled` | `1` | Présent si l'app existait avant l'intégration Eulerian |
 
-**System logic:**
-- **Download** metric increments when `ea-appname` is seen for the first time for this user (without `ea-appinstalled`).
-- **Update** metric increments when `ea-appname` is unchanged but `ea-appversion` has a new value compared to the last launch.
+**Logique système :**
+- La métrique **Téléchargement** est incrémentée quand `ea-appname` est vu pour la première fois pour cet utilisateur (sans `ea-appinstalled`).
+- La métrique **Mise à jour** est incrémentée quand `ea-appname` est inchangé mais `ea-appversion` a une nouvelle valeur par rapport au dernier lancement.
 
 ---
 
-## GDPR / Consent
+## Consentement (GDPR / RGPD)
 
-> The two modes below are **mutually exclusive**. Choose one and never use both in the same app.
+> Les deux modes ci-dessous sont **mutuellement exclusifs**. Choisissez-en un et ne les utilisez jamais ensemble dans la même application.
 
 ### Mode 1 — TCF v2 (`gdpr_consent`)
 
-Pass the TCString generated by your CMP once per visitor, at the moment the user expresses opt-in or opt-out.
+Transmettez la TCString générée par votre CMP une seule fois par visiteur, au moment où l'utilisateur exprime son opt-in ou opt-out.
 
 ```java
 EAProperties consentTag = new EAProperties.Builder("|univers|rubrique|page")
         .setUID("5434742")
         .set("abonnement", "mensuel")
-        .set("gdpr_consent", "EADURF214345")  // your TCString
+        .set("gdpr_consent", "EADURF214345")  // votre TCString
         .build();
 EAnalytics.getInstance().track(consentTag);
 ```
 
-### Mode 2 — Categories (`pmcat`)
+### Mode 2 — Catégories (`pmcat`)
 
-Pass the Eulerian IDs of **refused** categories, separated by `-`. Send `-` alone if the user accepts all categories.
+Passez les IDs Eulerian des catégories **refusées**, séparés par `-`. Envoyez `-` seul si l'utilisateur accepte toutes les catégories.
 
 ```java
 EAProperties consentTag = new EAProperties.Builder("|univers|rubrique|page")
         .setUID("5434742")
         .set("abonnement", "mensuel")
-        .set("pmcat", "1-10")  // refused category IDs
+        .set("pmcat", "1-10")  // IDs des catégories refusées
         .build();
 EAnalytics.getInstance().track(consentTag);
 ```
 
-Example category mapping:
+Exemple de mappage des catégories :
 
-| Category | Eulerian ID |
-|----------|-------------|
+| Catégorie | ID Eulerian |
+|-----------|-------------|
 | analytics | 1 |
-| advertising | 10 |
-| functional | 19 |
+| publicité | 10 |
+| fonctionnel | 19 |
 
-*Example: user refuses analytics + advertising → `pmcat` = `1-10`*
+*Exemple : l'utilisateur refuse analytics + publicité → `pmcat` = `1-10`*
 
-### Opt-out URL
+### URL d'opt-out général
 
-Provide this URL on your privacy page or inside your CMP for a full unconditional opt-out:
+Fournissez cette URL sur votre page « Vie privée / RGPD » ou dans votre CMP pour un retrait total inconditionnel :
 
 ```
-https://<your-tracking-domain>/optout.html?url=<your-domain>
+https://<votre-domaine-de-collecte>/optout.html?url=<votre-domaine>
 ```
 
-### Summary
+### Récapitulatif
 
-| | Mode TCF v2 | Mode Categories |
+| | Mode TCF v2 | Mode Catégories |
 |---|---|---|
-| **Parameter** | `gdpr_consent` | `pmcat` |
-| **When** | At opt-in/out | At opt-in/out |
-| **Content** | TCString | Refused IDs or `-` |
-| **CMP compatibility** | TCF v2 CMP | Custom / non-TCF CMP |
+| **Paramètre** | `gdpr_consent` | `pmcat` |
+| **Quand** | Lors de l'opt-in/out | Lors de l'opt-in/out |
+| **Contenu** | TCString | IDs refusés ou `-` |
+| **Compatibilité CMP** | CMP TCF v2 | CMP maison / non-TCF |
 
 ---
 
-## Dependencies
+## Dépendances
 
-The following dependencies are bundled automatically with the SDK:
+Les dépendances suivantes sont incluses automatiquement avec le SDK :
 
 ```groovy
 com.google.android.gms:play-services-ads-identifier:17.0.0
