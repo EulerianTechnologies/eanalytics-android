@@ -101,11 +101,25 @@ public class DemoApp extends Application {
 
 > `path` (nombre de página) es **obligatorio** en cada etiqueta. A diferencia del tracking web, nunca se infiere automáticamente desde la URL.
 
+> **Método genérico `set(String key, String value)`:** disponible en todas las etiquetas, permite añadir cualquier parámetro personalizado no cubierto por los métodos dedicados. Ejemplo: `.set("suscripcion", "mensual")`.
+
 ---
 
 ### Página genérica — `EAProperties`
 
 Úsala en todas las páginas que no sean ficha de producto, carrito, pedido o presupuesto (incluida la homepage y los pasos del embudo entre carrito y confirmación de pedido). Registra páginas vistas, visitas y fuentes de tráfico orgánico.
+
+**Métodos:**
+
+- `Builder(String path)` — nombre de la página **(obligatorio)**
+- `setUID(String uid)` — ID interno del usuario conectado; consolida el historial multi-device y permite reconciliar un clic con una descarga
+- `setEmail(String email)` — email del usuario
+- `setProfile(String profile)` — perfil del usuario (ej. `visitor`, `buyer`, `looker`)
+- `setPageGroup(String group)` — grupo de páginas para el reporting
+- `set(String key, String value)` — parámetro personalizado libre
+- `setCFlag(SiteCentricCFlag flag)` — adjunta uno o varios context flags a la etiqueta (ver [Context Flag](#context-flag-cflag))
+
+**Ejemplo:**
 
 ```java
 EAProperties genericTag = new EAProperties.Builder("NOM_PAGE")
@@ -123,6 +137,29 @@ EAnalytics.getInstance().track(genericTag);
 ### Página de producto — `EAProducts` (1 producto)
 
 Registra páginas vistas de producto y alimenta el informe "Adquisición & Rendimiento de producto". Una etiqueta se interpreta como página de producto cuando contiene **exactamente una** referencia de producto y ninguno de los parámetros `scart`, `estimate`, `ref`, `amount`.
+
+**Métodos:**
+
+- `Builder(String path)` — nombre de la página **(obligatorio)**
+- `setUID(String uid)` — ID interno del usuario conectado
+- `setEmail(String email)` — email del usuario
+- `setProfile(String profile)` — perfil del usuario
+- `setPageGroup(String group)` — grupo de páginas para el reporting
+- `addProduct(Product product)` — añade la referencia de producto **(obligatorio)**
+- `set(String key, String value)` — parámetro personalizado libre
+
+**Construcción de un `Product`:**
+
+- `Product.Builder(String ref)` — referencia del producto **(obligatorio)**
+- `setName(String name)` — nombre legible del producto para el reporting
+- `setGroup(String group)` — grupo de margen (`A` o `B`)
+- `setParams(Params params)` — categorías del producto (ej. `prdparam-category`, `prdparam-brand`)
+
+**Construcción de `Params`:**
+
+- `addParam(String key, String value)` — añade una categoría de producto; la clave es el sufijo tras `prdparam-`
+
+**Ejemplo:**
 
 ```java
 Params productParams = new Params.Builder()
@@ -152,6 +189,17 @@ EAnalytics.getInstance().track(productPage);
 
 Envía las primeras N referencias de producto mostradas en una página de resultados/categoría a los socios para retargeting. Una etiqueta se interpreta como página de categoría cuando contiene **más de una** referencia de producto y ninguno de los parámetros `scart`, `estimate`, `ref`, `amount`.
 
+**Métodos:**
+
+- `Builder(String path)` — nombre de la página **(obligatorio)**
+- `setUID(String uid)` — ID interno del usuario conectado
+- `setEmail(String email)` — email del usuario
+- `setPageGroup(String group)` — grupo de páginas para el reporting
+- `addProduct(Product product)` — añade una referencia de producto; repite para cada producto mostrado
+- `set(String key, String value)` — parámetro personalizado libre
+
+**Ejemplo:**
+
 ```java
 Product product1 = new Product.Builder("ref-product1").build();
 Product product2 = new Product.Builder("ref-product2").build();
@@ -174,6 +222,16 @@ EAnalytics.getInstance().track(resultPage);
 
 Registra las búsquedas internas, el número de resultados y parámetros adicionales. Una etiqueta se interpreta como página de búsqueda cuando contiene el parámetro `isearchengine`. No es exclusivo: puede combinarse con una referencia de producto en la misma etiqueta.
 
+**Métodos:**
+
+- `Builder(String path, String engineName)` — nombre de página + nombre del motor de búsqueda **(obligatorio)**
+- `setResults(int results)` — número de resultados devueltos por la búsqueda
+- `setParams(Params params)` — parámetros de búsqueda adicionales (pares clave/valor que corresponden a `isearchkey`/`isearchdata`)
+- `setUID(String uid)` — ID interno del usuario conectado
+- `set(String key, String value)` — parámetro personalizado libre
+
+**Ejemplo:**
+
 ```java
 Params searchParams = new Params.Builder()
         .addParam("motcle", "veste")
@@ -195,6 +253,13 @@ EAnalytics.getInstance().track(searchPage);
 
 Marca una página como error 404 añadiendo `set("error", "1")` a cualquier etiqueta. Alimenta el informe "Páginas en error".
 
+**Métodos:**
+
+- `Builder(String path)` — nombre de la página **(obligatorio)**
+- `set("error", "1")` — marca la página como error 404 **(obligatorio)**
+
+**Ejemplo:**
+
 ```java
 EAProperties errorTag = new EAProperties.Builder("erreur|404")
         .set("error", "1")
@@ -206,7 +271,20 @@ EAnalytics.getInstance().track(errorTag);
 
 ### Página de presupuesto — `EAEstimate`
 
-Registra presupuestos y los productos asociados. Una etiqueta se interpreta como página de presupuesto cuando contiene los parámetros `ref` y `estimate`. Los presupuestos se deduplicen por referencia: una segunda llamada con la misma referencia se ignora.
+Registra presupuestos y los productos asociados. Una etiqueta se interpreta como página de presupuesto cuando contiene `ref` y `estimate` — ambos definidos automáticamente por el constructor. Los presupuestos se deduplicen por referencia: una segunda llamada con la misma referencia se ignora.
+
+**Métodos:**
+
+- `Builder(String path, String ref)` — nombre de página + referencia única del presupuesto **(obligatorio)**
+- `setAmount(double amount)` — importe total IVA incluido (separador decimal: punto)
+- `setType(String type)` — tipo de presupuesto según tu propio referencial
+- `setCurrency(String currency)` — divisa si es diferente a la configurada en la interfaz
+- `addProduct(Product product, double amount, int quantity)` — añade un producto con su precio unitario y cantidad
+- `setUID(String uid)` — ID interno del usuario conectado
+- `setEmail(String email)` — email del usuario
+- `set(String key, String value)` — parámetro personalizado libre
+
+**Ejemplo:**
 
 ```java
 Product product1 = new Product.Builder("505").build();
@@ -227,7 +305,20 @@ EAnalytics.getInstance().track(estimatePage);
 
 ### Página de carrito — `EACart`
 
-Registra carritos iniciados y permite calcular las tasas de conversión y abandono. Una etiqueta se interpreta como página de carrito cuando contiene el parámetro `scart`. La duración de vida de un carrito es de 30 minutos (sesión deslizante).
+Registra carritos iniciados y permite calcular las tasas de conversión y abandono. Una etiqueta se interpreta como página de carrito cuando contiene `scart` — definido automáticamente por el constructor. La duración de vida de un carrito es de 30 minutos (sesión deslizante).
+
+**Métodos:**
+
+- `Builder(String path)` — nombre de la página **(obligatorio)**
+- `setCartCumul(boolean cumul)` — `false`: los productos del tag representan el contenido completo del carrito (snapshot); `true`: los productos se acumulan en cada llamada sucesiva
+- `addProduct(Product product, double amount, int quantity)` — añade un producto con su precio unitario y cantidad
+- `setUID(String uid)` — ID interno del usuario conectado
+- `setEmail(String email)` — email del usuario
+- `setProfile(String profile)` — perfil del usuario
+- `setPageGroup(String group)` — grupo de páginas para el reporting
+- `set(String key, String value)` — parámetro personalizado libre
+
+**Ejemplo:**
 
 ```java
 Params productParams = new Params.Builder()
@@ -245,19 +336,34 @@ EACart cartPage = new EACart.Builder("page-name")
         .setUID("123asd")
         .setEmail("test@test.fr")
         .setProfile("shopper")
-        .setCartCumul(false)               // false = snapshot completo del carrito; true = acumulativo
+        .setCartCumul(false)
         .addProduct(product1, 50.30, 2)
         .build();
 EAnalytics.getInstance().track(cartPage);
 ```
 
-> `setCartCumul(false)`: los productos de la etiqueta representan el contenido completo del carrito. `setCartCumul(true)`: los productos se acumulan en cada llamada sucesiva.
-
 ---
 
 ### Página de pedido — `EAOrder`
 
-Registra conversiones y ROI. Una etiqueta se interpreta como página de pedido cuando contiene `ref` y `amount` pero ni `scart` ni `estimate`. Los pedidos se deduplicen por referencia. Implementa esta etiqueta lo antes posible en el flujo de pago.
+Registra conversiones y ROI. Una etiqueta se interpreta como página de pedido cuando contiene `ref` y `amount` pero ni `scart` ni `estimate`. Los pedidos se deduplicen por referencia. Implementa esta etiqueta lo antes posible en el flujo de pago para no perder la llamada si el usuario no regresa al sitio tras la plataforma de pago.
+
+**Métodos:**
+
+- `Builder(String path, String ref)` — nombre de página + referencia única del pedido **(obligatorio)**
+- `setAmount(double amount)` — importe total IVA incluido sin gastos de envío **(obligatorio)**
+- `setPayment(String payment)` — método de pago utilizado (ej. `credit card`, `paypal`)
+- `setType(String type)` — tipo de venta según tu propio referencial
+- `setCurrency(String currency)` — divisa si es diferente a la configurada en la interfaz
+- `setNewCustomer(boolean newCustomer)` — `true`: nuevo cliente; `false`: cliente recurrente
+- `setEstimateRef(String ref)` — referencia del presupuesto vinculado a este pedido (opcional)
+- `addProduct(Product product, double amount, int quantity)` — añade un producto con su precio unitario y cantidad
+- `setUID(String uid)` — ID interno del usuario conectado
+- `setEmail(String email)` — email del usuario
+- `setProfile(String profile)` — perfil del usuario
+- `set(String key, String value)` — parámetro personalizado libre
+
+**Ejemplo:**
 
 ```java
 Params productParams = new Params.Builder()
@@ -280,7 +386,7 @@ EAOrder orderPage = new EAOrder.Builder("Tunnel|Confirmation", "F654335671")
         .setType("online")
         .setPayment("credit card")
         .setCurrency("EUR")
-        .setEstimateRef("asd123qwe")        // opcional
+        .setEstimateRef("asd123qwe")
         .set("custom-param-key", "custom-param-value")
         .addProduct(product1, 25.15, 2)
         .build();
@@ -293,13 +399,40 @@ EAnalytics.getInstance().track(orderPage);
 
 Registra impresiones y clics en bloques de merchandising (listas de recomendación, banners, etc.). Se envían como peticiones **GET** a `/tpview/` y `/tpclick/` — a diferencia del resto de etiquetas que se envían por POST. Soporta el mismo mecanismo de reintento offline que el resto del SDK.
 
+**Métodos `EATpView` (impresión):**
+
+- `Builder(String path)` — página de referencia **(obligatorio)**
+- `setSiteName(String name)` — nombre del sitio de comercio
+- `setCampaign(String campaign)` — nombre de la campaña
+- `setPlacement(String placement)` — ubicación del bloque en la página
+- `addProduct(String ref, Integer position)` — referencia de producto y su posición en el bloque; repite para cada producto mostrado
+- `setUrl(String url)` — URL de contexto
+- `setPublisher(String publisher)` — editor (opcional)
+- `setMedia(String media)` — tipo de medio (opcional)
+- `setCategory(String category)` — categoría del bloque (opcional)
+
+**Métodos `EATpClick` (clic):**
+
+- `Builder(String path)` — página de referencia **(obligatorio)**
+- `setSiteName(String name)` — nombre del sitio de comercio
+- `setCampaign(String campaign)` — nombre de la campaña
+- `setPlacement(String placement)` — ubicación del bloque en la página
+- `setProduct(String ref, int position)` — referencia y posición del producto clicado **(obligatorio)**
+- `setProduct(String ref, int position, Integer totalProducts)` — variante con el número total de productos en el bloque
+- `setUrl(String url)` — URL de contexto
+- `setPublisher(String publisher)` — editor (opcional)
+- `setMedia(String media)` — tipo de medio (opcional)
+- `setCategory(String category)` — categoría del bloque (opcional)
+
+**Ejemplo:**
+
 ```java
 // Impresión en un bloque de merchandising
 EATpView view = new EATpView.Builder("homepage")
         .setSiteName("my-site")
         .setCampaign("summer_sale")
         .setPlacement("banner_top")
-        .addProduct("PROD_001", 0)          // referencia de producto, posición
+        .addProduct("PROD_001", 0)
         .addProduct("PROD_002", 1)
         .setUrl("http://eulerian.net")
         .build();
@@ -310,7 +443,7 @@ EATpClick click = new EATpClick.Builder("homepage")
         .setSiteName("my-site")
         .setCampaign("summer_sale")
         .setPlacement("banner_top")
-        .setProduct("PROD_001", 2)          // referencia de producto, posición en el momento del clic
+        .setProduct("PROD_001", 2)
         .setUrl("http://eulerian.net")
         .build();
 EAnalytics.getInstance().track(click);
@@ -321,6 +454,17 @@ EAnalytics.getInstance().track(click);
 ### Context Flag (CFLAG) — `SiteCentricCFlag`
 
 Adjunta uno o varios context flags a cualquier etiqueta para enriquecer tus informes con dimensiones contextuales. Cada flag acepta hasta 10 valores.
+
+**Métodos `SiteCentricCFlag`:**
+
+- `Builder()` — constructor
+- `set(String key, String... values)` — define una dimensión contextual con uno o varios valores (máximo 10)
+
+**Se adjunta a una etiqueta mediante:**
+
+- `setCFlag(SiteCentricCFlag flag)` — disponible en todos los tipos de etiqueta
+
+**Ejemplo:**
 
 ```java
 import com.eulerian.android.sdk.SiteCentricCFlag;
